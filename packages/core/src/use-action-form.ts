@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { type DefaultValues, type FieldValues, useForm } from 'react-hook-form'
+import { type DefaultValues, type FieldPath, type FieldValues, useForm } from 'react-hook-form'
 import type { ZodError, ZodSchema } from 'zod'
 
 import { clearPersistedValues, debounce, loadPersistedValues, savePersistedValues } from './persist'
@@ -137,6 +137,7 @@ export function useActionForm<
 
   // ----- Resolve initial values (persisted > options) ----------------------
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally run once on mount
   const resolvedDefaults = useMemo<DefaultValues<TFieldValues> | undefined>(() => {
     if (persistKey) {
       const persisted = loadPersistedValues<TFieldValues>(persistKey)
@@ -148,7 +149,7 @@ export function useActionForm<
       }
     }
     return optionDefaults
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- intentionally run once
+  }, [])
 
   // ----- React Hook Form ---------------------------------------------------
 
@@ -228,19 +229,19 @@ export function useActionForm<
         const fieldResult = resolvedSchema.safeParse(values)
         if (fieldResult.success) {
           // Clear any existing errors for this field
-          form.clearErrors(name as any)
+          form.clearErrors(name as FieldPath<TFieldValues>)
         } else {
           const zodError = fieldResult.error as ZodError
           const flat = zodError.flatten()
           const fieldErrors = flat.fieldErrors[name]
 
           if (fieldErrors && fieldErrors.length > 0) {
-            form.setError(name as any, {
+            form.setError(name as FieldPath<TFieldValues>, {
               type: 'validation',
               message: fieldErrors[0],
             })
           } else {
-            form.clearErrors(name as any)
+            form.clearErrors(name as FieldPath<TFieldValues>)
           }
         }
       }
@@ -350,7 +351,7 @@ export function useActionForm<
                 obj[key] = value
               }
             }
-            result = await (action as (d: any) => Promise<TResult>)(obj)
+            result = await (action as (d: unknown) => Promise<TResult>)(obj)
           }
         } else if (actionIsFormData) {
           // Build FormData from validated values for (prevState, formData) actions
@@ -374,7 +375,7 @@ export function useActionForm<
             action as (prev: Awaited<TResult> | null, fd: FormData) => Promise<TResult>
           )(prevStateRef.current, formData)
         } else {
-          result = await (action as (d: any) => Promise<TResult>)(data)
+          result = await (action as (d: unknown) => Promise<TResult>)(data)
         }
 
         resultRef.current = result

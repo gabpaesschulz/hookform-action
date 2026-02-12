@@ -22,7 +22,7 @@ import React from 'react'
 // @ts-ignore – useActionState only exists in React 19+
 export const useActionState: typeof React.useActionState | undefined =
   // @ts-ignore
-  (React as any).useActionState ?? undefined
+  (React as unknown as Record<string, unknown>).useActionState ?? undefined
 
 // ---------------------------------------------------------------------------
 // useOptimistic (React 19) — fallback to identity on React 18
@@ -35,7 +35,7 @@ export const useActionState: typeof React.useActionState | undefined =
 // @ts-ignore – useOptimistic only exists in React 19+
 export const useOptimistic: typeof React.useOptimistic | undefined =
   // @ts-ignore
-  (React as any).useOptimistic ?? undefined
+  (React as unknown as Record<string, unknown>).useOptimistic ?? undefined
 
 /**
  * Whether the current React runtime supports `useOptimistic`.

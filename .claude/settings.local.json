@@ -10,7 +10,8 @@
       "Bash(pnpm test:*)",
       "Bash(pnpm add:*)",
       "Bash(pnpm install:*)",
-      "Bash(npx biome check:*)"
+      "Bash(npx biome check:*)",
+      "Bash(pnpm lint:*)"
     ]
   }
 }

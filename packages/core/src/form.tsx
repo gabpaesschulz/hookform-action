@@ -15,7 +15,7 @@ export interface FormProps<TFieldValues extends FieldValues = FieldValues, TResu
    * The return value from `useActionForm` (any adapter) or `useActionFormCore`.
    * Provides the form methods and the action integration.
    */
-  form: UseActionFormCoreReturn<TFieldValues, TResult, any> & {
+  form: UseActionFormCoreReturn<TFieldValues, TResult, unknown> & {
     /** formAction is optional – only provided by the Next.js adapter */
     formAction?: (formData: FormData) => Promise<void>
   }

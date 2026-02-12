@@ -66,7 +66,7 @@ describe('withZod', () => {
     expect(result).toHaveProperty('success', false)
     expect(result).toHaveProperty('errors')
 
-    const errors = (result as any).errors
+    const errors = (result as { errors: Record<string, unknown> }).errors
     expect(errors.email).toBeDefined()
     expect(errors.password).toBeDefined()
   })
@@ -113,7 +113,7 @@ describe('withZod', () => {
     expect(handler).not.toHaveBeenCalled()
     expect(result).toHaveProperty('success', false)
 
-    const errors = (result as any).errors
+    const errors = (result as { errors: Record<string, unknown> }).errors
     expect(errors.email).toBeDefined()
     expect(errors.password).toBeDefined()
   })

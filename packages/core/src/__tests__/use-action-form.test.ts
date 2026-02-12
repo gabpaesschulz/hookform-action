@@ -9,35 +9,35 @@ import { useActionForm } from '../use-action-form'
 
 /** Classic FormData action (arity 2) */
 function createSuccessAction(): FormDataServerAction<{ success: true; data: string }> {
-  return vi.fn(async (_prev: any, _fd: FormData) => ({ success: true as const, data: 'ok' }))
+  return vi.fn(async (_prev: unknown, _fd: FormData) => ({ success: true as const, data: 'ok' }))
 }
 
 /** Classic FormData action that returns errors (arity 2) */
 function createErrorAction(): FormDataServerAction<{
   errors: { email: string[]; name?: string[] }
 }> {
-  return vi.fn(async (_prev: any, _fd: FormData) => ({
+  return vi.fn(async (_prev: unknown, _fd: FormData) => ({
     errors: { email: ['Invalid email address'], name: ['Name is required'] },
   }))
 }
 
 /** Classic FormData action that throws (arity 2) */
 function createThrowingAction(): FormDataServerAction<{ success: true }> {
-  return vi.fn(async (_prev: any, _fd: FormData) => {
+  return vi.fn(async (_prev: unknown, _fd: FormData) => {
     throw new Error('Network failure')
   })
 }
 
 /** JSON action (arity 1) – success */
 function createJsonSuccessAction(): JsonServerAction<{ success: true; data: string }> {
-  return vi.fn(async (_data: any) => ({ success: true as const, data: 'json-ok' }))
+  return vi.fn(async (_data: unknown) => ({ success: true as const, data: 'json-ok' }))
 }
 
 /** JSON action (arity 1) – returns errors */
 function createJsonErrorAction(): JsonServerAction<{
   errors: { email: string[] }
 }> {
-  return vi.fn(async (_data: any) => ({
+  return vi.fn(async (_data: unknown) => ({
     errors: { email: ['Invalid email from JSON action'] },
   }))
 }
@@ -185,7 +185,7 @@ describe('useActionForm', () => {
 
   it('supports custom error mapper', async () => {
     const action: FormDataServerAction<{ validationErrors: { field: string; msg: string }[] }> =
-      vi.fn(async (_prev: any, _fd: FormData) => ({
+      vi.fn(async (_prev: unknown, _fd: FormData) => ({
         validationErrors: [{ field: 'email', msg: 'Bad email' }],
       }))
 

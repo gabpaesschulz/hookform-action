@@ -10,7 +10,7 @@ import type { ZodSchema } from 'zod'
 /**
  * A Server Action that receives a single JSON payload and returns a promise.
  */
-export type JsonServerAction<TResult = unknown> = (data: any) => Promise<TResult>
+export type JsonServerAction<TResult = unknown> = (data: unknown) => Promise<TResult>
 
 /**
  * A Server Action that receives the previous state and a FormData.
@@ -123,7 +123,7 @@ export function defaultErrorMapper<TResult>(result: TResult): FieldErrorRecord |
 export function hasAttachedSchema<TResult>(
   action: ServerAction<TResult>,
 ): action is ZodServerAction<ZodSchema, TResult> {
-  return '__schema' in action && (action as any).__schema != null
+  return '__schema' in action && (action as unknown as Record<string, unknown>).__schema != null
 }
 
 // ---------------------------------------------------------------------------

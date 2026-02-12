@@ -15,22 +15,29 @@ interface TodoItem {
 
 /** JSON action that succeeds – simulates updating a todo */
 function createUpdateTodoAction(): JsonServerAction<{ success: true; data: TodoItem }> {
-  return vi.fn(async (data: any) => ({
-    success: true as const,
-    data: { id: data.id ?? 'todo-1', title: data.title, completed: data.completed ?? false },
-  }))
+  return vi.fn(async (data: unknown) => {
+    const d = data as Record<string, unknown>
+    return {
+      success: true as const,
+      data: {
+        id: (d.id as string) ?? 'todo-1',
+        title: d.title as string,
+        completed: (d.completed as boolean) ?? false,
+      },
+    }
+  })
 }
 
 /** JSON action that returns errors */
 function createErrorTodoAction(): JsonServerAction<{ errors: { title: string[] } }> {
-  return vi.fn(async (_data: any) => ({
+  return vi.fn(async (_data: unknown) => ({
     errors: { title: ['Title is required'] },
   }))
 }
 
 /** JSON action that throws */
 function createThrowingTodoAction(): JsonServerAction<{ success: true }> {
-  return vi.fn(async (_data: any) => {
+  return vi.fn(async (_data: unknown) => {
     throw new Error('Network error')
   })
 }

@@ -16,14 +16,7 @@ const signupSchema = z.object({
 
 /** JSON action that always succeeds */
 function createSuccessAction(): JsonServerAction<{ success: true }> {
-  return vi.fn(async (_data: any) => ({ success: true as const }))
-}
-
-/** JSON action that returns errors from server */
-function createServerErrorAction(): JsonServerAction<{ errors: { email: string[] } }> {
-  return vi.fn(async (_data: any) => ({
-    errors: { email: ['Already registered'] },
-  }))
+  return vi.fn(async (_data: unknown) => ({ success: true as const }))
 }
 
 // ---------------------------------------------------------------------------
@@ -167,7 +160,7 @@ describe('useActionForm – auto-detected schema from withZod', () => {
   })
 
   it('auto-detects schema from withZod action and validates on submit', async () => {
-    const handler = vi.fn(async (data: any) => ({
+    const handler = vi.fn(async (data: unknown) => ({
       success: true as const,
       data,
     }))

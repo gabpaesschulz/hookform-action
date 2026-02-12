@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next'
+import './globals.css'
 
 export const metadata: Metadata = {
-  title: "next-action-form – Docs",
+  title: 'next-action-form – Docs',
   description:
-    "Seamless integration between React Hook Form and Next.js Server Actions with Zod validation and multi-step persistence.",
-};
+    'Seamless integration between React Hook Form and Next.js Server Actions with Zod validation and multi-step persistence.',
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a
                 href="https://github.com/your-username/next-action-form"
                 target="_blank"
-                rel="noopener"
+                rel="noreferrer noopener"
                 className="hover:text-white transition-colors"
               >
                 GitHub
@@ -53,5 +53,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
       </body>
     </html>
-  );
+  )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { type DefaultValues, type FieldValues, useForm } from 'react-hook-form'
+import { type DefaultValues, type FieldPath, type FieldValues, useForm } from 'react-hook-form'
 import type { ZodError, ZodSchema } from 'zod'
 
 import type {
@@ -106,6 +106,7 @@ export function useActionFormCore<
 
   // ----- Resolve initial values (persisted > options) ----------------------
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally run once on mount
   const resolvedDefaults = useMemo<DefaultValues<TFieldValues> | undefined>(() => {
     if (persistKey) {
       const persisted = loadPersistedValues<TFieldValues>(persistKey)
@@ -117,7 +118,7 @@ export function useActionFormCore<
       }
     }
     return optionDefaults
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- intentionally run once
+  }, [])
 
   // ----- React Hook Form ---------------------------------------------------
 
@@ -189,19 +190,19 @@ export function useActionFormCore<
       if (validationMode === 'onChange' || type === 'blur') {
         const fieldResult = resolvedSchema.safeParse(values)
         if (fieldResult.success) {
-          form.clearErrors(name as any)
+          form.clearErrors(name as FieldPath<TFieldValues>)
         } else {
           const zodError = fieldResult.error as ZodError
           const flat = zodError.flatten()
           const fieldErrors = flat.fieldErrors[name]
 
           if (fieldErrors && fieldErrors.length > 0) {
-            form.setError(name as any, {
+            form.setError(name as FieldPath<TFieldValues>, {
               type: 'validation',
               message: fieldErrors[0],
             })
           } else {
-            form.clearErrors(name as any)
+            form.clearErrors(name as FieldPath<TFieldValues>)
           }
         }
       }
@@ -212,6 +213,7 @@ export function useActionFormCore<
 
   // ----- Plugin lifecycle: onMount -----------------------------------------
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: plugins identity changes every render; run once on mount
   useEffect(() => {
     const cleanups = plugins.map((p) => p.onMount?.()).filter(Boolean) as (() => void)[]
 
@@ -392,7 +394,7 @@ export function useActionFormCore<
 
         // Plugin: onError
         for (const plugin of plugins) {
-          plugin.onError?.(wrappedError as any, data)
+          plugin.onError?.(wrappedError as TResult & Error, data)
         }
 
         onError?.(wrappedError)
@@ -457,7 +459,10 @@ export function useActionFormCore<
   // ----- Compose control with DevTools metadata ----------------------------
 
   const enhancedControl = useMemo(() => {
-    const ctrl = form.control as any
+    const ctrl = form.control as typeof form.control & {
+      _submissionHistory: SubmissionRecord<TResult>[]
+      _actionFormState: ActionFormState<TResult>
+    }
     ctrl._submissionHistory = submissionHistoryRef.current
     ctrl._actionFormState = actionState
     return ctrl

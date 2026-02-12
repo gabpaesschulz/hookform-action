@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["next-action-form"],
-};
+  transpilePackages: ['next-action-form'],
+}
 
-export default nextConfig;
+export default nextConfig

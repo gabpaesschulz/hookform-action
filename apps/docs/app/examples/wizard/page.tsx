@@ -1,6 +1,6 @@
-import { WizardForm } from "./wizard-form";
+import { WizardForm } from './wizard-form'
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 export default function WizardExamplePage() {
   return (
@@ -13,8 +13,9 @@ export default function WizardExamplePage() {
 
       <h1 className="text-3xl font-bold mb-2">Multi-Step Wizard Example</h1>
       <p className="text-gray-400 mb-8">
-        A 3-step onboarding wizard with <code className="text-brand-400">persistKey</code> enabled — form state is saved
-        to sessionStorage automatically with debounce. Refresh the page to see persistence in action.
+        A 3-step onboarding wizard with <code className="text-brand-400">persistKey</code> enabled —
+        form state is saved to sessionStorage automatically with debounce. Refresh the page to see
+        persistence in action.
       </p>
 
       <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-8">
@@ -26,21 +27,22 @@ export default function WizardExamplePage() {
         <div className="prose prose-invert prose-sm max-w-none">
           <ul className="space-y-2 text-gray-400">
             <li>
-              <strong className="text-gray-200">Persistence:</strong> Pass{" "}
-              <code>persistKey: &apos;wizard-onboarding&apos;</code> to enable automatic sessionStorage persistence with
-              200ms debounce.
+              <strong className="text-gray-200">Persistence:</strong> Pass{' '}
+              <code>persistKey: &apos;wizard-onboarding&apos;</code> to enable automatic
+              sessionStorage persistence with 200ms debounce.
             </li>
             <li>
-              <strong className="text-gray-200">Step validation:</strong> Uses RHF&apos;s <code>trigger()</code> to
-              validate only the current step&apos;s fields before advancing.
+              <strong className="text-gray-200">Step validation:</strong> Uses RHF&apos;s{' '}
+              <code>trigger()</code> to validate only the current step&apos;s fields before
+              advancing.
             </li>
             <li>
-              <strong className="text-gray-200">Auto-clear:</strong> On successful submission, persisted data is
-              automatically removed from sessionStorage.
+              <strong className="text-gray-200">Auto-clear:</strong> On successful submission,
+              persisted data is automatically removed from sessionStorage.
             </li>
             <li>
-              <strong className="text-gray-200">SSR-safe:</strong> The persistence layer checks for <code>window</code>{" "}
-              availability before accessing sessionStorage.
+              <strong className="text-gray-200">SSR-safe:</strong> The persistence layer checks for{' '}
+              <code>window</code> availability before accessing sessionStorage.
             </li>
           </ul>
         </div>
@@ -71,5 +73,5 @@ const nextStep = async () => {
         </div>
       </div>
     </div>
-  );
+  )
 }

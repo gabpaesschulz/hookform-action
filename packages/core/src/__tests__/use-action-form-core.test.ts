@@ -7,18 +7,27 @@ import { useActionFormCore } from '../use-action-form-core'
 // Helpers
 // ---------------------------------------------------------------------------
 
-function createSuccessSubmit(): SubmitFunction<any, { success: true; data: string }> {
-  return vi.fn(async (_data: any) => ({ success: true as const, data: 'ok' }))
+function createSuccessSubmit(): SubmitFunction<
+  Record<string, unknown>,
+  { success: true; data: string }
+> {
+  return vi.fn(async (_data: Record<string, unknown>) => ({
+    success: true as const,
+    data: 'ok',
+  }))
 }
 
-function createErrorSubmit(): SubmitFunction<any, { errors: { email: string[] } }> {
-  return vi.fn(async (_data: any) => ({
+function createErrorSubmit(): SubmitFunction<
+  Record<string, unknown>,
+  { errors: { email: string[] } }
+> {
+  return vi.fn(async (_data: Record<string, unknown>) => ({
     errors: { email: ['Invalid email address'] },
   }))
 }
 
-function createThrowingSubmit(): SubmitFunction<any, { success: true }> {
-  return vi.fn(async (_data: any) => {
+function createThrowingSubmit(): SubmitFunction<Record<string, unknown>, { success: true }> {
+  return vi.fn(async (_data: Record<string, unknown>) => {
     throw new Error('Network failure')
   })
 }
@@ -51,7 +60,7 @@ describe('useActionFormCore', () => {
     const submit = createSuccessSubmit()
     const { result } = renderHook(() => useActionFormCore(submit))
 
-    expect((result.current as any).formAction).toBeUndefined()
+    expect((result.current as Record<string, unknown>).formAction).toBeUndefined()
   })
 
   it('uses provided defaultValues', () => {
