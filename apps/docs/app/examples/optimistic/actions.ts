@@ -1,0 +1,42 @@
+"use server";
+
+export interface Todo {
+  id: string;
+  text: string;
+  done: boolean;
+}
+
+// Simulated in-memory store
+let todos: Todo[] = [
+  { id: "1", text: "Read next-action-form v2 docs", done: true },
+  { id: "2", text: "Upgrade to React 19", done: false },
+  { id: "3", text: "Add optimistic UI to my app", done: false },
+];
+
+export async function addTodoAction(
+  prevState: { todos?: Todo[]; errors?: Record<string, string[]> } | null,
+  formData: FormData,
+) {
+  const text = formData.get("text") as string;
+
+  // Simulate network delay
+  await new Promise((r) => setTimeout(r, 1500));
+
+  if (!text || text.trim().length === 0) {
+    return { errors: { text: ["Todo text is required"] }, todos };
+  }
+
+  // Simulate random failure for demo purposes
+  if (text.toLowerCase().includes("fail")) {
+    throw new Error("Server error! The optimistic update will be rolled back.");
+  }
+
+  const newTodo: Todo = {
+    id: crypto.randomUUID(),
+    text: text.trim(),
+    done: false,
+  };
+
+  todos = [...todos, newTodo];
+  return { todos };
+}

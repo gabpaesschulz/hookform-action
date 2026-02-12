@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm tsc:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm dlx publint:*)",
+      "Bash(pnpm dlx madge:*)",
+      "Bash(pnpm dlx jscpd:*)",
+      "Bash(pnpm turbo build:*)",
+      "Bash(pnpm test:*)"
+    ]
+  }
+}
