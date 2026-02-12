@@ -1,5 +1,5 @@
-import type { FieldValues, DefaultValues, Mode, UseFormReturn } from "react-hook-form";
-import type { ZodSchema } from "zod";
+import type { DefaultValues, FieldValues, Mode, UseFormReturn } from 'react-hook-form'
+import type { ZodSchema } from 'zod'
 
 // ---------------------------------------------------------------------------
 // Field-level error shape (Zod `.flatten().fieldErrors` compatible)
@@ -9,7 +9,7 @@ import type { ZodSchema } from "zod";
  * Record mapping field names to arrays of error messages.
  * This is the shape produced by `ZodError.flatten().fieldErrors`.
  */
-export type FieldErrorRecord = Record<string, string[] | undefined>;
+export type FieldErrorRecord = Record<string, string[] | undefined>
 
 // ---------------------------------------------------------------------------
 // Default action result shape
@@ -19,10 +19,10 @@ export type FieldErrorRecord = Record<string, string[] | undefined>;
  * Standard result type from an action that uses Zod validation.
  */
 export interface ActionResult<TData = unknown> {
-  success?: boolean;
-  errors?: FieldErrorRecord;
-  data?: TData;
-  message?: string;
+  success?: boolean
+  errors?: FieldErrorRecord
+  data?: TData
+  message?: string
 }
 
 // ---------------------------------------------------------------------------
@@ -33,7 +33,7 @@ export interface ActionResult<TData = unknown> {
  * A function that takes the raw action result and extracts field errors.
  * Return `null` or `undefined` if there are no errors.
  */
-export type ErrorMapper<TResult> = (result: TResult) => FieldErrorRecord | null | undefined;
+export type ErrorMapper<TResult> = (result: TResult) => FieldErrorRecord | null | undefined
 
 /**
  * Default error mapper that works with the standard Zod flatten format:
@@ -42,14 +42,14 @@ export type ErrorMapper<TResult> = (result: TResult) => FieldErrorRecord | null 
 export function defaultErrorMapper<TResult>(result: TResult): FieldErrorRecord | null | undefined {
   if (
     result &&
-    typeof result === "object" &&
-    "errors" in result &&
+    typeof result === 'object' &&
+    'errors' in result &&
     result.errors &&
-    typeof result.errors === "object"
+    typeof result.errors === 'object'
   ) {
-    return result.errors as FieldErrorRecord;
+    return result.errors as FieldErrorRecord
   }
-  return null;
+  return null
 }
 
 // ---------------------------------------------------------------------------
@@ -62,7 +62,7 @@ export function defaultErrorMapper<TResult>(result: TResult): FieldErrorRecord |
  * - `'onChange'` – validate on every field change
  * - `'onBlur'`  – validate when a field loses focus
  */
-export type ClientValidationMode = "onSubmit" | "onChange" | "onBlur";
+export type ClientValidationMode = 'onSubmit' | 'onChange' | 'onBlur'
 
 // ---------------------------------------------------------------------------
 // Optimistic UI types
@@ -76,7 +76,7 @@ export type ClientValidationMode = "onSubmit" | "onChange" | "onBlur";
 export type OptimisticReducer<TOptimistic, TFieldValues extends FieldValues = FieldValues> = (
   currentData: TOptimistic,
   formValues: TFieldValues,
-) => TOptimistic;
+) => TOptimistic
 
 /**
  * The optimistic state object returned by the hook when
@@ -84,11 +84,11 @@ export type OptimisticReducer<TOptimistic, TFieldValues extends FieldValues = Fi
  */
 export interface OptimisticState<TOptimistic> {
   /** The current optimistic data (updated instantly on submit). */
-  data: TOptimistic;
+  data: TOptimistic
   /** Whether an optimistic update is pending (action in flight). */
-  isPending: boolean;
+  isPending: boolean
   /** Manually revert to the last confirmed state. */
-  rollback: () => void;
+  rollback: () => void
 }
 
 // ---------------------------------------------------------------------------
@@ -99,7 +99,9 @@ export interface OptimisticState<TOptimistic> {
  * A generic async submit function. Adapters (Next.js, standalone, etc.)
  * are responsible for wrapping their specific action into this shape.
  */
-export type SubmitFunction<TFieldValues extends FieldValues, TResult> = (data: TFieldValues) => Promise<TResult>;
+export type SubmitFunction<TFieldValues extends FieldValues, TResult> = (
+  data: TFieldValues,
+) => Promise<TResult>
 
 // ---------------------------------------------------------------------------
 // Plugin interface (internal, v3)
@@ -109,17 +111,20 @@ export type SubmitFunction<TFieldValues extends FieldValues, TResult> = (data: T
  * Internal plugin interface for extending useActionFormCore behavior.
  * Not part of the public API yet — used for internal composition.
  */
-export interface ActionFormPlugin<TFieldValues extends FieldValues = FieldValues, TResult = ActionResult> {
+export interface ActionFormPlugin<
+  TFieldValues extends FieldValues = FieldValues,
+  TResult = ActionResult,
+> {
   /** Unique name for debugging */
-  name: string;
+  name: string
   /** Called before submit. Return false to prevent submission. */
-  onBeforeSubmit?: (data: TFieldValues) => boolean | Promise<boolean>;
+  onBeforeSubmit?: (data: TFieldValues) => boolean | Promise<boolean>
   /** Called after a successful submission. */
-  onSuccess?: (result: TResult, data: TFieldValues) => void;
+  onSuccess?: (result: TResult, data: TFieldValues) => void
   /** Called after a failed submission. */
-  onError?: (error: TResult | Error, data: TFieldValues) => void;
+  onError?: (error: TResult | Error, data: TFieldValues) => void
   /** Called on mount. Return a cleanup function. */
-  onMount?: () => (() => void) | void;
+  onMount?: () => (() => void) | undefined
 }
 
 // ---------------------------------------------------------------------------
@@ -136,41 +141,41 @@ export interface UseActionFormCoreOptions<
    * If `persistKey` is provided and stored data exists, persisted values
    * take precedence.
    */
-  defaultValues?: DefaultValues<TFieldValues>;
+  defaultValues?: DefaultValues<TFieldValues>
 
   /**
    * Validation mode passed to React Hook Form.
    * @default 'onSubmit'
    */
-  mode?: Mode;
+  mode?: Mode
 
   /**
    * When provided, enables transparent sessionStorage persistence.
    * The form state is saved under this key and restored on mount.
    */
-  persistKey?: string;
+  persistKey?: string
 
   /**
    * Custom function to extract field errors from the action result.
    * By default supports the Zod `.flatten().fieldErrors` format.
    */
-  errorMapper?: ErrorMapper<TResult>;
+  errorMapper?: ErrorMapper<TResult>
 
   /**
    * Callback fired after a successful submission (no field errors returned).
    */
-  onSuccess?: (result: TResult) => void;
+  onSuccess?: (result: TResult) => void
 
   /**
    * Callback fired when the action throws or returns field errors.
    */
-  onError?: (result: TResult | Error) => void;
+  onError?: (result: TResult | Error) => void
 
   /**
    * Debounce interval (ms) for sessionStorage persistence.
    * @default 300
    */
-  persistDebounce?: number;
+  persistDebounce?: number
 
   // ---- Client-side Zod validation -----------------------------------------
 
@@ -178,14 +183,14 @@ export interface UseActionFormCoreOptions<
    * Zod schema for client-side validation.
    * If provided, fields are validated in real-time (based on `validationMode`).
    */
-  schema?: ZodSchema;
+  schema?: ZodSchema
 
   /**
    * Controls when client-side Zod schema validation runs.
    * Only takes effect when `schema` is provided.
    * @default 'onSubmit'
    */
-  validationMode?: ClientValidationMode;
+  validationMode?: ClientValidationMode
 
   // ---- Optimistic UI ------------------------------------------------------
 
@@ -193,20 +198,20 @@ export interface UseActionFormCoreOptions<
    * Unique key identifying the optimistic state.
    * When provided (along with `optimisticData`), enables optimistic updates.
    */
-  optimisticKey?: string;
+  optimisticKey?: string
 
   /**
    * Reducer that computes the optimistic state from the current data and
    * the form values being submitted.
    * Required when `optimisticKey` is set.
    */
-  optimisticData?: OptimisticReducer<TOptimistic, TFieldValues>;
+  optimisticData?: OptimisticReducer<TOptimistic, TFieldValues>
 
   /**
    * Initial data for the optimistic state.
    * This is the "confirmed" state before any optimistic updates.
    */
-  optimisticInitial?: TOptimistic;
+  optimisticInitial?: TOptimistic
 
   // ---- Internal plugins (v3) ----------------------------------------------
 
@@ -214,7 +219,7 @@ export interface UseActionFormCoreOptions<
    * Internal plugin array. Not part of the public API yet.
    * @internal
    */
-  plugins?: ActionFormPlugin<TFieldValues, TResult>[];
+  plugins?: ActionFormPlugin<TFieldValues, TResult>[]
 }
 
 // ---------------------------------------------------------------------------
@@ -223,17 +228,17 @@ export interface UseActionFormCoreOptions<
 
 export interface ActionFormState<TResult> {
   /** Whether the form is currently being submitted. */
-  isSubmitting: boolean;
+  isSubmitting: boolean
   /** Whether the last submission was successful (no field errors). */
-  isSubmitSuccessful: boolean;
+  isSubmitSuccessful: boolean
   /** Raw error record returned by the action (via errorMapper). */
-  submitErrors: FieldErrorRecord | null;
+  submitErrors: FieldErrorRecord | null
   /** The full result from the last action invocation, if any. */
-  actionResult: TResult | null;
+  actionResult: TResult | null
   /**
    * `true` while a transition is pending.
    */
-  isPending: boolean;
+  isPending: boolean
 }
 
 // ---------------------------------------------------------------------------
@@ -244,7 +249,7 @@ export interface UseActionFormCoreReturn<
   TFieldValues extends FieldValues = FieldValues,
   TResult = ActionResult,
   TOptimistic = undefined,
-> extends Omit<UseFormReturn<TFieldValues>, "handleSubmit"> {
+> extends Omit<UseFormReturn<TFieldValues>, 'handleSubmit'> {
   /**
    * Enhanced handleSubmit that submits via the provided submit function.
    * Call with no arguments: `onSubmit={handleSubmit()}`.
@@ -252,46 +257,46 @@ export interface UseActionFormCoreReturn<
    */
   handleSubmit: (
     onValid?: (data: TFieldValues) => void | Promise<void>,
-  ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
+  ) => (e?: React.BaseSyntheticEvent) => Promise<void>
 
   /**
    * Extended form state including action status.
    */
-  formState: UseFormReturn<TFieldValues>["formState"] & ActionFormState<TResult>;
+  formState: UseFormReturn<TFieldValues>['formState'] & ActionFormState<TResult>
 
   /**
    * Manually set a server-side error on a specific field.
    */
-  setSubmitError: (field: keyof TFieldValues & string, message: string) => void;
+  setSubmitError: (field: keyof TFieldValues & string, message: string) => void
 
   /**
    * Manually persist the current form state to sessionStorage.
    * Only works when `persistKey` is set.
    */
-  persist: () => void;
+  persist: () => void
 
   /**
    * Clear persisted data from sessionStorage.
    * Only works when `persistKey` is set.
    */
-  clearPersistedData: () => void;
+  clearPersistedData: () => void
 
   /**
    * Optimistic state. Only populated when `optimisticKey` is provided.
    * Contains `data`, `isPending`, and `rollback()`.
    */
-  optimistic: TOptimistic extends undefined ? undefined : OptimisticState<TOptimistic>;
+  optimistic: TOptimistic extends undefined ? undefined : OptimisticState<TOptimistic>
 
   /**
    * A control object that exposes internals for DevTools.
    * @internal
    */
-  control: UseFormReturn<TFieldValues>["control"] & {
+  control: UseFormReturn<TFieldValues>['control'] & {
     /** Submission history for DevTools inspection. */
-    _submissionHistory?: SubmissionRecord<TResult>[];
+    _submissionHistory?: SubmissionRecord<TResult>[]
     /** The core action form state. */
-    _actionFormState?: ActionFormState<TResult>;
-  };
+    _actionFormState?: ActionFormState<TResult>
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -300,17 +305,17 @@ export interface UseActionFormCoreReturn<
 
 export interface SubmissionRecord<TResult> {
   /** Unique ID for this submission */
-  id: string;
+  id: string
   /** Timestamp of submission */
-  timestamp: number;
+  timestamp: number
   /** The payload sent */
-  payload: Record<string, unknown>;
+  payload: Record<string, unknown>
   /** The response from the action */
-  response: TResult | null;
+  response: TResult | null
   /** Error, if any */
-  error: Error | null;
+  error: Error | null
   /** Duration in ms */
-  duration: number;
+  duration: number
   /** Whether the submission was successful */
-  success: boolean;
+  success: boolean
 }

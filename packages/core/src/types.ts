@@ -1,5 +1,5 @@
-import type { FieldValues, DefaultValues, Mode, UseFormReturn } from "react-hook-form";
-import type { ZodSchema } from "zod";
+import type { DefaultValues, FieldValues, Mode, UseFormReturn } from 'react-hook-form'
+import type { ZodSchema } from 'zod'
 
 // ---------------------------------------------------------------------------
 // Server Action type – supports both Next.js App Router conventions:
@@ -10,7 +10,7 @@ import type { ZodSchema } from "zod";
 /**
  * A Server Action that receives a single JSON payload and returns a promise.
  */
-export type JsonServerAction<TResult = unknown> = (data: any) => Promise<TResult>;
+export type JsonServerAction<TResult = unknown> = (data: any) => Promise<TResult>
 
 /**
  * A Server Action that receives the previous state and a FormData.
@@ -19,23 +19,28 @@ export type JsonServerAction<TResult = unknown> = (data: any) => Promise<TResult
 export type FormDataServerAction<TResult = unknown> = (
   prevState: Awaited<TResult> | null,
   formData: FormData,
-) => Promise<TResult>;
+) => Promise<TResult>
 
 /**
  * Represents a Next.js Server Action function signature.
  * Supports both the classic (prevState, formData) signature and the
  * simpler (data) => Promise signature for JSON-based actions.
  */
-export type ServerAction<TResult = unknown> = JsonServerAction<TResult> | FormDataServerAction<TResult>;
+export type ServerAction<TResult = unknown> =
+  | JsonServerAction<TResult>
+  | FormDataServerAction<TResult>
 
 /**
  * A Server Action created with `withZod` that has the schema attached.
  * This allows `useActionForm` to automatically infer the schema for
  * client-side validation.
  */
-export type ZodServerAction<TSchema extends ZodSchema = ZodSchema, TResult = unknown> = ServerAction<TResult> & {
-  __schema: TSchema;
-};
+export type ZodServerAction<
+  TSchema extends ZodSchema = ZodSchema,
+  TResult = unknown,
+> = ServerAction<TResult> & {
+  __schema: TSchema
+}
 
 // ---------------------------------------------------------------------------
 // Infer the result type of a Server Action
@@ -47,8 +52,8 @@ export type ZodServerAction<TSchema extends ZodSchema = ZodSchema, TResult = unk
 export type InferActionResult<TAction> = TAction extends JsonServerAction<infer R>
   ? Awaited<R>
   : TAction extends FormDataServerAction<infer R>
-  ? Awaited<R>
-  : never;
+    ? Awaited<R>
+    : never
 
 // ---------------------------------------------------------------------------
 // Standard field-level error shape returned by Zod `.flatten().fieldErrors`
@@ -58,7 +63,7 @@ export type InferActionResult<TAction> = TAction extends JsonServerAction<infer 
  * Record mapping field names to arrays of error messages.
  * This is the shape produced by `ZodError.flatten().fieldErrors`.
  */
-export type FieldErrorRecord = Record<string, string[] | undefined>;
+export type FieldErrorRecord = Record<string, string[] | undefined>
 
 // ---------------------------------------------------------------------------
 // Default action result shape (what most Server Actions return)
@@ -68,10 +73,10 @@ export type FieldErrorRecord = Record<string, string[] | undefined>;
  * Standard result type from a Server Action that uses Zod validation.
  */
 export interface ActionResult<TData = unknown> {
-  success?: boolean;
-  errors?: FieldErrorRecord;
-  data?: TData;
-  message?: string;
+  success?: boolean
+  errors?: FieldErrorRecord
+  data?: TData
+  message?: string
 }
 
 // ---------------------------------------------------------------------------
@@ -82,14 +87,16 @@ export interface ActionResult<TData = unknown> {
  * A function that takes the raw action result and extracts field errors.
  * Return `null` or `undefined` if there are no errors.
  */
-export type ErrorMapper<TResult> = (result: TResult) => FieldErrorRecord | null | undefined;
+export type ErrorMapper<TResult> = (result: TResult) => FieldErrorRecord | null | undefined
 
 /**
  * Detect whether a Server Action uses the FormData signature (arity === 2)
  * or the JSON signature (arity <= 1).
  */
-export function isFormDataAction<TResult>(action: ServerAction<TResult>): action is FormDataServerAction<TResult> {
-  return action.length >= 2;
+export function isFormDataAction<TResult>(
+  action: ServerAction<TResult>,
+): action is FormDataServerAction<TResult> {
+  return action.length >= 2
 }
 
 /**
@@ -99,14 +106,14 @@ export function isFormDataAction<TResult>(action: ServerAction<TResult>): action
 export function defaultErrorMapper<TResult>(result: TResult): FieldErrorRecord | null | undefined {
   if (
     result &&
-    typeof result === "object" &&
-    "errors" in result &&
+    typeof result === 'object' &&
+    'errors' in result &&
     result.errors &&
-    typeof result.errors === "object"
+    typeof result.errors === 'object'
   ) {
-    return result.errors as FieldErrorRecord;
+    return result.errors as FieldErrorRecord
   }
-  return null;
+  return null
 }
 
 /**
@@ -116,7 +123,7 @@ export function defaultErrorMapper<TResult>(result: TResult): FieldErrorRecord |
 export function hasAttachedSchema<TResult>(
   action: ServerAction<TResult>,
 ): action is ZodServerAction<ZodSchema, TResult> {
-  return "__schema" in action && (action as any).__schema != null;
+  return '__schema' in action && (action as any).__schema != null
 }
 
 // ---------------------------------------------------------------------------
@@ -129,7 +136,7 @@ export function hasAttachedSchema<TResult>(
  * - `'onChange'` – validate on every field change
  * - `'onBlur'`  – validate when a field loses focus
  */
-export type ClientValidationMode = "onSubmit" | "onChange" | "onBlur";
+export type ClientValidationMode = 'onSubmit' | 'onChange' | 'onBlur'
 
 // ---------------------------------------------------------------------------
 // Optimistic UI types
@@ -143,7 +150,7 @@ export type ClientValidationMode = "onSubmit" | "onChange" | "onBlur";
 export type OptimisticReducer<TOptimistic, TFieldValues extends FieldValues = FieldValues> = (
   currentData: TOptimistic,
   formValues: TFieldValues,
-) => TOptimistic;
+) => TOptimistic
 
 /**
  * The optimistic state object returned by `useActionForm` when
@@ -151,11 +158,11 @@ export type OptimisticReducer<TOptimistic, TFieldValues extends FieldValues = Fi
  */
 export interface OptimisticState<TOptimistic> {
   /** The current optimistic data (updated instantly on submit). */
-  data: TOptimistic;
+  data: TOptimistic
   /** Whether an optimistic update is pending (action in flight). */
-  isPending: boolean;
+  isPending: boolean
   /** Manually revert to the last confirmed state. */
-  rollback: () => void;
+  rollback: () => void
 }
 
 // ---------------------------------------------------------------------------
@@ -172,41 +179,41 @@ export interface UseActionFormOptions<
    * If `persistKey` is provided and stored data exists, persisted values
    * take precedence.
    */
-  defaultValues?: DefaultValues<TFieldValues>;
+  defaultValues?: DefaultValues<TFieldValues>
 
   /**
    * Validation mode passed to React Hook Form.
    * @default 'onSubmit'
    */
-  mode?: Mode;
+  mode?: Mode
 
   /**
    * When provided, enables transparent sessionStorage persistence.
    * The form state is saved under this key and restored on mount.
    */
-  persistKey?: string;
+  persistKey?: string
 
   /**
    * Custom function to extract field errors from the action result.
    * By default supports the Zod `.flatten().fieldErrors` format.
    */
-  errorMapper?: ErrorMapper<TResult>;
+  errorMapper?: ErrorMapper<TResult>
 
   /**
    * Callback fired after a successful submission (no field errors returned).
    */
-  onSuccess?: (result: TResult) => void;
+  onSuccess?: (result: TResult) => void
 
   /**
    * Callback fired when the action throws or returns field errors.
    */
-  onError?: (result: TResult | Error) => void;
+  onError?: (result: TResult | Error) => void
 
   /**
    * Debounce interval (ms) for sessionStorage persistence.
    * @default 300
    */
-  persistDebounce?: number;
+  persistDebounce?: number
 
   // ---- v2: Client-side Zod validation -------------------------------------
 
@@ -215,14 +222,14 @@ export interface UseActionFormOptions<
    * If provided, fields are validated in real-time (based on `validationMode`).
    * If the action was created with `withZod`, the schema is auto-detected.
    */
-  schema?: ZodSchema;
+  schema?: ZodSchema
 
   /**
    * Controls when client-side Zod schema validation runs.
    * Only takes effect when `schema` is provided (or inferred from `withZod`).
    * @default 'onSubmit'
    */
-  validationMode?: ClientValidationMode;
+  validationMode?: ClientValidationMode
 
   // ---- v2: Optimistic UI --------------------------------------------------
 
@@ -231,20 +238,20 @@ export interface UseActionFormOptions<
    * When provided (along with `optimisticData`), enables React 19's
    * `useOptimistic` integration.
    */
-  optimisticKey?: string;
+  optimisticKey?: string
 
   /**
    * Reducer that computes the optimistic state from the current data and
    * the form values being submitted.
    * Required when `optimisticKey` is set.
    */
-  optimisticData?: OptimisticReducer<TOptimistic, TFieldValues>;
+  optimisticData?: OptimisticReducer<TOptimistic, TFieldValues>
 
   /**
    * Initial data for the optimistic state.
    * This is the "confirmed" state before any optimistic updates.
    */
-  optimisticInitial?: TOptimistic;
+  optimisticInitial?: TOptimistic
 }
 
 // ---------------------------------------------------------------------------
@@ -253,18 +260,18 @@ export interface UseActionFormOptions<
 
 export interface ActionFormState<TResult> {
   /** Whether the form is currently being submitted to the server action. */
-  isSubmitting: boolean;
+  isSubmitting: boolean
   /** Whether the last submission was successful (no field errors). */
-  isSubmitSuccessful: boolean;
+  isSubmitSuccessful: boolean
   /** Raw error record returned by the server action (via errorMapper). */
-  submitErrors: FieldErrorRecord | null;
+  submitErrors: FieldErrorRecord | null
   /** The full result from the last action invocation, if any. */
-  actionResult: TResult | null;
+  actionResult: TResult | null
   /**
    * `true` while a transition is pending (React 19 `useTransition`).
    * Falls back to `isSubmitting` on React 18.
    */
-  isPending: boolean;
+  isPending: boolean
 }
 
 // ---------------------------------------------------------------------------
@@ -275,7 +282,7 @@ export interface UseActionFormReturn<
   TFieldValues extends FieldValues = FieldValues,
   TResult = ActionResult,
   TOptimistic = undefined,
-> extends Omit<UseFormReturn<TFieldValues>, "handleSubmit"> {
+> extends Omit<UseFormReturn<TFieldValues>, 'handleSubmit'> {
   /**
    * Enhanced handleSubmit that submits to the Server Action.
    * Call with no arguments: `onSubmit={handleSubmit()}`.
@@ -283,38 +290,38 @@ export interface UseActionFormReturn<
    */
   handleSubmit: (
     onValid?: (data: TFieldValues) => void | Promise<void>,
-  ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
+  ) => (e?: React.BaseSyntheticEvent) => Promise<void>
 
   /**
    * Extended form state including server action status.
    */
-  formState: UseFormReturn<TFieldValues>["formState"] & ActionFormState<TResult>;
+  formState: UseFormReturn<TFieldValues>['formState'] & ActionFormState<TResult>
 
   /**
    * Manually set a server-side error on a specific field.
    */
-  setSubmitError: (field: keyof TFieldValues & string, message: string) => void;
+  setSubmitError: (field: keyof TFieldValues & string, message: string) => void
 
   /**
    * Manually persist the current form state to sessionStorage.
    * Only works when `persistKey` is set.
    */
-  persist: () => void;
+  persist: () => void
 
   /**
    * Clear persisted data from sessionStorage.
    * Only works when `persistKey` is set.
    */
-  clearPersistedData: () => void;
+  clearPersistedData: () => void
 
   /**
    * The underlying form action compatible with Next.js `<form action={…}>`.
    */
-  formAction: (formData: FormData) => Promise<void>;
+  formAction: (formData: FormData) => Promise<void>
 
   /**
    * Optimistic state (v2). Only populated when `optimisticKey` is provided.
    * Contains `data`, `isPending`, and `rollback()`.
    */
-  optimistic: TOptimistic extends undefined ? undefined : OptimisticState<TOptimistic>;
+  optimistic: TOptimistic extends undefined ? undefined : OptimisticState<TOptimistic>
 }

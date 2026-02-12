@@ -1,331 +1,331 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { renderHook, act, waitFor } from "@testing-library/react";
-import { useActionFormCore } from "../use-action-form-core";
-import type { SubmitFunction } from "../core-types";
+import { act, renderHook, waitFor } from '@testing-library/react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import type { SubmitFunction } from '../core-types'
+import { useActionFormCore } from '../use-action-form-core'
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
 function createSuccessSubmit(): SubmitFunction<any, { success: true; data: string }> {
-  return vi.fn(async (_data: any) => ({ success: true as const, data: "ok" }));
+  return vi.fn(async (_data: any) => ({ success: true as const, data: 'ok' }))
 }
 
 function createErrorSubmit(): SubmitFunction<any, { errors: { email: string[] } }> {
   return vi.fn(async (_data: any) => ({
-    errors: { email: ["Invalid email address"] },
-  }));
+    errors: { email: ['Invalid email address'] },
+  }))
 }
 
 function createThrowingSubmit(): SubmitFunction<any, { success: true }> {
   return vi.fn(async (_data: any) => {
-    throw new Error("Network failure");
-  });
+    throw new Error('Network failure')
+  })
 }
 
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
 
-describe("useActionFormCore", () => {
+describe('useActionFormCore', () => {
   beforeEach(() => {
-    sessionStorage.clear();
-  });
+    sessionStorage.clear()
+  })
 
   // ---- Basic rendering ----------------------------------------------------
 
-  it("returns all expected core properties", () => {
-    const submit = createSuccessSubmit();
-    const { result } = renderHook(() => useActionFormCore(submit));
+  it('returns all expected core properties', () => {
+    const submit = createSuccessSubmit()
+    const { result } = renderHook(() => useActionFormCore(submit))
 
-    expect(result.current.register).toBeDefined();
-    expect(result.current.handleSubmit).toBeDefined();
-    expect(result.current.formState).toBeDefined();
-    expect(result.current.setSubmitError).toBeDefined();
-    expect(result.current.persist).toBeDefined();
-    expect(result.current.clearPersistedData).toBeDefined();
-    expect(result.current.control).toBeDefined();
-  });
+    expect(result.current.register).toBeDefined()
+    expect(result.current.handleSubmit).toBeDefined()
+    expect(result.current.formState).toBeDefined()
+    expect(result.current.setSubmitError).toBeDefined()
+    expect(result.current.persist).toBeDefined()
+    expect(result.current.clearPersistedData).toBeDefined()
+    expect(result.current.control).toBeDefined()
+  })
 
   it("does NOT have formAction (that's adapter-specific)", () => {
-    const submit = createSuccessSubmit();
-    const { result } = renderHook(() => useActionFormCore(submit));
+    const submit = createSuccessSubmit()
+    const { result } = renderHook(() => useActionFormCore(submit))
 
-    expect((result.current as any).formAction).toBeUndefined();
-  });
+    expect((result.current as any).formAction).toBeUndefined()
+  })
 
-  it("uses provided defaultValues", () => {
-    const submit = createSuccessSubmit();
+  it('uses provided defaultValues', () => {
+    const submit = createSuccessSubmit()
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        defaultValues: { email: "test@example.com" },
+        defaultValues: { email: 'test@example.com' },
       }),
-    );
+    )
 
-    expect(result.current.getValues("email")).toBe("test@example.com");
-  });
+    expect(result.current.getValues('email')).toBe('test@example.com')
+  })
 
   // ---- Successful submission ----------------------------------------------
 
-  it("calls the submit function on handleSubmit", async () => {
-    const submit = createSuccessSubmit();
+  it('calls the submit function on handleSubmit', async () => {
+    const submit = createSuccessSubmit()
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        defaultValues: { email: "test@example.com" },
+        defaultValues: { email: 'test@example.com' },
       }),
-    );
+    )
 
     await act(async () => {
-      await result.current.handleSubmit()();
-    });
+      await result.current.handleSubmit()()
+    })
 
     await waitFor(() => {
-      expect(submit).toHaveBeenCalledWith({ email: "test@example.com" });
-    });
-  });
+      expect(submit).toHaveBeenCalledWith({ email: 'test@example.com' })
+    })
+  })
 
-  it("sets isSubmitSuccessful after success", async () => {
-    const submit = createSuccessSubmit();
+  it('sets isSubmitSuccessful after success', async () => {
+    const submit = createSuccessSubmit()
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        defaultValues: { name: "test" },
+        defaultValues: { name: 'test' },
       }),
-    );
+    )
 
     await act(async () => {
-      await result.current.handleSubmit()();
-    });
+      await result.current.handleSubmit()()
+    })
 
     await waitFor(() => {
-      expect(result.current.formState.isSubmitSuccessful).toBe(true);
-      expect(result.current.formState.actionResult).toEqual({ success: true, data: "ok" });
-    });
-  });
+      expect(result.current.formState.isSubmitSuccessful).toBe(true)
+      expect(result.current.formState.actionResult).toEqual({ success: true, data: 'ok' })
+    })
+  })
 
   // ---- Error handling -----------------------------------------------------
 
-  it("maps server errors to form fields", async () => {
-    const submit = createErrorSubmit();
+  it('maps server errors to form fields', async () => {
+    const submit = createErrorSubmit()
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        defaultValues: { email: "" },
+        defaultValues: { email: '' },
       }),
-    );
+    )
 
     await act(async () => {
-      await result.current.handleSubmit()();
-    });
+      await result.current.handleSubmit()()
+    })
 
     await waitFor(() => {
       expect(result.current.formState.submitErrors).toEqual({
-        email: ["Invalid email address"],
-      });
-      expect(result.current.formState.isSubmitSuccessful).toBe(false);
-    });
-  });
+        email: ['Invalid email address'],
+      })
+      expect(result.current.formState.isSubmitSuccessful).toBe(false)
+    })
+  })
 
-  it("handles thrown errors gracefully", async () => {
-    const submit = createThrowingSubmit();
-    const onError = vi.fn();
+  it('handles thrown errors gracefully', async () => {
+    const submit = createThrowingSubmit()
+    const onError = vi.fn()
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        defaultValues: { email: "" },
+        defaultValues: { email: '' },
         onError,
       }),
-    );
+    )
 
     await act(async () => {
-      await result.current.handleSubmit()();
-    });
+      await result.current.handleSubmit()()
+    })
 
     await waitFor(() => {
-      expect(result.current.formState.isSubmitSuccessful).toBe(false);
-      expect(onError).toHaveBeenCalled();
-    });
-  });
+      expect(result.current.formState.isSubmitSuccessful).toBe(false)
+      expect(onError).toHaveBeenCalled()
+    })
+  })
 
   // ---- Callbacks ----------------------------------------------------------
 
-  it("calls onSuccess callback", async () => {
-    const submit = createSuccessSubmit();
-    const onSuccess = vi.fn();
+  it('calls onSuccess callback', async () => {
+    const submit = createSuccessSubmit()
+    const onSuccess = vi.fn()
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        defaultValues: { name: "test" },
+        defaultValues: { name: 'test' },
         onSuccess,
       }),
-    );
+    )
 
     await act(async () => {
-      await result.current.handleSubmit()();
-    });
+      await result.current.handleSubmit()()
+    })
 
     await waitFor(() => {
-      expect(onSuccess).toHaveBeenCalledWith({ success: true, data: "ok" });
-    });
-  });
+      expect(onSuccess).toHaveBeenCalledWith({ success: true, data: 'ok' })
+    })
+  })
 
-  it("calls onError callback on field errors", async () => {
-    const submit = createErrorSubmit();
-    const onError = vi.fn();
+  it('calls onError callback on field errors', async () => {
+    const submit = createErrorSubmit()
+    const onError = vi.fn()
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        defaultValues: { email: "" },
+        defaultValues: { email: '' },
         onError,
       }),
-    );
+    )
 
     await act(async () => {
-      await result.current.handleSubmit()();
-    });
+      await result.current.handleSubmit()()
+    })
 
     await waitFor(() => {
-      expect(onError).toHaveBeenCalled();
-    });
-  });
+      expect(onError).toHaveBeenCalled()
+    })
+  })
 
   // ---- Persistence --------------------------------------------------------
 
-  it("persists values to sessionStorage", async () => {
-    const submit = createSuccessSubmit();
+  it('persists values to sessionStorage', async () => {
+    const submit = createSuccessSubmit()
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        defaultValues: { email: "" },
-        persistKey: "test-core-form",
+        defaultValues: { email: '' },
+        persistKey: 'test-core-form',
         persistDebounce: 0,
       }),
-    );
+    )
 
     await act(async () => {
-      result.current.persist();
-    });
+      result.current.persist()
+    })
 
-    const stored = sessionStorage.getItem("test-core-form");
-    expect(stored).toBeTruthy();
-  });
+    const stored = sessionStorage.getItem('test-core-form')
+    expect(stored).toBeTruthy()
+  })
 
-  it("clears persisted data", async () => {
-    sessionStorage.setItem("test-core-clear", JSON.stringify({ email: "old@test.com" }));
+  it('clears persisted data', async () => {
+    sessionStorage.setItem('test-core-clear', JSON.stringify({ email: 'old@test.com' }))
 
-    const submit = createSuccessSubmit();
+    const submit = createSuccessSubmit()
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        persistKey: "test-core-clear",
+        persistKey: 'test-core-clear',
       }),
-    );
+    )
 
     await act(async () => {
-      result.current.clearPersistedData();
-    });
+      result.current.clearPersistedData()
+    })
 
-    expect(sessionStorage.getItem("test-core-clear")).toBeNull();
-  });
+    expect(sessionStorage.getItem('test-core-clear')).toBeNull()
+  })
 
   // ---- setSubmitError -----------------------------------------------------
 
-  it("allows manually setting a server error", async () => {
-    const submit = createSuccessSubmit();
+  it('allows manually setting a server error', async () => {
+    const submit = createSuccessSubmit()
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        defaultValues: { email: "" },
+        defaultValues: { email: '' },
       }),
-    );
+    )
 
     act(() => {
-      result.current.setSubmitError("email", "Custom server error");
-    });
+      result.current.setSubmitError('email', 'Custom server error')
+    })
 
     await waitFor(() => {
-      const emailState = result.current.getFieldState("email");
-      expect(emailState.error?.message).toBe("Custom server error");
-      expect(emailState.error?.type).toBe("server");
-    });
-  });
+      const emailState = result.current.getFieldState('email')
+      expect(emailState.error?.message).toBe('Custom server error')
+      expect(emailState.error?.type).toBe('server')
+    })
+  })
 
   // ---- DevTools control metadata ------------------------------------------
 
-  it("exposes submission history on control for DevTools", async () => {
-    const submit = createSuccessSubmit();
+  it('exposes submission history on control for DevTools', async () => {
+    const submit = createSuccessSubmit()
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        defaultValues: { name: "test" },
+        defaultValues: { name: 'test' },
       }),
-    );
+    )
 
     // Initially empty
-    expect(result.current.control._submissionHistory).toEqual([]);
+    expect(result.current.control._submissionHistory).toEqual([])
 
     await act(async () => {
-      await result.current.handleSubmit()();
-    });
+      await result.current.handleSubmit()()
+    })
 
     await waitFor(() => {
-      const history = result.current.control._submissionHistory;
-      expect(history).toBeDefined();
-      expect(history!.length).toBe(1);
-      expect(history![0]!.success).toBe(true);
-      expect(history![0]!.payload).toEqual({ name: "test" });
-    });
-  });
+      const history = result.current.control._submissionHistory
+      expect(history).toBeDefined()
+      expect(history?.length).toBe(1)
+      expect(history?.[0]?.success).toBe(true)
+      expect(history?.[0]?.payload).toEqual({ name: 'test' })
+    })
+  })
 
   // ---- Plugin lifecycle ---------------------------------------------------
 
-  it("calls plugin onBeforeSubmit and can prevent submission", async () => {
-    const submit = createSuccessSubmit();
-    const onBeforeSubmit = vi.fn().mockReturnValue(false);
+  it('calls plugin onBeforeSubmit and can prevent submission', async () => {
+    const submit = createSuccessSubmit()
+    const onBeforeSubmit = vi.fn().mockReturnValue(false)
 
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        defaultValues: { name: "test" },
-        plugins: [{ name: "blocker", onBeforeSubmit }],
+        defaultValues: { name: 'test' },
+        plugins: [{ name: 'blocker', onBeforeSubmit }],
       }),
-    );
+    )
 
     await act(async () => {
-      await result.current.handleSubmit()();
-    });
+      await result.current.handleSubmit()()
+    })
 
     await waitFor(() => {
-      expect(onBeforeSubmit).toHaveBeenCalled();
-      expect(submit).not.toHaveBeenCalled();
-    });
-  });
+      expect(onBeforeSubmit).toHaveBeenCalled()
+      expect(submit).not.toHaveBeenCalled()
+    })
+  })
 
-  it("calls plugin onSuccess after successful submission", async () => {
-    const submit = createSuccessSubmit();
-    const pluginOnSuccess = vi.fn();
+  it('calls plugin onSuccess after successful submission', async () => {
+    const submit = createSuccessSubmit()
+    const pluginOnSuccess = vi.fn()
 
     const { result } = renderHook(() =>
       useActionFormCore(submit, {
-        defaultValues: { name: "test" },
-        plugins: [{ name: "logger", onSuccess: pluginOnSuccess }],
+        defaultValues: { name: 'test' },
+        plugins: [{ name: 'logger', onSuccess: pluginOnSuccess }],
       }),
-    );
+    )
 
     await act(async () => {
-      await result.current.handleSubmit()();
-    });
+      await result.current.handleSubmit()()
+    })
 
     await waitFor(() => {
-      expect(pluginOnSuccess).toHaveBeenCalledWith({ success: true, data: "ok" }, { name: "test" });
-    });
-  });
+      expect(pluginOnSuccess).toHaveBeenCalledWith({ success: true, data: 'ok' }, { name: 'test' })
+    })
+  })
 
-  it("calls plugin onMount and cleanup", () => {
-    const cleanup = vi.fn();
-    const onMount = vi.fn().mockReturnValue(cleanup);
-    const submit = createSuccessSubmit();
+  it('calls plugin onMount and cleanup', () => {
+    const cleanup = vi.fn()
+    const onMount = vi.fn().mockReturnValue(cleanup)
+    const submit = createSuccessSubmit()
 
     const { unmount } = renderHook(() =>
       useActionFormCore(submit, {
-        plugins: [{ name: "mounter", onMount }],
+        plugins: [{ name: 'mounter', onMount }],
       }),
-    );
+    )
 
-    expect(onMount).toHaveBeenCalled();
+    expect(onMount).toHaveBeenCalled()
 
-    unmount();
+    unmount()
 
-    expect(cleanup).toHaveBeenCalled();
-  });
-});
+    expect(cleanup).toHaveBeenCalled()
+  })
+})

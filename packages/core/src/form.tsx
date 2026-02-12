@@ -1,34 +1,34 @@
-"use client";
+'use client'
 
-import React, { type FormHTMLAttributes, type ReactNode } from "react";
-import { FormProvider, type FieldValues, type UseFormReturn } from "react-hook-form";
+import type { FormHTMLAttributes, ReactNode } from 'react'
+import { type FieldValues, FormProvider, type UseFormReturn } from 'react-hook-form'
 
-import type { UseActionFormCoreReturn } from "./core-types";
+import type { UseActionFormCoreReturn } from './core-types'
 
 // ---------------------------------------------------------------------------
 // Props
 // ---------------------------------------------------------------------------
 
 export interface FormProps<TFieldValues extends FieldValues = FieldValues, TResult = unknown>
-  extends Omit<FormHTMLAttributes<HTMLFormElement>, "action" | "onSubmit"> {
+  extends Omit<FormHTMLAttributes<HTMLFormElement>, 'action' | 'onSubmit'> {
   /**
    * The return value from `useActionForm` (any adapter) or `useActionFormCore`.
    * Provides the form methods and the action integration.
    */
   form: UseActionFormCoreReturn<TFieldValues, TResult, any> & {
     /** formAction is optional – only provided by the Next.js adapter */
-    formAction?: (formData: FormData) => Promise<void>;
-  };
+    formAction?: (formData: FormData) => Promise<void>
+  }
 
   /**
    * Form content. Fields can use `useFormContext()` to access the RHF API.
    */
-  children: ReactNode;
+  children: ReactNode
 
   /**
    * Optional callback executed with validated data before the action is called.
    */
-  onValid?: (data: TFieldValues) => void | Promise<void>;
+  onValid?: (data: TFieldValues) => void | Promise<void>
 }
 
 // ---------------------------------------------------------------------------
@@ -60,7 +60,7 @@ export function Form<TFieldValues extends FieldValues = FieldValues, TResult = u
   ...rest
 }: FormProps<TFieldValues, TResult>) {
   // Destructure the RHF-compatible form methods for the provider
-  const { handleSubmit, formAction, optimistic, ...formMethods } = form;
+  const { handleSubmit, formAction, optimistic, ...formMethods } = form
 
   return (
     <FormProvider {...(formMethods as unknown as UseFormReturn<TFieldValues>)}>
@@ -68,5 +68,5 @@ export function Form<TFieldValues extends FieldValues = FieldValues, TResult = u
         {children}
       </form>
     </FormProvider>
-  );
+  )
 }

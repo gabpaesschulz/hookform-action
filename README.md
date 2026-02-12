@@ -9,8 +9,8 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/next-action-form"><img src="https://img.shields.io/npm/v/next-action-form?style=flat-square&color=5c7cfa" alt="npm version" /></a>
   <a href="https://www.npmjs.com/package/next-action-form"><img src="https://img.shields.io/npm/dm/next-action-form?style=flat-square&color=748ffc" alt="npm downloads" /></a>
-  <a href="https://github.com/your-username/next-action-form/actions"><img src="https://img.shields.io/github/actions/workflow/status/your-username/next-action-form/ci.yml?style=flat-square" alt="CI" /></a>
-  <a href="https://github.com/your-username/next-action-form/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/next-action-form?style=flat-square" alt="license" /></a>
+  <a href="https://github.com/gabpaesschulz/next-action-form/actions"><img src="https://img.shields.io/github/actions/workflow/status/gabpaesschulz/next-action-form/ci.yml?style=flat-square" alt="CI" /></a>
+  <a href="https://github.com/gabpaesschulz/next-action-form/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/next-action-form?style=flat-square" alt="license" /></a>
 </p>
 
 ---
@@ -336,7 +336,7 @@ New capabilities:
 
 ```bash
 # Clone and install
-git clone https://github.com/your-username/next-action-form.git
+git clone https://github.com/gabpaesschulz/next-action-form.git
 cd next-action-form
 pnpm install
 
