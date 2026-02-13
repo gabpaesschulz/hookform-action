@@ -1,6 +1,6 @@
-import { LoginForm } from "./login-form";
+import { LoginForm } from './login-form'
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 export default function LoginExamplePage() {
   return (
@@ -13,8 +13,8 @@ export default function LoginExamplePage() {
 
       <h1 className="text-3xl font-bold mb-2">Login Form Example</h1>
       <p className="text-gray-400 mb-8">
-        A simple login form using <code className="text-brand-400">useActionForm</code> with automatic Zod error mapping
-        from the server action.
+        A simple login form using <code className="text-brand-400">useActionForm</code> with
+        automatic Zod error mapping from the server action.
       </p>
 
       <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-8">
@@ -84,5 +84,5 @@ export function LoginForm() {
         </div>
       </div>
     </div>
-  );
+  )
 }

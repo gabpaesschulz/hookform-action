@@ -1,13 +1,13 @@
-"use client";
+'use client'
 
-import { useActionForm } from "hookform-action-core";
-import { useState } from "react";
-import { wizardAction } from "./actions";
+import { useActionForm } from 'hookform-action-core'
+import { useState } from 'react'
+import { wizardAction } from './actions'
 
-const STEPS = ["Personal Info", "Company", "Plan & Confirm"] as const;
+const STEPS = ['Personal Info', 'Company', 'Plan & Confirm'] as const
 
 export function WizardForm() {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(0)
 
   const {
     register,
@@ -17,17 +17,17 @@ export function WizardForm() {
     getValues,
   } = useActionForm(wizardAction, {
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      company: "",
-      role: "",
-      plan: "",
-      agreeToTerms: "",
+      firstName: '',
+      lastName: '',
+      email: '',
+      company: '',
+      role: '',
+      plan: '',
+      agreeToTerms: '',
     },
-    persistKey: "wizard-onboarding",
+    persistKey: 'wizard-onboarding',
     persistDebounce: 200,
-  });
+  })
 
   if (isSubmitSuccessful) {
     return (
@@ -37,24 +37,24 @@ export function WizardForm() {
           Your account has been created. The wizard state was cleared from sessionStorage.
         </p>
       </div>
-    );
+    )
   }
 
   const nextStep = async () => {
     // Validate current step fields before advancing
     const fieldsPerStep: Record<number, string[]> = {
-      0: ["firstName", "lastName", "email"],
-      1: ["company", "role"],
-      2: ["plan", "agreeToTerms"],
-    };
-    const valid = await trigger(fieldsPerStep[step] as never[]);
-    if (valid) setStep((s) => Math.min(s + 1, STEPS.length - 1));
-  };
+      0: ['firstName', 'lastName', 'email'],
+      1: ['company', 'role'],
+      2: ['plan', 'agreeToTerms'],
+    }
+    const valid = await trigger(fieldsPerStep[step] as never[])
+    if (valid) setStep((s) => Math.min(s + 1, STEPS.length - 1))
+  }
 
-  const prevStep = () => setStep((s) => Math.max(s - 1, 0));
+  const prevStep = () => setStep((s) => Math.max(s - 1, 0))
 
   const inputClass =
-    "w-full px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-colors";
+    'w-full px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-colors'
 
   return (
     <div>
@@ -64,15 +64,19 @@ export function WizardForm() {
           <div key={label} className="flex items-center gap-2 flex-1">
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
-                i <= step ? "bg-brand-600 text-white" : "bg-gray-800 text-gray-500"
+                i <= step ? 'bg-brand-600 text-white' : 'bg-gray-800 text-gray-500'
               }`}
             >
               {i + 1}
             </div>
-            <span className={`text-xs font-medium hidden sm:inline ${i <= step ? "text-gray-200" : "text-gray-600"}`}>
+            <span
+              className={`text-xs font-medium hidden sm:inline ${i <= step ? 'text-gray-200' : 'text-gray-600'}`}
+            >
               {label}
             </span>
-            {i < STEPS.length - 1 && <div className={`flex-1 h-0.5 ${i < step ? "bg-brand-600" : "bg-gray-800"}`} />}
+            {i < STEPS.length - 1 && (
+              <div className={`flex-1 h-0.5 ${i < step ? 'bg-brand-600' : 'bg-gray-800'}`} />
+            )}
           </div>
         ))}
       </div>
@@ -85,22 +89,31 @@ export function WizardForm() {
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1.5">
                   First Name
-                  <input placeholder="John" className={inputClass} {...register("firstName")} />
+                  <input placeholder="John" className={inputClass} {...register('firstName')} />
                 </label>
-                {errors.firstName && <p className="mt-1 text-sm text-red-400">{errors.firstName.message}</p>}
+                {errors.firstName && (
+                  <p className="mt-1 text-sm text-red-400">{errors.firstName.message}</p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1.5">
                   Last Name
-                  <input placeholder="Doe" className={inputClass} {...register("lastName")} />
+                  <input placeholder="Doe" className={inputClass} {...register('lastName')} />
                 </label>
-                {errors.lastName && <p className="mt-1 text-sm text-red-400">{errors.lastName.message}</p>}
+                {errors.lastName && (
+                  <p className="mt-1 text-sm text-red-400">{errors.lastName.message}</p>
+                )}
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1.5">
                 Email
-                <input type="email" placeholder="john@company.com" className={inputClass} {...register("email")} />
+                <input
+                  type="email"
+                  placeholder="john@company.com"
+                  className={inputClass}
+                  {...register('email')}
+                />
               </label>
               {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>}
             </div>
@@ -113,14 +126,20 @@ export function WizardForm() {
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1.5">
                 Company
-                <input placeholder="Acme Inc." className={inputClass} {...register("company")} />
+                <input placeholder="Acme Inc." className={inputClass} {...register('company')} />
               </label>
-              {errors.company && <p className="mt-1 text-sm text-red-400">{errors.company.message}</p>}
+              {errors.company && (
+                <p className="mt-1 text-sm text-red-400">{errors.company.message}</p>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1.5">
                 Role
-                <input placeholder="Frontend Developer" className={inputClass} {...register("role")} />
+                <input
+                  placeholder="Frontend Developer"
+                  className={inputClass}
+                  {...register('role')}
+                />
               </label>
               {errors.role && <p className="mt-1 text-sm text-red-400">{errors.role.message}</p>}
             </div>
@@ -133,19 +152,19 @@ export function WizardForm() {
             <div>
               <p className="block text-sm font-medium text-gray-300 mb-3">Choose a Plan</p>
               <div className="grid grid-cols-3 gap-3">
-                {(["free", "pro", "enterprise"] as const).map((plan) => (
+                {(['free', 'pro', 'enterprise'] as const).map((plan) => (
                   <label
                     key={plan}
                     className={`relative flex flex-col items-center p-4 border rounded-lg cursor-pointer transition-colors ${
-                      getValues("plan") === plan
-                        ? "border-brand-500 bg-brand-500/10"
-                        : "border-gray-700 hover:border-gray-600"
+                      getValues('plan') === plan
+                        ? 'border-brand-500 bg-brand-500/10'
+                        : 'border-gray-700 hover:border-gray-600'
                     }`}
                   >
-                    <input type="radio" value={plan} className="sr-only" {...register("plan")} />
+                    <input type="radio" value={plan} className="sr-only" {...register('plan')} />
                     <span className="text-lg font-semibold capitalize">{plan}</span>
                     <span className="text-xs text-gray-500 mt-1">
-                      {plan === "free" ? "$0/mo" : plan === "pro" ? "$29/mo" : "Custom"}
+                      {plan === 'free' ? '$0/mo' : plan === 'pro' ? '$29/mo' : 'Custom'}
                     </span>
                   </label>
                 ))}
@@ -157,11 +176,15 @@ export function WizardForm() {
                 type="checkbox"
                 value="true"
                 className="w-4 h-4 rounded border-gray-600 bg-gray-900 text-brand-500 focus:ring-brand-500"
-                {...register("agreeToTerms")}
+                {...register('agreeToTerms')}
               />
-              <span className="text-sm text-gray-300">I agree to the Terms of Service and Privacy Policy</span>
+              <span className="text-sm text-gray-300">
+                I agree to the Terms of Service and Privacy Policy
+              </span>
             </label>
-            {errors.agreeToTerms && <p className="text-sm text-red-400">{errors.agreeToTerms.message}</p>}
+            {errors.agreeToTerms && (
+              <p className="text-sm text-red-400">{errors.agreeToTerms.message}</p>
+            )}
           </div>
         )}
 
@@ -205,12 +228,16 @@ export function WizardForm() {
                       strokeWidth="4"
                       fill="none"
                     />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
                   </svg>
                   Submitting...
                 </span>
               ) : (
-                "Complete Setup ✓"
+                'Complete Setup ✓'
               )}
             </button>
           )}
@@ -221,5 +248,5 @@ export function WizardForm() {
         💾 Form state is persisted to sessionStorage. Refresh the page to see it restored.
       </p>
     </div>
-  );
+  )
 }

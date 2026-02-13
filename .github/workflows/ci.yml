@@ -38,7 +38,7 @@ jobs:
         run: pnpm lint
 
       - name: Type check
-        run: pnpm turbo check-types --filter=next-action-form
+        run: pnpm turbo check-types
 
       - name: Test
         run: pnpm test

@@ -1,5 +1,19 @@
 # next-action-form
 
+## 5.0.0
+
+### Major Changes
+
+- 44e3630: Initial V3 release. Introduces Hexagonal Architecture, React 19 support, and Standalone adapter.
+
+### Minor Changes
+
+- 212c2cd: read.me inclusion
+
+### Patch Changes
+
+- Add individual README.md files to each package for npm display.
+
 ## 4.0.0
 
 ### Major Changes

@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import { useActionForm } from "hookform-action-core";
-import { signupAction, signupSchema } from "./actions";
+import { useActionForm } from 'hookform-action-core'
+import { signupAction, signupSchema } from './actions'
 
 export function ValidationForm() {
   const {
@@ -9,11 +9,11 @@ export function ValidationForm() {
     handleSubmit,
     formState: { errors, isPending, isSubmitSuccessful },
   } = useActionForm(signupAction, {
-    defaultValues: { username: "", email: "", password: "" },
+    defaultValues: { username: '', email: '', password: '' },
     // Pass the schema for client-side validation on every change
     schema: signupSchema,
-    validationMode: "onChange",
-  });
+    validationMode: 'onChange',
+  })
 
   if (isSubmitSuccessful) {
     return (
@@ -23,7 +23,7 @@ export function ValidationForm() {
           Client-side validation passed, then the server action ran successfully.
         </p>
       </div>
-    );
+    )
   }
 
   return (
@@ -37,13 +37,19 @@ export function ValidationForm() {
           type="text"
           placeholder="my_username"
           className={`w-full px-4 py-2.5 bg-gray-900 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-colors ${
-            errors.username ? "border-red-500 focus:ring-red-500" : "border-gray-700 focus:ring-brand-500"
+            errors.username
+              ? 'border-red-500 focus:ring-red-500'
+              : 'border-gray-700 focus:ring-brand-500'
           }`}
-          {...register("username")}
+          {...register('username')}
         />
-        {errors.username && <p className="mt-1.5 text-sm text-red-400">{errors.username.message}</p>}
+        {errors.username && (
+          <p className="mt-1.5 text-sm text-red-400">{errors.username.message}</p>
+        )}
         {!errors.username && (
-          <p className="mt-1.5 text-xs text-gray-500">3–20 characters, letters, numbers, underscores</p>
+          <p className="mt-1.5 text-xs text-gray-500">
+            3–20 characters, letters, numbers, underscores
+          </p>
         )}
       </div>
 
@@ -56,9 +62,11 @@ export function ValidationForm() {
           type="email"
           placeholder="you@example.com"
           className={`w-full px-4 py-2.5 bg-gray-900 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-colors ${
-            errors.email ? "border-red-500 focus:ring-red-500" : "border-gray-700 focus:ring-brand-500"
+            errors.email
+              ? 'border-red-500 focus:ring-red-500'
+              : 'border-gray-700 focus:ring-brand-500'
           }`}
-          {...register("email")}
+          {...register('email')}
         />
         {errors.email && <p className="mt-1.5 text-sm text-red-400">{errors.email.message}</p>}
       </div>
@@ -72,12 +80,18 @@ export function ValidationForm() {
           type="password"
           placeholder="••••••••"
           className={`w-full px-4 py-2.5 bg-gray-900 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-colors ${
-            errors.password ? "border-red-500 focus:ring-red-500" : "border-gray-700 focus:ring-brand-500"
+            errors.password
+              ? 'border-red-500 focus:ring-red-500'
+              : 'border-gray-700 focus:ring-brand-500'
           }`}
-          {...register("password")}
+          {...register('password')}
         />
-        {errors.password && <p className="mt-1.5 text-sm text-red-400">{errors.password.message}</p>}
-        {!errors.password && <p className="mt-1.5 text-xs text-gray-500">8+ characters, one uppercase, one number</p>}
+        {errors.password && (
+          <p className="mt-1.5 text-sm text-red-400">{errors.password.message}</p>
+        )}
+        {!errors.password && (
+          <p className="mt-1.5 text-xs text-gray-500">8+ characters, one uppercase, one number</p>
+        )}
       </div>
 
       <button
@@ -88,21 +102,33 @@ export function ValidationForm() {
         {isPending ? (
           <span className="inline-flex items-center gap-2">
             <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              />
             </svg>
             Creating account...
           </span>
         ) : (
-          "Create Account"
+          'Create Account'
         )}
       </button>
 
       <p className="text-xs text-gray-500 text-center">
-        Try <code className="text-gray-400">admin</code> as username or{" "}
-        <code className="text-gray-400">taken@example.com</code> as email to see server-side errors (after client
-        validation passes).
+        Try <code className="text-gray-400">admin</code> as username or{' '}
+        <code className="text-gray-400">taken@example.com</code> as email to see server-side errors
+        (after client validation passes).
       </p>
     </form>
-  );
+  )
 }

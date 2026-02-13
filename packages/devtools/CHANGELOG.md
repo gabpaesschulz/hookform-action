@@ -1,5 +1,23 @@
 # @next-action-form/devtools
 
+## 5.0.0
+
+### Major Changes
+
+- 44e3630: Initial V3 release. Introduces Hexagonal Architecture, React 19 support, and Standalone adapter.
+
+### Minor Changes
+
+- 212c2cd: read.me inclusion
+
+### Patch Changes
+
+- Add individual README.md files to each package for npm display.
+- Updated dependencies
+- Updated dependencies [212c2cd]
+- Updated dependencies [44e3630]
+  - hookform-action-core@5.0.0
+
 ## 4.0.0
 
 ### Major Changes

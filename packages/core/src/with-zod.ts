@@ -1,8 +1,8 @@
-import type { ZodError, ZodSchema } from "zod";
-import type { ActionResult, FieldErrorRecord } from "./types";
+import type { ZodError, ZodSchema } from 'zod'
+import type { ActionResult, FieldErrorRecord } from './types'
 
 /** Local alias to avoid `infer as ZodInfer` which breaks DTS rollup (keyword conflict). */
-type ZodInfer<T extends ZodSchema> = T["_output"];
+type ZodInfer<T extends ZodSchema> = T['_output']
 
 // ---------------------------------------------------------------------------
 // withZod – wraps a handler with Zod schema validation (v2)
@@ -47,42 +47,42 @@ export function withZod<TSchema extends ZodSchema, TResult = ActionResult>(
   schema: TSchema,
   handler: (data: ZodInfer<TSchema>) => Promise<TResult>,
 ): ((data: unknown) => Promise<TResult | { success: false; errors: FieldErrorRecord }>) & {
-  __schema: TSchema;
+  __schema: TSchema
 } {
   const action = async (data: unknown) => {
     // If data is FormData, convert to plain object first
-    const rawData = data instanceof FormData ? formDataToObject(data) : data;
+    const rawData = data instanceof FormData ? formDataToObject(data) : data
 
-    const parsed = schema.safeParse(rawData);
+    const parsed = schema.safeParse(rawData)
 
     if (!parsed.success) {
-      const zodError = parsed.error as ZodError;
-      const flat = zodError.flatten();
+      const zodError = parsed.error as ZodError
+      const flat = zodError.flatten()
 
-      const errors: FieldErrorRecord = {};
+      const errors: FieldErrorRecord = {}
 
       // Field-level errors
       for (const [field, messages] of Object.entries(flat.fieldErrors)) {
         if (messages && messages.length > 0) {
-          errors[field] = messages as string[];
+          errors[field] = messages as string[]
         }
       }
 
       // Include form-level errors under a special key if present
       if (flat.formErrors && flat.formErrors.length > 0) {
-        errors._form = flat.formErrors;
+        errors._form = flat.formErrors
       }
 
-      return { success: false, errors } as { success: false; errors: FieldErrorRecord };
+      return { success: false, errors } as { success: false; errors: FieldErrorRecord }
     }
 
-    return handler(parsed.data);
-  };
+    return handler(parsed.data)
+  }
 
   // Attach schema for auto-detection by useActionForm
-  action.__schema = schema;
+  action.__schema = schema
 
-  return action;
+  return action
 }
 
 // ---------------------------------------------------------------------------
@@ -94,20 +94,20 @@ export function withZod<TSchema extends ZodSchema, TResult = ActionResult>(
  * Handles multiple values for the same key by creating arrays.
  */
 function formDataToObject(formData: FormData): Record<string, unknown> {
-  const obj: Record<string, unknown> = {};
+  const obj: Record<string, unknown> = {}
 
   for (const [key, value] of formData.entries()) {
     if (key in obj) {
-      const existing = obj[key];
+      const existing = obj[key]
       if (Array.isArray(existing)) {
-        existing.push(value);
+        existing.push(value)
       } else {
-        obj[key] = [existing, value];
+        obj[key] = [existing, value]
       }
     } else {
-      obj[key] = value;
+      obj[key] = value
     }
   }
 
-  return obj;
+  return obj
 }

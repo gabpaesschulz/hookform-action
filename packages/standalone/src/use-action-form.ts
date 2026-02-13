@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import { useCallback } from "react";
-import type { FieldValues } from "react-hook-form";
+import { useCallback } from 'react'
+import type { FieldValues } from 'react-hook-form'
 
 import {
   type ActionResult,
@@ -9,7 +9,7 @@ import {
   type UseActionFormCoreOptions,
   type UseActionFormCoreReturn,
   useActionFormCore,
-} from "hookform-action-core";
+} from 'hookform-action-core'
 
 // ---------------------------------------------------------------------------
 // Standalone-specific types
@@ -22,7 +22,7 @@ import {
  */
 export type StandaloneSubmitFunction<TFieldValues extends FieldValues, TResult> = (
   data: TFieldValues,
-) => Promise<TResult>;
+) => Promise<TResult>
 
 /**
  * Options for `useActionForm` in standalone mode.
@@ -48,7 +48,7 @@ export interface UseStandaloneActionFormOptions<
    * }
    * ```
    */
-  submit: StandaloneSubmitFunction<TFieldValues, TResult>;
+  submit: StandaloneSubmitFunction<TFieldValues, TResult>
 }
 
 /**
@@ -59,7 +59,7 @@ export type UseStandaloneActionFormReturn<
   TFieldValues extends FieldValues = FieldValues,
   TResult = ActionResult,
   TOptimistic = undefined,
-> = UseActionFormCoreReturn<TFieldValues, TResult, TOptimistic>;
+> = UseActionFormCoreReturn<TFieldValues, TResult, TOptimistic>
 
 // ---------------------------------------------------------------------------
 // useActionForm – Standalone adapter (v3)
@@ -112,15 +112,15 @@ export function useActionForm<
 >(
   options: UseStandaloneActionFormOptions<TFieldValues, TResult, TOptimistic>,
 ): UseStandaloneActionFormReturn<TFieldValues, TResult, TOptimistic> {
-  const { submit, ...coreOptions } = options;
+  const { submit, ...coreOptions } = options
 
   // The submit function is already in the right shape for the core
   const submitFn: SubmitFunction<TFieldValues, TResult> = useCallback(
     async (data: TFieldValues) => {
-      return submit(data);
+      return submit(data)
     },
     [submit],
-  );
+  )
 
-  return useActionFormCore<TFieldValues, TResult, TOptimistic>(submitFn, coreOptions);
+  return useActionFormCore<TFieldValues, TResult, TOptimistic>(submitFn, coreOptions)
 }

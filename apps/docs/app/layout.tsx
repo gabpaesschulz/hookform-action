@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next'
+import './globals.css'
 
 export const metadata: Metadata = {
-  title: "hookform-action – Docs",
+  title: 'hookform-action – Docs',
   description:
-    "Seamless integration between React Hook Form and Next.js Server Actions with Zod validation and multi-step persistence.",
-};
+    'Seamless integration between React Hook Form and Next.js Server Actions with Zod validation and multi-step persistence.',
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -53,5 +53,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
       </body>
     </html>
-  );
+  )
 }

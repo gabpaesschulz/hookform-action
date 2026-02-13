@@ -31,12 +31,6 @@
     }
   },
   "files": {
-    "ignore": [
-      "node_modules",
-      "dist",
-      ".next",
-      ".turbo",
-      "coverage"
-    ]
+    "ignore": ["node_modules", "dist", ".next", ".turbo", "coverage"]
   }
 }

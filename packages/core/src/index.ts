@@ -5,7 +5,7 @@
 // ---------------------------------------------------------------------------
 
 // Core hook (framework-agnostic)
-export { useActionFormCore } from "./use-action-form-core";
+export { useActionFormCore } from './use-action-form-core'
 
 // Core types
 export {
@@ -22,20 +22,20 @@ export {
   type SubmitFunction,
   type ActionFormPlugin,
   type SubmissionRecord,
-} from "./core-types";
+} from './core-types'
 
 // Form component (works with any adapter)
-export { Form } from "./form";
-export type { FormProps } from "./form";
+export { Form } from './form'
+export type { FormProps } from './form'
 
 // Persistence utilities
-export { loadPersistedValues, savePersistedValues, clearPersistedValues, debounce } from "./persist";
+export { loadPersistedValues, savePersistedValues, clearPersistedValues, debounce } from './persist'
 
 // React version detection utilities
-export { hasUseOptimistic, hasUseActionState, useTransition } from "./react-shim";
+export { hasUseOptimistic, hasUseActionState, useTransition } from './react-shim'
 
 // withZod utility (framework-agnostic)
-export { withZod } from "./with-zod";
+export { withZod } from './with-zod'
 
 // ---------------------------------------------------------------------------
 // V2 backward-compat re-exports
@@ -50,7 +50,7 @@ export {
   type InferActionResult,
   type UseActionFormOptions,
   type UseActionFormReturn,
-} from "./types";
+} from './types'
 
 // Legacy: useActionForm (Next.js-coupled version for backward compat)
-export { useActionForm } from "./use-action-form";
+export { useActionForm } from './use-action-form'

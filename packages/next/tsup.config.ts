@@ -1,16 +1,16 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from 'tsup'
 
 export default defineConfig({
-  entry: ["src/index.ts"],
-  format: ["cjs", "esm"],
+  entry: ['src/index.ts'],
+  format: ['cjs', 'esm'],
   dts: true,
   sourcemap: true,
   clean: true,
-  external: ["react", "react-dom", "react-hook-form", "zod", "next", "hookform-action-core"],
+  external: ['react', 'react-dom', 'react-hook-form', 'zod', 'next', 'hookform-action-core'],
   treeshake: true,
   splitting: false,
   minify: false,
   banner: {
     js: "'use client'",
   },
-});
+})

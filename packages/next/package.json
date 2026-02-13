@@ -1,73 +1,73 @@
 {
-    "name": "hookform-action",
-    "version": "4.0.0",
-    "description": "Next.js adapter for hookform-action – bridges React Hook Form with Server Actions.",
-    "keywords": [
-        "next.js",
-        "react-hook-form",
-        "server-actions",
-        "form",
-        "validation",
-        "typescript"
-    ],
-    "license": "MIT",
-    "author": "",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/gabpaesschulz/hookform-action",
-        "directory": "packages/next"
-    },
-    "main": "./dist/index.js",
-    "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
-    "exports": {
-        ".": {
-            "import": {
-                "types": "./dist/index.d.mts",
-                "default": "./dist/index.mjs"
-            },
-            "require": {
-                "types": "./dist/index.d.ts",
-                "default": "./dist/index.js"
-            }
-        }
-    },
-    "files": [
-        "dist",
-        "README.md",
-        "LICENSE"
-    ],
-    "sideEffects": false,
-    "scripts": {
-        "build": "tsup",
-        "dev": "tsup --watch",
-        "lint": "biome check src/",
-        "check-types": "tsc --noEmit"
-    },
-    "dependencies": {
-        "hookform-action-core": "workspace:*"
-    },
-    "peerDependencies": {
-        "next": ">=14.0.0",
-        "react": "^18.0.0 || ^19.0.0",
-        "react-dom": "^18.0.0 || ^19.0.0",
-        "react-hook-form": ">=7.50.0",
-        "zod": ">=3.22.0"
-    },
-    "peerDependenciesMeta": {
-        "zod": {
-            "optional": true
-        }
-    },
-    "devDependencies": {
-        "@types/react": "^18.3.18",
-        "@types/react-dom": "^18.3.5",
-        "next": "^15.1.0",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "react-hook-form": "^7.54.2",
-        "tsup": "^8.3.6",
-        "typescript": "^5.7.3",
-        "zod": "^3.24.1"
+  "name": "hookform-action",
+  "version": "4.0.2",
+  "description": "Next.js adapter for hookform-action – bridges React Hook Form with Server Actions.",
+  "keywords": [
+    "next.js",
+    "react-hook-form",
+    "server-actions",
+    "form",
+    "validation",
+    "typescript"
+  ],
+  "license": "MIT",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gabpaesschulz/hookform-action",
+    "directory": "packages/next"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "biome check src/",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hookform-action-core": "workspace:*"
+  },
+  "peerDependencies": {
+    "next": ">=14.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "react-hook-form": ">=7.50.0",
+    "zod": ">=3.22.0"
+  },
+  "peerDependenciesMeta": {
+    "zod": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "next": "^15.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.2",
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3",
+    "zod": "^3.24.1"
+  }
 }

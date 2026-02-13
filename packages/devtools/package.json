@@ -1,63 +1,63 @@
 {
-    "name": "hookform-action-devtools",
-    "version": "4.0.0",
-    "description": "DevTools panel for hookform-action – inspect form state, submission history, and debug optimistic UI.",
-    "keywords": [
-        "react-hook-form",
-        "devtools",
-        "form",
-        "debug",
-        "inspector"
-    ],
-    "license": "MIT",
-    "author": "",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/gabpaesschulz/hookform-action",
-        "directory": "packages/devtools"
-    },
-    "main": "./dist/index.js",
-    "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
-    "exports": {
-        ".": {
-            "import": {
-                "types": "./dist/index.d.mts",
-                "default": "./dist/index.mjs"
-            },
-            "require": {
-                "types": "./dist/index.d.ts",
-                "default": "./dist/index.js"
-            }
-        }
-    },
-    "files": [
-        "dist",
-        "README.md",
-        "LICENSE"
-    ],
-    "sideEffects": false,
-    "scripts": {
-        "build": "tsup",
-        "dev": "tsup --watch",
-        "lint": "biome check src/",
-        "check-types": "tsc --noEmit"
-    },
-    "dependencies": {
-        "hookform-action-core": "workspace:*"
-    },
-    "peerDependencies": {
-        "react": "^18.0.0 || ^19.0.0",
-        "react-dom": "^18.0.0 || ^19.0.0",
-        "react-hook-form": ">=7.50.0"
-    },
-    "devDependencies": {
-        "@types/react": "^18.3.18",
-        "@types/react-dom": "^18.3.5",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "react-hook-form": "^7.54.2",
-        "tsup": "^8.3.6",
-        "typescript": "^5.7.3"
+  "name": "hookform-action-devtools",
+  "version": "4.0.2",
+  "description": "DevTools panel for hookform-action – inspect form state, submission history, and debug optimistic UI.",
+  "keywords": [
+    "react-hook-form",
+    "devtools",
+    "form",
+    "debug",
+    "inspector"
+  ],
+  "license": "MIT",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gabpaesschulz/hookform-action",
+    "directory": "packages/devtools"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "biome check src/",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hookform-action-core": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "react-hook-form": ">=7.50.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.2",
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3"
+  }
 }

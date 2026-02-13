@@ -4,5 +4,5 @@
 // Tree-shakeable, zero external dependencies beyond React and RHF.
 // ---------------------------------------------------------------------------
 
-export { FormDevTool } from "./FormDevTool";
-export type { FormDevToolProps } from "./FormDevTool";
+export { FormDevTool } from './FormDevTool'
+export type { FormDevToolProps } from './FormDevTool'

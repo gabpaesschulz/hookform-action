@@ -1,126 +1,126 @@
 {
-    "name": "hookform-action-core",
-    "version": "4.0.0",
-    "description": "Seamless integration between React Hook Form and Server Actions with Zod validation, automatic type inference, optimistic UI, and multi-step form persistence.",
-    "keywords": [
-        "next.js",
-        "react-hook-form",
-        "server-actions",
-        "zod",
-        "form",
-        "validation",
-        "typescript",
-        "wizard",
-        "multi-step",
-        "optimistic",
-        "react-19",
-        "useOptimistic",
-        "useActionState"
-    ],
-    "license": "MIT",
-    "author": "",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/gabpaesschulz/hookform-action"
+  "name": "hookform-action-core",
+  "version": "4.0.2",
+  "description": "Seamless integration between React Hook Form and Server Actions with Zod validation, automatic type inference, optimistic UI, and multi-step form persistence.",
+  "keywords": [
+    "next.js",
+    "react-hook-form",
+    "server-actions",
+    "zod",
+    "form",
+    "validation",
+    "typescript",
+    "wizard",
+    "multi-step",
+    "optimistic",
+    "react-19",
+    "useOptimistic",
+    "useActionState"
+  ],
+  "license": "MIT",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gabpaesschulz/hookform-action"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     },
-    "main": "./dist/index.js",
-    "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
-    "exports": {
-        ".": {
-            "import": {
-                "types": "./dist/index.d.mts",
-                "default": "./dist/index.mjs"
-            },
-            "require": {
-                "types": "./dist/index.d.ts",
-                "default": "./dist/index.js"
-            }
-        },
-        "./with-zod": {
-            "import": {
-                "types": "./dist/with-zod.d.mts",
-                "default": "./dist/with-zod.mjs"
-            },
-            "require": {
-                "types": "./dist/with-zod.d.ts",
-                "default": "./dist/with-zod.js"
-            }
-        },
-        "./zod": {
-            "import": {
-                "types": "./dist/with-zod.d.mts",
-                "default": "./dist/with-zod.mjs"
-            },
-            "require": {
-                "types": "./dist/with-zod.d.ts",
-                "default": "./dist/with-zod.js"
-            }
-        },
-        "./core": {
-            "import": {
-                "types": "./dist/use-action-form-core.d.mts",
-                "default": "./dist/use-action-form-core.mjs"
-            },
-            "require": {
-                "types": "./dist/use-action-form-core.d.ts",
-                "default": "./dist/use-action-form-core.js"
-            }
-        },
-        "./core-types": {
-            "import": {
-                "types": "./dist/core-types.d.mts",
-                "default": "./dist/core-types.mjs"
-            },
-            "require": {
-                "types": "./dist/core-types.d.ts",
-                "default": "./dist/core-types.js"
-            }
-        }
+    "./with-zod": {
+      "import": {
+        "types": "./dist/with-zod.d.mts",
+        "default": "./dist/with-zod.mjs"
+      },
+      "require": {
+        "types": "./dist/with-zod.d.ts",
+        "default": "./dist/with-zod.js"
+      }
     },
-    "files": [
-        "dist",
-        "README.md",
-        "LICENSE"
-    ],
-    "sideEffects": false,
-    "scripts": {
-        "build": "tsup",
-        "dev": "tsup --watch",
-        "lint": "biome check src/",
-        "test": "vitest run",
-        "test:watch": "vitest",
-        "check-types": "tsc --noEmit"
+    "./zod": {
+      "import": {
+        "types": "./dist/with-zod.d.mts",
+        "default": "./dist/with-zod.mjs"
+      },
+      "require": {
+        "types": "./dist/with-zod.d.ts",
+        "default": "./dist/with-zod.js"
+      }
     },
-    "peerDependencies": {
-        "next": ">=14.0.0",
-        "react": "^18.0.0 || ^19.0.0",
-        "react-dom": "^18.0.0 || ^19.0.0",
-        "react-hook-form": ">=7.50.0",
-        "zod": ">=3.22.0"
+    "./core": {
+      "import": {
+        "types": "./dist/use-action-form-core.d.mts",
+        "default": "./dist/use-action-form-core.mjs"
+      },
+      "require": {
+        "types": "./dist/use-action-form-core.d.ts",
+        "default": "./dist/use-action-form-core.js"
+      }
     },
-    "peerDependenciesMeta": {
-        "next": {
-            "optional": true
-        },
-        "zod": {
-            "optional": true
-        }
-    },
-    "devDependencies": {
-        "@testing-library/jest-dom": "^6.6.3",
-        "@testing-library/react": "^16.1.0",
-        "@testing-library/user-event": "^14.5.2",
-        "@types/react": "^18.3.18",
-        "@types/react-dom": "^18.3.5",
-        "jsdom": "^25.0.1",
-        "next": "^15.1.0",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "react-hook-form": "^7.54.2",
-        "tsup": "^8.3.6",
-        "typescript": "^5.7.3",
-        "vitest": "^2.1.8",
-        "zod": "^3.24.1"
+    "./core-types": {
+      "import": {
+        "types": "./dist/core-types.d.mts",
+        "default": "./dist/core-types.mjs"
+      },
+      "require": {
+        "types": "./dist/core-types.d.ts",
+        "default": "./dist/core-types.js"
+      }
     }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "biome check src/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check-types": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "next": ">=14.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "react-hook-form": ">=7.50.0",
+    "zod": ">=3.22.0"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "jsdom": "^25.0.1",
+    "next": "^15.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.2",
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8",
+    "zod": "^3.24.1"
+  }
 }

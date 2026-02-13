@@ -15,8 +15,8 @@ export default function StandalonePage() {
 
       <h1 className="text-3xl font-bold mb-4">Standalone Adapter</h1>
       <p className="text-gray-400 mb-10 text-lg">
-        Use <code>hookform-action</code> in <strong>any React app</strong> — Vite, Remix, Astro, or plain SPAs. No
-        Next.js or Server Actions required.
+        Use <code>hookform-action</code> in <strong>any React app</strong> — Vite, Remix, Astro, or
+        plain SPAs. No Next.js or Server Actions required.
       </p>
 
       {/* Installation */}
@@ -28,8 +28,8 @@ export default function StandalonePage() {
 pnpm add hookform-action-standalone react-hook-form zod`}</pre>
         </div>
         <p className="text-gray-400 text-sm">
-          <code>hookform-action-standalone</code> depends on <code>hookform-action-core</code> (core) as a regular
-          dependency — it&apos;s installed automatically.
+          <code>hookform-action-standalone</code> depends on <code>hookform-action-core</code>{' '}
+          (core) as a regular dependency — it&apos;s installed automatically.
         </p>
       </section>
 
@@ -37,8 +37,8 @@ pnpm add hookform-action-standalone react-hook-form zod`}</pre>
       <section className="mb-16">
         <h2 className="text-2xl font-bold mb-4 text-brand-400">Basic Usage</h2>
         <p className="text-gray-400 mb-4">
-          Instead of passing a Server Action as the first argument, pass an options object with a<code> submit</code>{" "}
-          function:
+          Instead of passing a Server Action as the first argument, pass an options object with a
+          <code> submit</code> function:
         </p>
         <div className="code-block mb-4 text-gray-300">
           <pre>{`import { useActionForm } from 'hookform-action-standalone'
@@ -110,7 +110,9 @@ export function LoginForm() {
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">Signature</td>
                 <td className="py-3 pr-4 font-mono text-xs">useActionForm(action, options)</td>
-                <td className="py-3 font-mono text-xs">{"useActionForm({ submit, ...options })"}</td>
+                <td className="py-3 font-mono text-xs">
+                  {'useActionForm({ submit, ...options })'}
+                </td>
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">formAction</td>
@@ -163,7 +165,8 @@ npm install hookform-action-standalone react-hook-form zod
 npm install hookform-action-devtools   # optional`}</pre>
         </div>
         <p className="text-gray-400 text-sm">
-          No additional Vite configuration needed. The library ships ESM + CJS and works out of the box.
+          No additional Vite configuration needed. The library ships ESM + CJS and works out of the
+          box.
         </p>
       </section>
 
@@ -232,8 +235,8 @@ function EditTodo({ todo }: { todo: Todo }) {
           </table>
         </div>
         <p className="text-gray-400 text-sm mt-4">
-          All packages are tree-shakeable (<code>sideEffects: false</code>). DevTools is only included when imported —
-          typically behind a <code>process.env.NODE_ENV</code> guard.
+          All packages are tree-shakeable (<code>sideEffects: false</code>). DevTools is only
+          included when imported — typically behind a <code>process.env.NODE_ENV</code> guard.
         </p>
       </section>
 
@@ -241,5 +244,5 @@ function EditTodo({ todo }: { todo: Todo }) {
         <p>MIT License · Built with ♥ for the React community</p>
       </footer>
     </div>
-  );
+  )
 }

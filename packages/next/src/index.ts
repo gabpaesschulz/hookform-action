@@ -5,7 +5,7 @@
 // ---------------------------------------------------------------------------
 
 // Next.js-specific adapter hook
-export { useActionForm } from "./use-action-form";
+export { useActionForm } from './use-action-form'
 
 // Re-export everything from core for convenience
 export {
@@ -47,4 +47,4 @@ export {
   type InferActionResult,
   type UseActionFormOptions,
   type UseActionFormReturn,
-} from "hookform-action-core";
+} from 'hookform-action-core'

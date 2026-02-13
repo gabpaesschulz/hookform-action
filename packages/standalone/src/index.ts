@@ -5,12 +5,12 @@
 // ---------------------------------------------------------------------------
 
 // Standalone adapter hook
-export { useActionForm } from "./use-action-form";
+export { useActionForm } from './use-action-form'
 export type {
   StandaloneSubmitFunction,
   UseStandaloneActionFormOptions,
   UseStandaloneActionFormReturn,
-} from "./use-action-form";
+} from './use-action-form'
 
 // Re-export core utilities for convenience
 export {
@@ -41,4 +41,4 @@ export {
   clearPersistedValues,
   // React shim
   hasUseOptimistic,
-} from "hookform-action-core";
+} from 'hookform-action-core'

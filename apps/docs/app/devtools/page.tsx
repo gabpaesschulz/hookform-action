@@ -15,8 +15,8 @@ export default function DevToolsPage() {
 
       <h1 className="text-3xl font-bold mb-4">FormDevTool</h1>
       <p className="text-gray-400 mb-10 text-lg">
-        A floating debug panel for inspecting form state, submission history, and triggering debug actions. Inspired by
-        TanStack Query DevTools.
+        A floating debug panel for inspecting form state, submission history, and triggering debug
+        actions. Inspired by TanStack Query DevTools.
       </p>
 
       {/* Installation */}
@@ -28,8 +28,8 @@ export default function DevToolsPage() {
 pnpm add hookform-action-devtools`}</pre>
         </div>
         <p className="text-gray-400 text-sm">
-          Works with both <code>hookform-action</code> (Next.js) and <code>hookform-action-standalone</code> (Vite,
-          Remix, etc.).
+          Works with both <code>hookform-action</code> (Next.js) and{' '}
+          <code>hookform-action-standalone</code> (Vite, Remix, etc.).
         </p>
       </section>
 
@@ -62,8 +62,8 @@ export function MyForm() {
 }`}</pre>
         </div>
         <p className="text-gray-400 text-sm">
-          Wrap <code>&lt;FormDevTool&gt;</code> in a <code>NODE_ENV</code> check so it&apos;s tree-shaken out of
-          production builds.
+          Wrap <code>&lt;FormDevTool&gt;</code> in a <code>NODE_ENV</code> check so it&apos;s
+          tree-shaken out of production builds.
         </p>
       </section>
 
@@ -75,23 +75,24 @@ export function MyForm() {
             <div className="text-3xl mb-3">📋</div>
             <h3 className="text-lg font-semibold mb-2">State Tab</h3>
             <p className="text-gray-400 text-sm">
-              Live view of form values, validation errors, server errors, submit status (pending, submitting, dirty,
-              valid).
+              Live view of form values, validation errors, server errors, submit status (pending,
+              submitting, dirty, valid).
             </p>
           </div>
           <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
             <div className="text-3xl mb-3">📜</div>
             <h3 className="text-lg font-semibold mb-2">History Tab</h3>
             <p className="text-gray-400 text-sm">
-              Every submission recorded with payload, response, error, duration, and success/failure status.
+              Every submission recorded with payload, response, error, duration, and success/failure
+              status.
             </p>
           </div>
           <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
             <div className="text-3xl mb-3">⚡</div>
             <h3 className="text-lg font-semibold mb-2">Actions Tab</h3>
             <p className="text-gray-400 text-sm">
-              Debug buttons to log values, state, history, and errors to the console. Summary stats (total, successful,
-              failed, avg duration).
+              Debug buttons to log values, state, history, and errors to the console. Summary stats
+              (total, successful, failed, avg duration).
             </p>
           </div>
         </div>
@@ -116,15 +117,17 @@ export function MyForm() {
                 <td className="py-3 pr-4 font-mono text-xs">Control</td>
                 <td className="py-3 pr-4 text-gray-500">required</td>
                 <td className="py-3 text-gray-400">
-                  The <code>control</code> object from <code>useActionForm</code>. Contains enhanced metadata for
-                  submission history and action state.
+                  The <code>control</code> object from <code>useActionForm</code>. Contains enhanced
+                  metadata for submission history and action state.
                 </td>
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">position</td>
                 <td className="py-3 pr-4 font-mono text-xs">{`'bottom-right' | 'bottom-left' | 'top-right' | 'top-left'`}</td>
                 <td className="py-3 pr-4 font-mono text-xs">&apos;bottom-right&apos;</td>
-                <td className="py-3 text-gray-400">Position of the floating toggle button and panel.</td>
+                <td className="py-3 text-gray-400">
+                  Position of the floating toggle button and panel.
+                </td>
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">defaultOpen</td>
@@ -144,29 +147,29 @@ export function MyForm() {
           <div className="flex items-start gap-3">
             <span className="text-lg">🎨</span>
             <p>
-              <strong className="text-gray-200">Inline styles only</strong> — no CSS dependencies, no Tailwind, no CSS
-              modules. Works in any setup.
+              <strong className="text-gray-200">Inline styles only</strong> — no CSS dependencies,
+              no Tailwind, no CSS modules. Works in any setup.
             </p>
           </div>
           <div className="flex items-start gap-3">
             <span className="text-lg">🌳</span>
             <p>
-              <strong className="text-gray-200">Tree-shakeable</strong> — <code>sideEffects: false</code>. Not included
-              in production if not imported.
+              <strong className="text-gray-200">Tree-shakeable</strong> —{' '}
+              <code>sideEffects: false</code>. Not included in production if not imported.
             </p>
           </div>
           <div className="flex items-start gap-3">
             <span className="text-lg">🔄</span>
             <p>
-              <strong className="text-gray-200">Live polling</strong> — Refreshes every 1 second when the panel is open
-              to capture submission history updates.
+              <strong className="text-gray-200">Live polling</strong> — Refreshes every 1 second
+              when the panel is open to capture submission history updates.
             </p>
           </div>
           <div className="flex items-start gap-3">
             <span className="text-lg">🎯</span>
             <p>
-              <strong className="text-gray-200">Dark theme</strong> — Designed to look great alongside dev tools.
-              Monospace fonts, color-coded badges.
+              <strong className="text-gray-200">Dark theme</strong> — Designed to look great
+              alongside dev tools. Monospace fonts, color-coded badges.
             </p>
           </div>
         </div>
@@ -214,5 +217,5 @@ function ContactForm() {
         <p>MIT License · Built with ♥ for the React community</p>
       </footer>
     </div>
-  );
+  )
 }

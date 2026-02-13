@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import { useActionForm } from "hookform-action-core";
-import { loginAction } from "./actions";
+import { useActionForm } from 'hookform-action-core'
+import { loginAction } from './actions'
 
 export function LoginForm() {
   const {
@@ -9,8 +9,8 @@ export function LoginForm() {
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useActionForm(loginAction, {
-    defaultValues: { email: "", password: "" },
-  });
+    defaultValues: { email: '', password: '' },
+  })
 
   if (isSubmitSuccessful) {
     return (
@@ -18,7 +18,7 @@ export function LoginForm() {
         <p className="text-green-400 text-lg font-medium">✓ Login successful!</p>
         <p className="text-gray-400 text-sm mt-2">This is where you&apos;d redirect the user.</p>
       </div>
-    );
+    )
   }
 
   return (
@@ -32,7 +32,7 @@ export function LoginForm() {
           type="email"
           placeholder="you@example.com"
           className="w-full px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-colors"
-          {...register("email")}
+          {...register('email')}
         />
         {errors.email && <p className="mt-1.5 text-sm text-red-400">{errors.email.message}</p>}
       </div>
@@ -46,9 +46,11 @@ export function LoginForm() {
           type="password"
           placeholder="••••••••"
           className="w-full px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-colors"
-          {...register("password")}
+          {...register('password')}
         />
-        {errors.password && <p className="mt-1.5 text-sm text-red-400">{errors.password.message}</p>}
+        {errors.password && (
+          <p className="mt-1.5 text-sm text-red-400">{errors.password.message}</p>
+        )}
       </div>
 
       <button
@@ -59,19 +61,32 @@ export function LoginForm() {
         {isSubmitting ? (
           <span className="inline-flex items-center gap-2">
             <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              />
             </svg>
             Signing in...
           </span>
         ) : (
-          "Sign In"
+          'Sign In'
         )}
       </button>
 
       <p className="text-xs text-gray-500 text-center">
-        Try <code className="text-gray-400">taken@example.com</code> to see server-side error mapping.
+        Try <code className="text-gray-400">taken@example.com</code> to see server-side error
+        mapping.
       </p>
     </form>
-  );
+  )
 }
