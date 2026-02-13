@@ -239,14 +239,14 @@ const form = useActionForm(wizardAction, {
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────┐
-│        hookform-action-core (core)           │
+┌────────────────────────────────────────────────┐
+│        hookform-action-core (core)             │
 │   useActionFormCore · withZod · Form · persist │
-├────────────────────┬────────────────────────┤
-│   hookform-action  │  hookform-action       │
-│    (Next.js)       │    -standalone         │
-│  (Server Actions)  │  (fetch / REST / gRPC)  │
-└────────────────────┴────────────────────────┘
+├────────────────────┬───────────────────────────┤
+│   hookform-action  │  hookform-action          │
+│    (Next.js)       │    -standalone            │
+│  (Server Actions)  │  (fetch / REST / gRPC)    │
+└────────────────────┴───────────────────────────┘
           ┌──────────────────────┐
           │ hookform-action    │
           │     -devtools      │
