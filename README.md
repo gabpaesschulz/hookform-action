@@ -248,8 +248,8 @@ const form = useActionForm(wizardAction, {
 │  (Server Actions)  │  (fetch / REST / gRPC)    │
 └────────────────────┴───────────────────────────┘
           ┌──────────────────────┐
-          │ hookform-action    │
-          │     -devtools      │
+          │ hookform-action      │
+          │     -devtools        │
           │  (FormDevTool panel) │
           └──────────────────────┘
 ```
