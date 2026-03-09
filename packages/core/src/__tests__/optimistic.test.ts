@@ -1,64 +1,64 @@
-import { act, renderHook, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
-import type { JsonServerAction } from "../types";
-import { useActionForm } from "../use-action-form";
+import { act, renderHook, waitFor } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
+import type { JsonServerAction } from '../types'
+import { useActionForm } from '../use-action-form'
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
 interface TodoItem {
-  id: string;
-  title: string;
-  completed: boolean;
+  id: string
+  title: string
+  completed: boolean
 }
 
 /** JSON action that succeeds – simulates updating a todo */
 function createUpdateTodoAction(): JsonServerAction<{ success: true; data: TodoItem }> {
   return vi.fn(async (data: unknown) => {
-    const d = data as Record<string, unknown>;
+    const d = data as Record<string, unknown>
     return {
       success: true as const,
       data: {
-        id: (d.id as string) ?? "todo-1",
+        id: (d.id as string) ?? 'todo-1',
         title: d.title as string,
         completed: (d.completed as boolean) ?? false,
       },
-    };
-  });
+    }
+  })
 }
 
 /** JSON action that returns errors */
 function createErrorTodoAction(): JsonServerAction<{ errors: { title: string[] } }> {
   return vi.fn(async (_data: unknown) => ({
-    errors: { title: ["Title is required"] },
-  }));
+    errors: { title: ['Title is required'] },
+  }))
 }
 
 /** JSON action that throws */
 function createThrowingTodoAction(): JsonServerAction<{ success: true }> {
   return vi.fn(async (_data: unknown) => {
-    throw new Error("Network error");
-  });
+    throw new Error('Network error')
+  })
 }
 
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
 
-describe("useActionForm – optimistic updates", () => {
+describe('useActionForm – optimistic updates', () => {
   const INITIAL_TODO: TodoItem = {
-    id: "todo-1",
-    title: "Buy groceries",
+    id: 'todo-1',
+    title: 'Buy groceries',
     completed: false,
-  };
+  }
 
-  it("returns optimistic state when optimisticReducer is provided", () => {
-    const action = createUpdateTodoAction();
+  it('returns optimistic state when optimisticReducer is provided', () => {
+    const action = createUpdateTodoAction()
 
     const { result } = renderHook(() =>
       useActionForm(action, {
-        defaultValues: { title: "Buy groceries", completed: false },
+        defaultValues: { title: 'Buy groceries', completed: false },
         optimisticDefault: INITIAL_TODO,
         optimisticReducer: (current, formValues) => ({
           ...current,
@@ -66,32 +66,32 @@ describe("useActionForm – optimistic updates", () => {
           completed: formValues.completed,
         }),
       }),
-    );
+    )
 
-    expect(result.current.optimistic).toBeDefined();
-    expect(result.current.optimistic?.data).toEqual(INITIAL_TODO);
-    expect(result.current.optimistic?.isPending).toBe(false);
-    expect(typeof result.current.optimistic?.rollback).toBe("function");
-  });
+    expect(result.current.optimistic).toBeDefined()
+    expect(result.current.optimistic?.data).toEqual(INITIAL_TODO)
+    expect(result.current.optimistic?.isPending).toBe(false)
+    expect(typeof result.current.optimistic?.rollback).toBe('function')
+  })
 
-  it("returns undefined optimistic when no optimisticReducer is set", () => {
-    const action = createUpdateTodoAction();
+  it('returns undefined optimistic when no optimisticReducer is set', () => {
+    const action = createUpdateTodoAction()
 
     const { result } = renderHook(() =>
       useActionForm(action, {
-        defaultValues: { title: "" },
+        defaultValues: { title: '' },
       }),
-    );
+    )
 
-    expect(result.current.optimistic).toBeUndefined();
-  });
+    expect(result.current.optimistic).toBeUndefined()
+  })
 
-  it("updates optimistic data on successful submit", async () => {
-    const action = createUpdateTodoAction();
+  it('updates optimistic data on successful submit', async () => {
+    const action = createUpdateTodoAction()
 
     const { result } = renderHook(() =>
       useActionForm(action, {
-        defaultValues: { title: "Updated title", completed: true },
+        defaultValues: { title: 'Updated title', completed: true },
         optimisticDefault: INITIAL_TODO,
         optimisticReducer: (current, formValues) => ({
           ...current,
@@ -99,106 +99,106 @@ describe("useActionForm – optimistic updates", () => {
           completed: formValues.completed,
         }),
       }),
-    );
+    )
 
     await act(async () => {
-      const handler = result.current.handleSubmit();
-      await handler();
-    });
+      const handler = result.current.handleSubmit()
+      await handler()
+    })
 
     await waitFor(() => {
-      expect(result.current.formState.isSubmitSuccessful).toBe(true);
-    });
+      expect(result.current.formState.isSubmitSuccessful).toBe(true)
+    })
 
     // After successful submit, the optimistic state should reflect the update
-    expect(result.current.optimistic?.data.title).toBe("Updated title");
-    expect(result.current.optimistic?.data.completed).toBe(true);
-  });
+    expect(result.current.optimistic?.data.title).toBe('Updated title')
+    expect(result.current.optimistic?.data.completed).toBe(true)
+  })
 
-  it("rolls back optimistic data on action error", async () => {
-    const action = createErrorTodoAction();
+  it('rolls back optimistic data on action error', async () => {
+    const action = createErrorTodoAction()
 
     const { result } = renderHook(() =>
       useActionForm(action, {
-        defaultValues: { title: "" },
+        defaultValues: { title: '' },
         optimisticDefault: INITIAL_TODO,
         optimisticReducer: (current, formValues) => ({
           ...current,
           title: formValues.title,
         }),
       }),
-    );
+    )
 
     await act(async () => {
-      const handler = result.current.handleSubmit();
-      await handler();
-    });
+      const handler = result.current.handleSubmit()
+      await handler()
+    })
 
     await waitFor(() => {
-      expect(result.current.formState.isSubmitSuccessful).toBe(false);
-    });
+      expect(result.current.formState.isSubmitSuccessful).toBe(false)
+    })
 
     // Should have rolled back to original
-    expect(result.current.optimistic?.data.title).toBe("Buy groceries");
-  });
+    expect(result.current.optimistic?.data.title).toBe('Buy groceries')
+  })
 
-  it("rolls back optimistic data on action throw", async () => {
-    const action = createThrowingTodoAction();
+  it('rolls back optimistic data on action throw', async () => {
+    const action = createThrowingTodoAction()
 
     const { result } = renderHook(() =>
       useActionForm(action, {
-        defaultValues: { title: "Will fail" },
+        defaultValues: { title: 'Will fail' },
         optimisticDefault: INITIAL_TODO,
         optimisticReducer: (current, formValues) => ({
           ...current,
           title: formValues.title,
         }),
       }),
-    );
+    )
 
     await act(async () => {
-      const handler = result.current.handleSubmit();
-      await handler();
-    });
+      const handler = result.current.handleSubmit()
+      await handler()
+    })
 
     await waitFor(() => {
-      expect(result.current.formState.isSubmitting).toBe(false);
-    });
+      expect(result.current.formState.isSubmitting).toBe(false)
+    })
 
     // Should have rolled back to original
-    expect(result.current.optimistic?.data.title).toBe("Buy groceries");
-  });
+    expect(result.current.optimistic?.data.title).toBe('Buy groceries')
+  })
 
-  it("manual rollback restores confirmed state", async () => {
-    const action = createUpdateTodoAction();
+  it('manual rollback restores confirmed state', async () => {
+    const action = createUpdateTodoAction()
 
     const { result } = renderHook(() =>
       useActionForm(action, {
-        defaultValues: { title: "Updated title", completed: false },
+        defaultValues: { title: 'Updated title', completed: false },
         optimisticDefault: INITIAL_TODO,
         optimisticReducer: (current, formValues) => ({
           ...current,
           title: formValues.title,
         }),
       }),
-    );
+    )
 
     // Submit successfully to update confirmed state
     await act(async () => {
-      const handler = result.current.handleSubmit();
-      await handler();
-    });
+      const handler = result.current.handleSubmit()
+      await handler()
+    })
 
     await waitFor(() => {
-      expect(result.current.formState.isSubmitSuccessful).toBe(true);
-    });
+      expect(result.current.formState.isSubmitSuccessful).toBe(true)
+    })
 
     // Now manually rollback
     act(() => {
-      result.current.optimistic?.rollback();
-    });
+      result.current.optimistic?.rollback()
+    })
 
     // The confirmed state after success should be the updated value
-    expect(result.current.optimistic?.data.title).toBe("Updated title");
-  });
-});
+    expect(result.current.optimistic?.data.title).toBe('Updated title')
+  })
+})

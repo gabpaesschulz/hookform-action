@@ -16,8 +16,9 @@ export default function NestedFieldsPage() {
         </div>
         <h1 className="text-3xl font-bold mb-3">Nested Fields &amp; Sub-components</h1>
         <p className="text-lg text-gray-400">
-          Compose large forms from smaller, focused components using <code>useFormContext</code> — without passing{" "}
-          <code>register</code>, <code>errors</code>, or <code>control</code> as props through every level.
+          Compose large forms from smaller, focused components using <code>useFormContext</code> —
+          without passing <code>register</code>, <code>errors</code>, or <code>control</code> as
+          props through every level.
         </p>
       </div>
 
@@ -25,15 +26,16 @@ export default function NestedFieldsPage() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-3">Why it matters</h2>
         <p className="text-gray-400 leading-relaxed">
-          Large forms — checkout, onboarding, profile settings — are easier to maintain when split into focused
-          sub-components. But React Hook Form&apos;s <code>register</code>, <code>control</code>, and{" "}
-          <code>formState</code> normally need to be prop-drilled down the tree, which creates tight coupling and
-          verbose component signatures.
+          Large forms — checkout, onboarding, profile settings — are easier to maintain when split
+          into focused sub-components. But React Hook Form&apos;s <code>register</code>,{' '}
+          <code>control</code>, and <code>formState</code> normally need to be prop-drilled down the
+          tree, which creates tight coupling and verbose component signatures.
         </p>
         <p className="text-gray-400 leading-relaxed mt-3">
-          The <code>{"<Form>"}</code> component from <code>hookform-action</code> wraps its children in React Hook
-          Form&apos;s <code>FormProvider</code> automatically. Any component inside the tree can call{" "}
-          <code>useFormContext()</code> to access the full RHF API without any prop passing.
+          The <code>{'<Form>'}</code> component from <code>hookform-action</code> wraps its children
+          in React Hook Form&apos;s <code>FormProvider</code> automatically. Any component inside
+          the tree can call <code>useFormContext()</code> to access the full RHF API without any
+          prop passing.
         </p>
       </section>
 
@@ -235,33 +237,37 @@ export function ShippingSection() {
         <h2 className="text-xl font-bold mb-4">Key Concepts</h2>
         <div className="space-y-3">
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
-            <code className="text-brand-400">{`<Form form={form}>`} — automatic FormProvider</code>
+            <code className="text-brand-400">{'<Form form={form}>'} — automatic FormProvider</code>
             <p className="text-gray-400 text-sm mt-1">
-              The <code>{"<Form>"}</code> component from <code>hookform-action</code> wraps children in RHF&apos;s{" "}
-              <code>FormProvider</code> automatically. You do not need to add <code>FormProvider</code> yourself. All
-              sub-components in the tree can call <code>useFormContext()</code>.
+              The <code>{'<Form>'}</code> component from <code>hookform-action</code> wraps children
+              in RHF&apos;s <code>FormProvider</code> automatically. You do not need to add{' '}
+              <code>FormProvider</code> yourself. All sub-components in the tree can call{' '}
+              <code>useFormContext()</code>.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">useFormContext&lt;TFieldValues&gt;()</code>
             <p className="text-gray-400 text-sm mt-1">
-              Pass the form&apos;s type parameter to get typed access to <code>register</code>, <code>errors</code>, and{" "}
-              <code>control</code>. Without the generic, you get <code>FieldValues</code> (essentially <code>any</code>
+              Pass the form&apos;s type parameter to get typed access to <code>register</code>,{' '}
+              <code>errors</code>, and <code>control</code>. Without the generic, you get{' '}
+              <code>FieldValues</code> (essentially <code>any</code>
               ).
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">Dot-notation for nested paths</code>
             <p className="text-gray-400 text-sm mt-1">
-              Register deeply nested fields with dot notation: <code>register(&apos;customer.name&apos;)</code>. RHF
-              will collect these into a properly structured object. The Zod schema&apos;s shape must match exactly.
+              Register deeply nested fields with dot notation:{' '}
+              <code>register(&apos;customer.name&apos;)</code>. RHF will collect these into a
+              properly structured object. The Zod schema&apos;s shape must match exactly.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">control in sub-components</code>
             <p className="text-gray-400 text-sm mt-1">
-              <code>control</code> is needed for <code>Controller</code> and <code>useFieldArray</code> inside
-              sub-components. Get it from <code>useFormContext()</code> — not passed as a prop from the parent.
+              <code>control</code> is needed for <code>Controller</code> and{' '}
+              <code>useFieldArray</code> inside sub-components. Get it from{' '}
+              <code>useFormContext()</code> — not passed as a prop from the parent.
             </p>
           </div>
         </div>
@@ -278,9 +284,9 @@ export function ShippingSection() {
                 Double-wrapping with <code>FormProvider</code>
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                <code>{"<Form>"}</code> already includes a <code>FormProvider</code>. Adding another one around it
-                creates nested contexts and causes <code>useFormContext()</code> to read from the innermost (empty)
-                provider.
+                <code>{'<Form>'}</code> already includes a <code>FormProvider</code>. Adding another
+                one around it creates nested contexts and causes <code>useFormContext()</code> to
+                read from the innermost (empty) provider.
               </p>
             </div>
           </li>
@@ -288,23 +294,27 @@ export function ShippingSection() {
             <span className="text-yellow-400 shrink-0 mt-0.5">⚠</span>
             <div>
               <p className="text-sm font-medium text-gray-200">
-                Sub-components using <code>useFormContext</code> outside <code>{"<Form>"}</code>
+                Sub-components using <code>useFormContext</code> outside <code>{'<Form>'}</code>
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                If a sub-component is rendered outside the <code>{"<Form>"}</code> tree (e.g. in a portal, a story, or a
-                test), <code>useFormContext()</code> will return <code>undefined</code> and throw. Wrap test cases in a
-                mock <code>FormProvider</code>.
+                If a sub-component is rendered outside the <code>{'<Form>'}</code> tree (e.g. in a
+                portal, a story, or a test), <code>useFormContext()</code> will return{' '}
+                <code>undefined</code> and throw. Wrap test cases in a mock{' '}
+                <code>FormProvider</code>.
               </p>
             </div>
           </li>
           <li className="flex gap-3 bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4">
             <span className="text-yellow-400 shrink-0 mt-0.5">⚠</span>
             <div>
-              <p className="text-sm font-medium text-gray-200">Mismatched dot-notation path and schema shape</p>
+              <p className="text-sm font-medium text-gray-200">
+                Mismatched dot-notation path and schema shape
+              </p>
               <p className="text-sm text-gray-400 mt-1">
-                If you register <code>customer.name</code> but the Zod schema expects <code>customerName</code> (flat),
-                the field will not validate correctly and the error path will not match. Keep the schema and the{" "}
-                <code>register</code> paths in sync.
+                If you register <code>customer.name</code> but the Zod schema expects{' '}
+                <code>customerName</code> (flat), the field will not validate correctly and the
+                error path will not match. Keep the schema and the <code>register</code> paths in
+                sync.
               </p>
             </div>
           </li>
@@ -315,10 +325,16 @@ export function ShippingSection() {
       <section className="border-t border-gray-800 pt-8">
         <h2 className="text-lg font-semibold mb-4">Related</h2>
         <div className="flex flex-wrap gap-4 text-sm">
-          <a href="/recipes/field-array" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/field-array"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Dynamic Fields with useFieldArray
           </a>
-          <a href="/recipes/multi-step-wizard" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/multi-step-wizard"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Multi-Step Wizard
           </a>
           <a
@@ -329,11 +345,14 @@ export function ShippingSection() {
           >
             → RHF useFormContext docs ↗
           </a>
-          <a href="/api-reference" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/api-reference"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → API Reference
           </a>
         </div>
       </section>
     </div>
-  );
+  )
 }

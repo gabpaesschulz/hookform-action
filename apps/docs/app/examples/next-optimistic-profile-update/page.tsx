@@ -1,4 +1,4 @@
-import { ExampleShell } from "../_components/example-shell";
+import { ExampleShell } from '../_components/example-shell'
 
 export default function NextOptimisticProfileUpdatePage() {
   return (
@@ -35,12 +35,15 @@ return (
       </div>
 
       <p className="text-sm text-gray-500">
-        Want a live list scenario? Open{" "}
-        <a className="text-brand-300 hover:text-brand-200" href="/examples/next-optimistic-list-rollback">
+        Want a live list scenario? Open{' '}
+        <a
+          className="text-brand-300 hover:text-brand-200"
+          href="/examples/next-optimistic-list-rollback"
+        >
           Next Optimistic List Rollback
         </a>
         .
       </p>
     </ExampleShell>
-  );
+  )
 }

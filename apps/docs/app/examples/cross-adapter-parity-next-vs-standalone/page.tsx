@@ -1,4 +1,4 @@
-import { ExampleShell } from "../_components/example-shell";
+import { ExampleShell } from '../_components/example-shell'
 
 export default function CrossAdapterParityPage() {
   return (
@@ -36,5 +36,5 @@ const form = useActionForm({
         </div>
       </div>
     </ExampleShell>
-  );
+  )
 }

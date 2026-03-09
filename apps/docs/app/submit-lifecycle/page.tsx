@@ -9,9 +9,8 @@ export default function SubmitLifecyclePage() {
 
       <h1 className="text-3xl font-bold mb-3">Submit Lifecycle</h1>
       <p className="text-gray-400 max-w-3xl mb-10">
-        A practical mental model for <code>isSubmitting</code>, <code>isPending</code>,{" "}
-        <code>isSubmitSuccessful</code>, <code>submitErrors</code>, and{" "}
-        <code>actionResult</code>.
+        A practical mental model for <code>isSubmitting</code>, <code>isPending</code>,{' '}
+        <code>isSubmitSuccessful</code>, <code>submitErrors</code>, and <code>actionResult</code>.
       </p>
 
       {/* 1. Simple explanation */}
@@ -25,25 +24,25 @@ export default function SubmitLifecyclePage() {
             <span className="font-medium text-gray-200">Idle</span>: no request in flight.
           </li>
           <li>
-            <span className="font-medium text-gray-200">Submit starts</span>:{" "}
-            <code>isSubmitting = true</code>, <code>isPending = true</code>,{" "}
+            <span className="font-medium text-gray-200">Submit starts</span>:{' '}
+            <code>isSubmitting = true</code>, <code>isPending = true</code>,{' '}
             <code>submitErrors = null</code>.
           </li>
           <li>
-            <span className="font-medium text-gray-200">Success</span>:{" "}
-            <code>isPending = false</code>, <code>isSubmitting = false</code>,{" "}
-            <code>isSubmitSuccessful = true</code>, <code>submitErrors = null</code>,{" "}
+            <span className="font-medium text-gray-200">Success</span>:{' '}
+            <code>isPending = false</code>, <code>isSubmitting = false</code>,{' '}
+            <code>isSubmitSuccessful = true</code>, <code>submitErrors = null</code>,{' '}
             <code>actionResult = result</code>.
           </li>
           <li>
-            <span className="font-medium text-gray-200">Field error result</span>:{" "}
-            <code>isPending = false</code>, <code>isSubmitting = false</code>,{" "}
-            <code>isSubmitSuccessful = false</code>, <code>submitErrors = ...</code>,{" "}
+            <span className="font-medium text-gray-200">Field error result</span>:{' '}
+            <code>isPending = false</code>, <code>isSubmitting = false</code>,{' '}
+            <code>isSubmitSuccessful = false</code>, <code>submitErrors = ...</code>,{' '}
             <code>actionResult = result</code>.
           </li>
           <li>
-            <span className="font-medium text-gray-200">Thrown error (network/exception)</span>:{" "}
-            <code>isPending = false</code>, <code>isSubmitting = false</code>,{" "}
+            <span className="font-medium text-gray-200">Thrown error (network/exception)</span>:{' '}
+            <code>isPending = false</code>, <code>isSubmitting = false</code>,{' '}
             <code>isSubmitSuccessful = false</code>. Handle this path in <code>onError</code>.
           </li>
         </ol>
@@ -75,9 +74,7 @@ export default function SubmitLifecyclePage() {
               </tr>
               <tr className="border-b border-gray-800/50 bg-brand-500/5">
                 <td className="py-3 pr-4 font-mono text-brand-300">formState.isPending</td>
-                <td className="py-3 pr-4 text-gray-400">
-                  Transition + request pending window.
-                </td>
+                <td className="py-3 pr-4 text-gray-400">Transition + request pending window.</td>
                 <td className="py-3 pr-4 text-gray-400">
                   Derived from <code>useTransition</code> plus internal pending state.
                 </td>
@@ -97,9 +94,7 @@ export default function SubmitLifecyclePage() {
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">formState.submitErrors</td>
-                <td className="py-3 pr-4 text-gray-400">
-                  Structured field-level error record.
-                </td>
+                <td className="py-3 pr-4 text-gray-400">Structured field-level error record.</td>
                 <td className="py-3 pr-4 text-gray-400">
                   Set on client/server validation errors, cleared at new submit start.
                 </td>
@@ -107,7 +102,9 @@ export default function SubmitLifecyclePage() {
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">formState.actionResult</td>
-                <td className="py-3 pr-4 text-gray-400">Full result object from last completed action response.</td>
+                <td className="py-3 pr-4 text-gray-400">
+                  Full result object from last completed action response.
+                </td>
                 <td className="py-3 pr-4 text-gray-400">
                   Updated on success and field-error responses.
                 </td>
@@ -171,14 +168,15 @@ const confirmedData =
             Using <code>isSubmitting</code> for button lock/loading. Prefer <code>isPending</code>.
           </li>
           <li className="bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4 text-sm text-gray-300">
-            Treating <code>actionResult</code> as automatic success. It can also hold an error-shaped result.
+            Treating <code>actionResult</code> as automatic success. It can also hold an
+            error-shaped result.
           </li>
           <li className="bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4 text-sm text-gray-300">
-            Running success side-effects only with <code>isSubmitSuccessful</code>. Gate with{" "}
+            Running success side-effects only with <code>isSubmitSuccessful</code>. Gate with{' '}
             <code>!isPending</code> too.
           </li>
           <li className="bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4 text-sm text-gray-300">
-            Expecting <code>submitErrors</code> for thrown exceptions. Thrown errors belong to{" "}
+            Expecting <code>submitErrors</code> for thrown exceptions. Thrown errors belong to{' '}
             <code>onError</code>.
           </li>
         </ul>
@@ -203,7 +201,8 @@ const confirmedData =
           <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4">
             <p className="font-semibold text-gray-200 mb-2">Validation Errors Snippet</p>
             <p className="text-gray-400">
-              Show <code>submitErrors</code> for field-level API errors and keep RHF <code>errors</code> in sync.
+              Show <code>submitErrors</code> for field-level API errors and keep RHF{' '}
+              <code>errors</code> in sync.
             </p>
           </div>
           <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4">
@@ -216,12 +215,16 @@ const confirmedData =
       </section>
 
       <section className="border-t border-gray-800 pt-8">
-        <h2 className="text-xl font-bold mb-3 text-brand-400">How this maps to RHF + transitions + Server Actions</h2>
+        <h2 className="text-xl font-bold mb-3 text-brand-400">
+          How this maps to RHF + transitions + Server Actions
+        </h2>
         <p className="text-gray-400 leading-relaxed">
-          RHF still owns base form mechanics (<code>register</code>, <code>errors</code>, touched/dirty state).
-          hookform-action wraps submit execution, runs inside <code>startTransition</code>, then composes the final
-          form state (`isPending = transitionPending || internalPending`). In Next.js mode, the adapter also bridges{" "}
-          <code>FormData</code>/<code>prevState</code> signatures before passing control to the same core lifecycle.
+          RHF still owns base form mechanics (<code>register</code>, <code>errors</code>,
+          touched/dirty state). hookform-action wraps submit execution, runs inside{' '}
+          <code>startTransition</code>, then composes the final form state (`isPending =
+          transitionPending || internalPending`). In Next.js mode, the adapter also bridges{' '}
+          <code>FormData</code>/<code>prevState</code> signatures before passing control to the same
+          core lifecycle.
         </p>
       </section>
     </div>

@@ -1,4 +1,4 @@
-import { ExampleShell } from "../_components/example-shell";
+import { ExampleShell } from '../_components/example-shell'
 
 export default function MigrationManualToHookformActionPage() {
   return (
@@ -50,5 +50,5 @@ return (
         </div>
       </div>
     </ExampleShell>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { ExampleShell } from "../_components/example-shell";
+import { ExampleShell } from '../_components/example-shell'
 
 export default function DevtoolsDebugSubmissionHistoryPage() {
   return (
@@ -36,6 +36,5 @@ function App() {
         Strategic point: teams adopt faster when debugging behavior is visible and repeatable.
       </p>
     </ExampleShell>
-  );
+  )
 }
-

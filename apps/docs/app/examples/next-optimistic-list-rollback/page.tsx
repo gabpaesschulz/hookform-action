@@ -1,7 +1,7 @@
-import { ExampleShell } from "../_components/example-shell";
-import { OptimisticTodoForm } from "../optimistic/optimistic-todo-form";
+import { ExampleShell } from '../_components/example-shell'
+import { OptimisticTodoForm } from '../optimistic/optimistic-todo-form'
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 export default function NextOptimisticListRollbackPage() {
   return (
@@ -17,9 +17,9 @@ export default function NextOptimisticListRollbackPage() {
       </div>
 
       <p className="text-sm text-gray-500">
-        Tip: submit a todo containing <code className="text-gray-300">fail</code> to trigger rollback.
+        Tip: submit a todo containing <code className="text-gray-300">fail</code> to trigger
+        rollback.
       </p>
     </ExampleShell>
-  );
+  )
 }
-

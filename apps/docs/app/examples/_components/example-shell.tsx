@@ -1,12 +1,12 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react'
 
 interface ExampleShellProps {
-  title: string;
-  subtitle: string;
-  impact: string;
-  differential: string;
-  message: string;
-  children: ReactNode;
+  title: string
+  subtitle: string
+  impact: string
+  differential: string
+  message: string
+  children: ReactNode
 }
 
 export function ExampleShell({
@@ -45,6 +45,5 @@ export function ExampleShell({
 
       {children}
     </div>
-  );
+  )
 }
-

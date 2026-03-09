@@ -17,8 +17,9 @@ export default function StandaloneFetchPage() {
         </div>
         <h1 className="text-3xl font-bold mb-3">Standalone — Vite, Remix &amp; Custom APIs</h1>
         <p className="text-lg text-gray-400">
-          Use <code>hookform-action-standalone</code> with any async function — <code>fetch</code>, <code>axios</code>,
-          tRPC, or a custom client — in apps that don&apos;t use Next.js Server Actions.
+          Use <code>hookform-action-standalone</code> with any async function — <code>fetch</code>,{' '}
+          <code>axios</code>, tRPC, or a custom client — in apps that don&apos;t use Next.js Server
+          Actions.
         </p>
         <a
           href="/standalone"
@@ -32,14 +33,15 @@ export default function StandaloneFetchPage() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-3">Why it matters</h2>
         <p className="text-gray-400 leading-relaxed">
-          Not every React app uses Next.js or Server Actions. Vite SPAs, Remix apps, Astro islands, and React Native
-          projects all need the same ergonomics — typed validation, automatic error mapping, optimistic UI — but with a
-          plain async function as the submit handler.
+          Not every React app uses Next.js or Server Actions. Vite SPAs, Remix apps, Astro islands,
+          and React Native projects all need the same ergonomics — typed validation, automatic error
+          mapping, optimistic UI — but with a plain async function as the submit handler.
         </p>
         <p className="text-gray-400 leading-relaxed mt-3">
-          The standalone adapter exposes exactly the same hook API. The only difference is: instead of passing a Server
-          Action as the first argument, you pass an options object with a <code>submit</code> function. Everything else
-          — <code>schema</code>, <code>optimisticData</code>, <code>persistKey</code>, <code>onSuccess</code>,{" "}
+          The standalone adapter exposes exactly the same hook API. The only difference is: instead
+          of passing a Server Action as the first argument, you pass an options object with a{' '}
+          <code>submit</code> function. Everything else — <code>schema</code>,{' '}
+          <code>optimisticData</code>, <code>persistKey</code>, <code>onSuccess</code>,{' '}
           <code>errorMapper</code> — works identically.
         </p>
       </section>
@@ -193,8 +195,12 @@ export async function loginApi(data: { email: string; password: string }) {
             <thead>
               <tr className="border-b border-gray-800">
                 <th className="text-left py-2 pr-4 text-gray-400 font-medium">Feature</th>
-                <th className="text-left py-2 pr-4 text-brand-400 font-medium">hookform-action (Next.js)</th>
-                <th className="text-left py-2 text-emerald-400 font-medium">hookform-action-standalone</th>
+                <th className="text-left py-2 pr-4 text-brand-400 font-medium">
+                  hookform-action (Next.js)
+                </th>
+                <th className="text-left py-2 text-emerald-400 font-medium">
+                  hookform-action-standalone
+                </th>
               </tr>
             </thead>
             <tbody className="text-gray-400">
@@ -206,7 +212,9 @@ export async function loginApi(data: { email: string; password: string }) {
               <tr className="border-b border-gray-800/50">
                 <td className="py-2 pr-4 font-mono text-xs">Hook signature</td>
                 <td className="py-2 pr-4 font-mono text-xs">useActionForm(action, options?)</td>
-                <td className="py-2 font-mono text-xs">useActionForm(&#123; submit, ...options &#125;)</td>
+                <td className="py-2 font-mono text-xs">
+                  useActionForm(&#123; submit, ...options &#125;)
+                </td>
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-2 pr-4 font-mono text-xs">formAction</td>
@@ -245,25 +253,28 @@ export async function loginApi(data: { email: string; password: string }) {
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">submit: async (data) =&gt; TResult</code>
             <p className="text-gray-400 text-sm mt-1">
-              Any async function that receives the validated form data and returns a result. It can call{" "}
-              <code>fetch</code>, <code>axios</code>, a tRPC procedure, a GraphQL mutation, or any other async
-              operation. If it throws, the hook catches it and fires <code>onError</code>.
+              Any async function that receives the validated form data and returns a result. It can
+              call <code>fetch</code>, <code>axios</code>, a tRPC procedure, a GraphQL mutation, or
+              any other async operation. If it throws, the hook catches it and fires{' '}
+              <code>onError</code>.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">Structured errors vs thrown errors</code>
             <p className="text-gray-400 text-sm mt-1">
-              For HTTP 4xx errors, return a structured result (with <code>errors</code>) instead of throwing. This
-              allows the <code>errorMapper</code> to set field errors correctly. Only throw for unexpected errors (5xx,
-              network failures) — those trigger <code>onError</code> with an <code>Error</code> instance.
+              For HTTP 4xx errors, return a structured result (with <code>errors</code>) instead of
+              throwing. This allows the <code>errorMapper</code> to set field errors correctly. Only
+              throw for unexpected errors (5xx, network failures) — those trigger{' '}
+              <code>onError</code> with an <code>Error</code> instance.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">withZod is not used server-side in standalone</code>
             <p className="text-gray-400 text-sm mt-1">
-              <code>withZod</code> is a wrapper for Next.js Server Actions. In standalone mode, pass the schema via the{" "}
-              <code>schema</code> option for client-side validation only. Server-side validation must be implemented
-              inside your <code>submit</code> function or API handler.
+              <code>withZod</code> is a wrapper for Next.js Server Actions. In standalone mode, pass
+              the schema via the <code>schema</code> option for client-side validation only.
+              Server-side validation must be implemented inside your <code>submit</code> function or
+              API handler.
             </p>
           </div>
         </div>
@@ -278,9 +289,9 @@ export async function loginApi(data: { email: string; password: string }) {
             <div>
               <p className="text-sm font-medium text-gray-200">Throwing on HTTP 4xx errors</p>
               <p className="text-sm text-gray-400 mt-1">
-                If your fetch wrapper throws on 4xx, the hook receives an <code>Error</code> — not a structured result.
-                The <code>errorMapper</code> won&apos;t fire for thrown errors. Return a structured object instead so
-                field errors can be set automatically.
+                If your fetch wrapper throws on 4xx, the hook receives an <code>Error</code> — not a
+                structured result. The <code>errorMapper</code> won&apos;t fire for thrown errors.
+                Return a structured object instead so field errors can be set automatically.
               </p>
             </div>
           </li>
@@ -291,9 +302,9 @@ export async function loginApi(data: { email: string; password: string }) {
                 No <code>formAction</code> in standalone
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                The standalone adapter does not expose <code>formAction</code> — there is no support for the{" "}
-                <code>{"<form action={...}>"}</code> pattern without JavaScript. Progressive enhancement requires the
-                Next.js adapter.
+                The standalone adapter does not expose <code>formAction</code> — there is no support
+                for the <code>{'<form action={...}>'}</code> pattern without JavaScript. Progressive
+                enhancement requires the Next.js adapter.
               </p>
             </div>
           </li>
@@ -304,9 +315,9 @@ export async function loginApi(data: { email: string; password: string }) {
                 Inline <code>submit</code> function
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                Defining <code>submit</code> as an inline arrow function inside the component creates a new reference on
-                every render. Extract it to module scope or wrap with <code>useCallback</code> to avoid re-initialising
-                the hook.
+                Defining <code>submit</code> as an inline arrow function inside the component
+                creates a new reference on every render. Extract it to module scope or wrap with{' '}
+                <code>useCallback</code> to avoid re-initialising the hook.
               </p>
             </div>
           </li>
@@ -317,20 +328,32 @@ export async function loginApi(data: { email: string; password: string }) {
       <section className="border-t border-gray-800 pt-8">
         <h2 className="text-lg font-semibold mb-4">Related</h2>
         <div className="flex flex-wrap gap-4 text-sm">
-          <a href="/standalone" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+          <a
+            href="/standalone"
+            className="text-emerald-400 hover:text-emerald-300 transition-colors"
+          >
             → Standalone Guide
           </a>
-          <a href="/recipes/custom-error-mapper" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/custom-error-mapper"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Custom Error Mapper
           </a>
-          <a href="/recipes/login-form" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/login-form"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Login Form (Next.js)
           </a>
-          <a href="/api-reference" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/api-reference"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → API Reference
           </a>
         </div>
       </section>
     </div>
-  );
+  )
 }

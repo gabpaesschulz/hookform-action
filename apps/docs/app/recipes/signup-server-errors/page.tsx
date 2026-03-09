@@ -16,8 +16,8 @@ export default function SignupServerErrorsPage() {
         </div>
         <h1 className="text-3xl font-bold mb-3">Sign Up with Server Validation Errors</h1>
         <p className="text-lg text-gray-400">
-          How to return business-logic errors from a server action — duplicate email, taken username, and more — and
-          have them appear on the correct fields automatically.
+          How to return business-logic errors from a server action — duplicate email, taken
+          username, and more — and have them appear on the correct fields automatically.
         </p>
       </div>
 
@@ -25,16 +25,17 @@ export default function SignupServerErrorsPage() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-3">Why it matters</h2>
         <p className="text-gray-400 leading-relaxed">
-          The login form teaches the happy path. This recipe teaches what actually happens in production: the user
-          submits valid data, but the server rejects it because the email is already registered or the username is
-          taken. These are business-logic errors that Zod&apos;s schema can&apos;t know about.
+          The login form teaches the happy path. This recipe teaches what actually happens in
+          production: the user submits valid data, but the server rejects it because the email is
+          already registered or the username is taken. These are business-logic errors that
+          Zod&apos;s schema can&apos;t know about.
         </p>
         <p className="text-gray-400 leading-relaxed mt-3">
-          <code>hookform-action</code> has a built-in contract for this: return{" "}
-          <code>{`{ errors: { field: string[] } }`}</code> from the action and the hook maps it directly to the
-          corresponding React Hook Form fields — no extra wiring needed. This recipe also shows{" "}
-          <code>setSubmitError</code> for errors set outside the action, and the <code>onError</code> callback for side
-          effects like toasts.
+          <code>hookform-action</code> has a built-in contract for this: return{' '}
+          <code>{'{ errors: { field: string[] } }'}</code> from the action and the hook maps it
+          directly to the corresponding React Hook Form fields — no extra wiring needed. This recipe
+          also shows <code>setSubmitError</code> for errors set outside the action, and the{' '}
+          <code>onError</code> callback for side effects like toasts.
         </p>
       </section>
 
@@ -182,34 +183,36 @@ setSubmitError('email', 'This email was flagged as invalid by our provider')`}</
         <h2 className="text-xl font-bold mb-4">Key Concepts</h2>
         <div className="space-y-3">
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
-            <code className="text-brand-400">{`{ errors: { field: string[] } }`}</code>
+            <code className="text-brand-400">{'{ errors: { field: string[] } }'}</code>
             <p className="text-gray-400 text-sm mt-1">
-              The default error contract. Return this shape from any action and <code>defaultErrorMapper</code>{" "}
-              automatically sets the corresponding RHF field errors. The key is the field name, the value is an array of
-              message strings (only the first message is shown by RHF by default).
+              The default error contract. Return this shape from any action and{' '}
+              <code>defaultErrorMapper</code> automatically sets the corresponding RHF field errors.
+              The key is the field name, the value is an array of message strings (only the first
+              message is shown by RHF by default).
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">formState.actionResult</code>
             <p className="text-gray-400 text-sm mt-1">
-              The raw return value of the last action call, preserved with full type safety via{" "}
-              <code>InferActionResult&lt;typeof action&gt;</code>. Use it to surface global messages or access non-error
-              data from the response.
+              The raw return value of the last action call, preserved with full type safety via{' '}
+              <code>InferActionResult&lt;typeof action&gt;</code>. Use it to surface global messages
+              or access non-error data from the response.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">setSubmitError(field, message)</code>
             <p className="text-gray-400 text-sm mt-1">
-              Programmatically sets a field error as if it came from the server. Useful for client-side checks that
-              happen outside the normal submit flow, such as async email-availability lookups on blur.
+              Programmatically sets a field error as if it came from the server. Useful for
+              client-side checks that happen outside the normal submit flow, such as async
+              email-availability lookups on blur.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">onError callback</code>
             <p className="text-gray-400 text-sm mt-1">
-              Fires when the action returns field errors <em>or</em> throws an exception. Use it for side effects —
-              toast notifications, error logging, analytics — without polluting the action or the component&apos;s
-              render logic.
+              Fires when the action returns field errors <em>or</em> throws an exception. Use it for
+              side effects — toast notifications, error logging, analytics — without polluting the
+              action or the component&apos;s render logic.
             </p>
           </div>
         </div>
@@ -222,22 +225,27 @@ setSubmitError('email', 'This email was flagged as invalid by our provider')`}</
           <li className="flex gap-3 bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4">
             <span className="text-yellow-400 shrink-0 mt-0.5">⚠</span>
             <div>
-              <p className="text-sm font-medium text-gray-200">Server errors don&apos;t clear when the user retypes</p>
+              <p className="text-sm font-medium text-gray-200">
+                Server errors don&apos;t clear when the user retypes
+              </p>
               <p className="text-sm text-gray-400 mt-1">
-                This is intentional RHF behaviour. A server error set via the error mapper persists until the next
-                submit (or until you call <code>clearErrors(field)</code> manually). To clear on input, use{" "}
-                <code>validationMode: &apos;onChange&apos;</code> with a client-side schema.
+                This is intentional RHF behaviour. A server error set via the error mapper persists
+                until the next submit (or until you call <code>clearErrors(field)</code> manually).
+                To clear on input, use <code>validationMode: &apos;onChange&apos;</code> with a
+                client-side schema.
               </p>
             </div>
           </li>
           <li className="flex gap-3 bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4">
             <span className="text-yellow-400 shrink-0 mt-0.5">⚠</span>
             <div>
-              <p className="text-sm font-medium text-gray-200">Distinguishing field errors from global errors</p>
+              <p className="text-sm font-medium text-gray-200">
+                Distinguishing field errors from global errors
+              </p>
               <p className="text-sm text-gray-400 mt-1">
-                The <code>errors</code> object only contains field-level errors from RHF. To display a global error
-                message (e.g. &quot;Service unavailable&quot;), read it from <code>actionResult</code> and render it
-                separately outside the field markup.
+                The <code>errors</code> object only contains field-level errors from RHF. To display
+                a global error message (e.g. &quot;Service unavailable&quot;), read it from{' '}
+                <code>actionResult</code> and render it separately outside the field markup.
               </p>
             </div>
           </li>
@@ -248,8 +256,9 @@ setSubmitError('email', 'This email was flagged as invalid by our provider')`}</
                 <code>withZod</code> already returns field errors — don&apos;t double-validate
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                If the schema fails, <code>withZod</code> short-circuits and returns <code>{`{ errors }`}</code> before
-                your handler runs. Do not call <code>schema.safeParse</code> again inside the handler.
+                If the schema fails, <code>withZod</code> short-circuits and returns{' '}
+                <code>{'{ errors }'}</code> before your handler runs. Do not call{' '}
+                <code>schema.safeParse</code> again inside the handler.
               </p>
             </div>
           </li>
@@ -260,20 +269,32 @@ setSubmitError('email', 'This email was flagged as invalid by our provider')`}</
       <section className="border-t border-gray-800 pt-8">
         <h2 className="text-lg font-semibold mb-4">Related</h2>
         <div className="flex flex-wrap gap-4 text-sm">
-          <a href="/recipes/login-form" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/login-form"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Login Form
           </a>
-          <a href="/recipes/custom-error-mapper" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/custom-error-mapper"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Custom Error Mapper
           </a>
-          <a href="/examples/validation" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/examples/validation"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Live Validation Example
           </a>
-          <a href="/api-reference" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/api-reference"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → API Reference
           </a>
         </div>
       </section>
     </div>
-  );
+  )
 }

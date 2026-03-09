@@ -16,8 +16,8 @@ export default function EditServerDataPage() {
         </div>
         <h1 className="text-3xl font-bold mb-3">Edit Form with Server-Loaded Data</h1>
         <p className="text-lg text-gray-400">
-          Pre-populate a form from a Server Component, track which fields the user actually changed, and revalidate the
-          page data after a successful save.
+          Pre-populate a form from a Server Component, track which fields the user actually changed,
+          and revalidate the page data after a successful save.
         </p>
       </div>
 
@@ -25,15 +25,16 @@ export default function EditServerDataPage() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-3">Why it matters</h2>
         <p className="text-gray-400 leading-relaxed">
-          Edit forms are the second most common form type after login. They require loading data from the server and
-          using it as <code>defaultValues</code> — but there&apos;s a fundamental tension: Server Components can fetch
-          data asynchronously, while <code>useActionForm</code> lives in a Client Component. Getting the data handoff
-          right prevents stale defaults and unintended dirty-field detection.
+          Edit forms are the second most common form type after login. They require loading data
+          from the server and using it as <code>defaultValues</code> — but there&apos;s a
+          fundamental tension: Server Components can fetch data asynchronously, while{' '}
+          <code>useActionForm</code> lives in a Client Component. Getting the data handoff right
+          prevents stale defaults and unintended dirty-field detection.
         </p>
         <p className="text-gray-400 leading-relaxed mt-3">
-          This recipe shows the canonical Server → Client pattern, how to use <code>isDirty</code> to show the save
-          button only when something changed, and how to use <code>router.refresh()</code> to revalidate without a full
-          page reload.
+          This recipe shows the canonical Server → Client pattern, how to use <code>isDirty</code>{' '}
+          to show the save button only when something changed, and how to use{' '}
+          <code>router.refresh()</code> to revalidate without a full page reload.
         </p>
       </section>
 
@@ -173,33 +174,36 @@ export function EditProfileForm({ defaultValues }: EditProfileFormProps) {
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">Server Component → Client Component data handoff</code>
             <p className="text-gray-400 text-sm mt-1">
-              Fetch data in an async Server Component, then pass it as a plain prop to the Client Component. The Client
-              Component receives it as a stable object and uses it as <code>defaultValues</code>. This avoids the{" "}
-              <code>useEffect</code> fetch anti-pattern and leverages Next.js caching.
+              Fetch data in an async Server Component, then pass it as a plain prop to the Client
+              Component. The Client Component receives it as a stable object and uses it as{' '}
+              <code>defaultValues</code>. This avoids the <code>useEffect</code> fetch anti-pattern
+              and leverages Next.js caching.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">isDirty / dirtyFields</code>
             <p className="text-gray-400 text-sm mt-1">
-              <code>isDirty</code> is <code>true</code> when at least one field differs from its{" "}
-              <code>defaultValue</code>. <code>dirtyFields</code> is a record of which specific fields changed. Use them
-              to disable the save button when nothing has been modified and to show per-field change indicators.
+              <code>isDirty</code> is <code>true</code> when at least one field differs from its{' '}
+              <code>defaultValue</code>. <code>dirtyFields</code> is a record of which specific
+              fields changed. Use them to disable the save button when nothing has been modified and
+              to show per-field change indicators.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">router.refresh()</code>
             <p className="text-gray-400 text-sm mt-1">
-              Re-executes all Server Components on the current route without a full navigation. The Server Component
-              re-fetches the updated data and passes it as new props to the Client Component. Call it in{" "}
-              <code>onSuccess</code> after a successful save.
+              Re-executes all Server Components on the current route without a full navigation. The
+              Server Component re-fetches the updated data and passes it as new props to the Client
+              Component. Call it in <code>onSuccess</code> after a successful save.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">reset(newValues) after save</code>
             <p className="text-gray-400 text-sm mt-1">
-              After a successful edit, call <code>reset(result.data)</code> or <code>reset(defaultValues)</code> to
-              update the RHF baseline. This clears <code>isDirty</code> so the save button correctly disables again
-              without a full remount.
+              After a successful edit, call <code>reset(result.data)</code> or{' '}
+              <code>reset(defaultValues)</code> to update the RHF baseline. This clears{' '}
+              <code>isDirty</code> so the save button correctly disables again without a full
+              remount.
             </p>
           </div>
         </div>
@@ -216,9 +220,9 @@ export function EditProfileForm({ defaultValues }: EditProfileFormProps) {
                 Unstable <code>defaultValues</code> causing unintended resets
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                If <code>defaultValues</code> is an inline object literal created on every render, RHF may re-initialise
-                and clear user edits. Always pass a stable reference — either from a Server Component prop, a{" "}
-                <code>useMemo</code>, or a fetched query result.
+                If <code>defaultValues</code> is an inline object literal created on every render,
+                RHF may re-initialise and clear user edits. Always pass a stable reference — either
+                from a Server Component prop, a <code>useMemo</code>, or a fetched query result.
               </p>
             </div>
           </li>
@@ -229,9 +233,9 @@ export function EditProfileForm({ defaultValues }: EditProfileFormProps) {
                 <code>isSubmitSuccessful</code> stays <code>true</code> after save
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                For edit forms you usually want the user to stay on the page and keep editing. Avoid gating the form
-                behind <code>isSubmitSuccessful</code> — it will hide the form after the first save. Use{" "}
-                <code>onSuccess</code> for side effects only.
+                For edit forms you usually want the user to stay on the page and keep editing. Avoid
+                gating the form behind <code>isSubmitSuccessful</code> — it will hide the form after
+                the first save. Use <code>onSuccess</code> for side effects only.
               </p>
             </div>
           </li>
@@ -242,8 +246,9 @@ export function EditProfileForm({ defaultValues }: EditProfileFormProps) {
                 Forgetting <code>reset()</code> after a successful save
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                Without <code>reset()</code>, <code>isDirty</code> stays <code>true</code> even though the changes were
-                saved. The save button remains enabled and the user may accidentally re-submit.
+                Without <code>reset()</code>, <code>isDirty</code> stays <code>true</code> even
+                though the changes were saved. The save button remains enabled and the user may
+                accidentally re-submit.
               </p>
             </div>
           </li>
@@ -254,20 +259,32 @@ export function EditProfileForm({ defaultValues }: EditProfileFormProps) {
       <section className="border-t border-gray-800 pt-8">
         <h2 className="text-lg font-semibold mb-4">Related</h2>
         <div className="flex flex-wrap gap-4 text-sm">
-          <a href="/recipes/reset-after-success" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/reset-after-success"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Reset After Success
           </a>
-          <a href="/recipes/modal-form" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/modal-form"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Modal / Dialog Form
           </a>
-          <a href="/recipes/signup-server-errors" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/signup-server-errors"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Sign Up with Server Errors
           </a>
-          <a href="/api-reference" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/api-reference"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → API Reference
           </a>
         </div>
       </section>
     </div>
-  );
+  )
 }

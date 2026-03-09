@@ -17,8 +17,8 @@ export default function OptimisticUIPage() {
         </div>
         <h1 className="text-3xl font-bold mb-3">Optimistic UI Updates</h1>
         <p className="text-lg text-gray-400">
-          Show the result of a submission instantly — before the server responds — and roll back automatically if
-          something goes wrong.
+          Show the result of a submission instantly — before the server responds — and roll back
+          automatically if something goes wrong.
         </p>
         <a
           href="/examples/optimistic"
@@ -32,15 +32,15 @@ export default function OptimisticUIPage() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-3">Why it matters</h2>
         <p className="text-gray-400 leading-relaxed">
-          Optimistic UI is the difference between a form that feels fast and one that feels slow. Instead of waiting
-          500ms for the server to respond before updating the list, you project the expected result immediately and
-          confirm (or roll back) once the server replies.
+          Optimistic UI is the difference between a form that feels fast and one that feels slow.
+          Instead of waiting 500ms for the server to respond before updating the list, you project
+          the expected result immediately and confirm (or roll back) once the server replies.
         </p>
         <p className="text-gray-400 leading-relaxed mt-3">
-          <code>hookform-action</code> implements this via React&apos;s <code>useOptimistic</code> (React 19) with a
-          fallback for React 18. You provide an <code>optimisticData</code> reducer that produces the projected state
-          from the current data and the form values. The hook handles the transition, confirmation, and rollback
-          automatically.
+          <code>hookform-action</code> implements this via React&apos;s <code>useOptimistic</code>{' '}
+          (React 19) with a fallback for React 18. You provide an <code>optimisticData</code>{' '}
+          reducer that produces the projected state from the current data and the form values. The
+          hook handles the transition, confirmation, and rollback automatically.
         </p>
       </section>
 
@@ -186,32 +186,34 @@ export function TodoForm() {
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">optimisticData (reducer)</code>
             <p className="text-gray-400 text-sm mt-1">
-              A pure function <code>(currentData, formValues) =&gt; newData</code> that computes the projected state. It
-              runs synchronously on submit — before the server responds. Keep it fast and side-effect-free.
+              A pure function <code>(currentData, formValues) =&gt; newData</code> that computes the
+              projected state. It runs synchronously on submit — before the server responds. Keep it
+              fast and side-effect-free.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">optimistic.data vs actionResult</code>
             <p className="text-gray-400 text-sm mt-1">
-              <code>optimistic.data</code> is the projected state (may contain temporary items with fake IDs).{" "}
-              <code>actionResult</code> is the confirmed state returned by the server. Use the pattern shown above:
-              prefer <code>optimistic.data</code> while <code>optimistic.isPending</code> is true, then switch to{" "}
-              <code>actionResult</code>.
+              <code>optimistic.data</code> is the projected state (may contain temporary items with
+              fake IDs). <code>actionResult</code> is the confirmed state returned by the server.
+              Use the pattern shown above: prefer <code>optimistic.data</code> while{' '}
+              <code>optimistic.isPending</code> is true, then switch to <code>actionResult</code>.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">Automatic rollback on error</code>
             <p className="text-gray-400 text-sm mt-1">
-              When the action throws, the hook automatically reverts <code>optimistic.data</code> to the last confirmed
-              state. You can also trigger a manual rollback via <code>optimistic.rollback()</code> for
-              business-logic-driven reversals.
+              When the action throws, the hook automatically reverts <code>optimistic.data</code> to
+              the last confirmed state. You can also trigger a manual rollback via{' '}
+              <code>optimistic.rollback()</code> for business-logic-driven reversals.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">React 18 / React 19 compatibility</code>
             <p className="text-gray-400 text-sm mt-1">
-              On React 19 the hook uses the native <code>useOptimistic</code> API. On React 18 it uses a local state
-              fallback. The behaviour is identical — you don&apos;t need to change any code when upgrading React.
+              On React 19 the hook uses the native <code>useOptimistic</code> API. On React 18 it
+              uses a local state fallback. The behaviour is identical — you don&apos;t need to
+              change any code when upgrading React.
             </p>
           </div>
         </div>
@@ -228,9 +230,9 @@ export function TodoForm() {
                 Rendering <code>optimistic.data</code> after the action resolves
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                After the action succeeds, <code>optimistic.data</code> still contains the projected state with
-                temporary IDs. Always switch to <code>actionResult</code> once <code>optimistic.isPending</code> is{" "}
-                <code>false</code>.
+                After the action succeeds, <code>optimistic.data</code> still contains the projected
+                state with temporary IDs. Always switch to <code>actionResult</code> once{' '}
+                <code>optimistic.isPending</code> is <code>false</code>.
               </p>
             </div>
           </li>
@@ -241,8 +243,9 @@ export function TodoForm() {
                 Inline object literal for <code>optimisticInitial</code>
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                Define <code>optimisticInitial</code> outside the component or use <code>useMemo</code>. An inline array
-                literal creates a new reference on every render and resets the optimistic state unexpectedly.
+                Define <code>optimisticInitial</code> outside the component or use{' '}
+                <code>useMemo</code>. An inline array literal creates a new reference on every
+                render and resets the optimistic state unexpectedly.
               </p>
             </div>
           </li>
@@ -253,8 +256,9 @@ export function TodoForm() {
                 Forgetting <code>reset()</code> in <code>onSuccess</code>
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                After a successful add, the text input stays filled. Call <code>reset()</code> in <code>onSuccess</code>{" "}
-                to clear the input so the user can type the next item immediately.
+                After a successful add, the text input stays filled. Call <code>reset()</code> in{' '}
+                <code>onSuccess</code> to clear the input so the user can type the next item
+                immediately.
               </p>
             </div>
           </li>
@@ -265,17 +269,26 @@ export function TodoForm() {
       <section className="border-t border-gray-800 pt-8">
         <h2 className="text-lg font-semibold mb-4">Related</h2>
         <div className="flex flex-wrap gap-4 text-sm">
-          <a href="/recipes/reset-after-success" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/reset-after-success"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Reset After Success
           </a>
-          <a href="/examples/optimistic" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/examples/optimistic"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Live Optimistic Example
           </a>
-          <a href="/api-reference" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/api-reference"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → API Reference
           </a>
         </div>
       </section>
     </div>
-  );
+  )
 }

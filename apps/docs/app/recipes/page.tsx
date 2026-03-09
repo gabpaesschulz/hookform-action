@@ -13,8 +13,9 @@ export default function RecipesPage() {
         </div>
         <h1 className="text-3xl font-bold mb-4">Recipes &amp; Common Patterns</h1>
         <p className="text-lg text-gray-400 max-w-2xl">
-          Complete, copy-paste patterns for the most common <code>hookform-action</code> use cases. Each recipe includes
-          a working server action, a typed client component, key concepts, and pitfalls to avoid.
+          Complete, copy-paste patterns for the most common <code>hookform-action</code> use cases.
+          Each recipe includes a working server action, a typed client component, key concepts, and
+          pitfalls to avoid.
         </p>
       </div>
 
@@ -37,10 +38,12 @@ export default function RecipesPage() {
             <div className="flex items-center gap-2 mb-2">
               <span className="text-xs text-gray-500 font-mono">#1</span>
             </div>
-            <h3 className="font-semibold text-white group-hover:text-brand-400 transition-colors mb-1">Login Form</h3>
+            <h3 className="font-semibold text-white group-hover:text-brand-400 transition-colors mb-1">
+              Login Form
+            </h3>
             <p className="text-sm text-gray-400">
-              The foundation pattern: <code>withZod</code> action, <code>useActionForm</code>, <code>isPending</code>,
-              and error display.
+              The foundation pattern: <code>withZod</code> action, <code>useActionForm</code>,{' '}
+              <code>isPending</code>, and error display.
             </p>
           </a>
 
@@ -70,7 +73,7 @@ export default function RecipesPage() {
               Reset After Success
             </h3>
             <p className="text-sm text-gray-400">
-              Three canonical patterns: redirect, in-place reset with <code>onSuccess</code>, and{" "}
+              Three canonical patterns: redirect, in-place reset with <code>onSuccess</code>, and{' '}
               <code>isSubmitSuccessful</code> guard.
             </p>
           </a>
@@ -102,8 +105,8 @@ export default function RecipesPage() {
               Multi-Step Wizard
             </h3>
             <p className="text-sm text-gray-400">
-              Per-step validation with <code>trigger()</code>, sessionStorage persistence with <code>persistKey</code>,
-              and safe progress clearing on submit.
+              Per-step validation with <code>trigger()</code>, sessionStorage persistence with{' '}
+              <code>persistKey</code>, and safe progress clearing on submit.
             </p>
           </a>
         </div>
@@ -117,7 +120,9 @@ export default function RecipesPage() {
             Tier 2 · Common
           </span>
         </div>
-        <p className="text-gray-500 text-sm mb-6">Patterns you will reach for often as your app grows.</p>
+        <p className="text-gray-500 text-sm mb-6">
+          Patterns you will reach for often as your app grows.
+        </p>
         <div className="grid sm:grid-cols-2 gap-4">
           <a
             href="/recipes/optimistic-ui"
@@ -127,9 +132,12 @@ export default function RecipesPage() {
               <span className="text-xs text-gray-500 font-mono">#6</span>
               <span className="text-xs text-cyan-400 font-medium">⚡ Advanced feature</span>
             </div>
-            <h3 className="font-semibold text-white group-hover:text-cyan-400 transition-colors mb-1">Optimistic UI</h3>
+            <h3 className="font-semibold text-white group-hover:text-cyan-400 transition-colors mb-1">
+              Optimistic UI
+            </h3>
             <p className="text-sm text-gray-400">
-              Instant feedback with <code>optimisticData</code>, temporary IDs, and automatic rollback on error.
+              Instant feedback with <code>optimisticData</code>, temporary IDs, and automatic
+              rollback on error.
             </p>
           </a>
 
@@ -144,7 +152,8 @@ export default function RecipesPage() {
               Modal / Dialog Form
             </h3>
             <p className="text-sm text-gray-400">
-              Form lifecycle inside a modal: reset on open, close on success, and Shadcn/ui Dialog integration.
+              Form lifecycle inside a modal: reset on open, close on success, and Shadcn/ui Dialog
+              integration.
             </p>
           </a>
 
@@ -159,8 +168,8 @@ export default function RecipesPage() {
               Dynamic Fields with useFieldArray
             </h3>
             <p className="text-sm text-gray-400">
-              Add and remove array items, validate each row, and submit a typed array to the server action using{" "}
-              <code>useFieldArray</code> from React Hook Form.
+              Add and remove array items, validate each row, and submit a typed array to the server
+              action using <code>useFieldArray</code> from React Hook Form.
             </p>
           </a>
         </div>
@@ -174,7 +183,9 @@ export default function RecipesPage() {
             Tier 3 · Specialized
           </span>
         </div>
-        <p className="text-gray-500 text-sm mb-6">Edge cases, ecosystem integrations, and power-user patterns.</p>
+        <p className="text-gray-500 text-sm mb-6">
+          Edge cases, ecosystem integrations, and power-user patterns.
+        </p>
         <div className="grid sm:grid-cols-2 gap-4">
           <a
             href="/recipes/file-upload"
@@ -183,10 +194,12 @@ export default function RecipesPage() {
             <div className="flex items-center gap-2 mb-2">
               <span className="text-xs text-gray-500 font-mono">#9</span>
             </div>
-            <h3 className="font-semibold text-white group-hover:text-brand-400 transition-colors mb-1">File Upload</h3>
+            <h3 className="font-semibold text-white group-hover:text-brand-400 transition-colors mb-1">
+              File Upload
+            </h3>
             <p className="text-sm text-gray-400">
-              FormData actions, file type and size validation, image preview, and <code>isPending</code> progress
-              indicator.
+              FormData actions, file type and size validation, image preview, and{' '}
+              <code>isPending</code> progress indicator.
             </p>
           </a>
 
@@ -201,7 +214,8 @@ export default function RecipesPage() {
               Nested Fields &amp; Sub-components
             </h3>
             <p className="text-sm text-gray-400">
-              Compose large forms from smaller components using <code>useFormContext</code> without prop drilling.
+              Compose large forms from smaller components using <code>useFormContext</code> without
+              prop drilling.
             </p>
           </a>
 
@@ -216,7 +230,8 @@ export default function RecipesPage() {
               Custom Error Mapper
             </h3>
             <p className="text-sm text-gray-400">
-              Translate non-standard API error shapes (Laravel, Rails, REST) to React Hook Form field errors.
+              Translate non-standard API error shapes (Laravel, Rails, REST) to React Hook Form
+              field errors.
             </p>
           </a>
 
@@ -232,8 +247,8 @@ export default function RecipesPage() {
               Standalone — Vite, Remix &amp; APIs
             </h3>
             <p className="text-sm text-gray-400">
-              Use <code>hookform-action-standalone</code> with <code>fetch</code> or <code>axios</code> outside of
-              Next.js.
+              Use <code>hookform-action-standalone</code> with <code>fetch</code> or{' '}
+              <code>axios</code> outside of Next.js.
             </p>
           </a>
         </div>
@@ -241,13 +256,16 @@ export default function RecipesPage() {
 
       <div className="border-t border-gray-800 pt-8 text-sm text-gray-500">
         <p>
-          All recipes use real, working code with full TypeScript types. Each pattern maps directly to a capability of
-          the <code>hookform-action</code> API.{" "}
-          <a href="/api-reference" className="text-brand-400 hover:text-brand-300 transition-colors">
+          All recipes use real, working code with full TypeScript types. Each pattern maps directly
+          to a capability of the <code>hookform-action</code> API.{' '}
+          <a
+            href="/api-reference"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             Read the API reference →
           </a>
         </p>
       </div>
     </div>
-  );
+  )
 }

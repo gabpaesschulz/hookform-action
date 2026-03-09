@@ -1,8 +1,8 @@
-"use client";
+'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { type DefaultValues, type FieldPath, type FieldValues, useForm } from "react-hook-form";
-import type { ZodError, ZodSchema } from "zod";
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { type DefaultValues, type FieldPath, type FieldValues, useForm } from 'react-hook-form'
+import type { ZodError, ZodSchema } from 'zod'
 
 import type {
   ActionFormState,
@@ -14,30 +14,37 @@ import type {
   SubmitFunction,
   UseActionFormCoreOptions,
   UseActionFormCoreReturn,
-} from "./core-types";
-import { defaultErrorMapper } from "./core-types";
-import { clearPersistedValues, debounce, loadPersistedValues, savePersistedValues } from "./persist";
-import { hasUseOptimistic, useOptimistic as useOptimisticReact19, useTransition } from "./react-shim";
+} from './core-types'
+import { defaultErrorMapper } from './core-types'
+import { clearPersistedValues, debounce, loadPersistedValues, savePersistedValues } from './persist'
+import {
+  hasUseOptimistic,
+  useOptimistic as useOptimisticReact19,
+  useTransition,
+} from './react-shim'
 
 // ---------------------------------------------------------------------------
 // Internal: client-side Zod validation helper
 // ---------------------------------------------------------------------------
 
-function validateWithSchema(schema: ZodSchema, values: Record<string, unknown>): FieldErrorRecord | null {
-  const result = schema.safeParse(values);
-  if (result.success) return null;
+function validateWithSchema(
+  schema: ZodSchema,
+  values: Record<string, unknown>,
+): FieldErrorRecord | null {
+  const result = schema.safeParse(values)
+  if (result.success) return null
 
-  const zodError = result.error as ZodError;
-  const flat = zodError.flatten();
-  const errors: FieldErrorRecord = {};
+  const zodError = result.error as ZodError
+  const flat = zodError.flatten()
+  const errors: FieldErrorRecord = {}
 
   for (const [field, messages] of Object.entries(flat.fieldErrors)) {
     if (messages && messages.length > 0) {
-      errors[field] = messages as string[];
+      errors[field] = messages as string[]
     }
   }
 
-  return Object.keys(errors).length > 0 ? errors : null;
+  return Object.keys(errors).length > 0 ? errors : null
 }
 
 // ---------------------------------------------------------------------------
@@ -45,8 +52,8 @@ function validateWithSchema(schema: ZodSchema, values: Record<string, unknown>):
 // ---------------------------------------------------------------------------
 
 function useOptimisticFallback<T>(initial: T): [T, (value: T) => void] {
-  const [state, setState] = useState<T>(initial);
-  return [state, setState];
+  const [state, setState] = useState<T>(initial)
+  return [state, setState]
 }
 
 // ---------------------------------------------------------------------------
@@ -79,7 +86,7 @@ export function useActionFormCore<
 ): UseActionFormCoreReturn<TFieldValues, TResult, TOptimistic> {
   const {
     defaultValues: optionDefaults,
-    mode = "onSubmit",
+    mode = 'onSubmit',
     persistKey,
     errorMapper = defaultErrorMapper as ErrorMapper<TResult>,
     onSuccess,
@@ -94,42 +101,42 @@ export function useActionFormCore<
     optimisticReducer,
     optimisticDefault,
     plugins = [],
-  } = options;
+  } = options
 
-  const resolvedValidationMode = validationMode ?? clientValidation ?? "onSubmit";
-  const resolvedOptimisticData = optimisticData ?? optimisticReducer;
-  const resolvedOptimisticInitial = (optimisticInitial ?? optimisticDefault) as TOptimistic;
+  const resolvedValidationMode = validationMode ?? clientValidation ?? 'onSubmit'
+  const resolvedOptimisticData = optimisticData ?? optimisticReducer
+  const resolvedOptimisticInitial = (optimisticInitial ?? optimisticDefault) as TOptimistic
 
   // ----- Resolve Zod schema -----------------------------------------------
 
-  const resolvedSchema = useMemo(() => optionsSchema ?? undefined, [optionsSchema]);
+  const resolvedSchema = useMemo(() => optionsSchema ?? undefined, [optionsSchema])
 
   // ----- Resolve initial values (persisted > options) ----------------------
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally run once on mount
   const resolvedDefaults = useMemo<DefaultValues<TFieldValues> | undefined>(() => {
     if (persistKey) {
-      const persisted = loadPersistedValues<TFieldValues>(persistKey);
+      const persisted = loadPersistedValues<TFieldValues>(persistKey)
       if (persisted) {
         return {
           ...(optionDefaults as Record<string, unknown> | undefined),
           ...persisted,
-        } as DefaultValues<TFieldValues>;
+        } as DefaultValues<TFieldValues>
       }
     }
-    return optionDefaults;
-  }, []);
+    return optionDefaults
+  }, [])
 
   // ----- React Hook Form ---------------------------------------------------
 
   const form = useForm<TFieldValues>({
     defaultValues: resolvedDefaults,
     mode,
-  });
+  })
 
   // ----- useTransition (React 18 & 19) ------------------------------------
 
-  const [isTransitioning, startTransition] = useTransition();
+  const [isTransitioning, startTransition] = useTransition()
 
   // ----- Action state ------------------------------------------------------
 
@@ -141,114 +148,116 @@ export function useActionFormCore<
     serverErrors: null,
     lastResult: null,
     isPending: false,
-  });
+  })
 
   // ----- Submission history (for DevTools) ----------------------------------
 
-  const submissionHistoryRef = useRef<SubmissionRecord<TResult>[]>([]);
+  const submissionHistoryRef = useRef<SubmissionRecord<TResult>[]>([])
 
   // ----- Optimistic UI (React 19 only) -------------------------------------
 
-  const hasOptimistic = resolvedOptimisticData != null && (optimisticKey != null || optimisticReducer != null);
+  const hasOptimistic =
+    resolvedOptimisticData != null && (optimisticKey != null || optimisticReducer != null)
 
-  const useOptimisticHook = hasUseOptimistic && useOptimisticReact19 ? useOptimisticReact19 : useOptimisticFallback;
+  const useOptimisticHook =
+    hasUseOptimistic && useOptimisticReact19 ? useOptimisticReact19 : useOptimisticFallback
 
-  const [optimisticState, setOptimistic] = useOptimisticHook(resolvedOptimisticInitial);
+  const [optimisticState, setOptimistic] = useOptimisticHook(resolvedOptimisticInitial)
 
-  const confirmedOptimisticRef = useRef<TOptimistic>(resolvedOptimisticInitial);
+  const confirmedOptimisticRef = useRef<TOptimistic>(resolvedOptimisticInitial)
 
   const rollbackOptimistic = useCallback(() => {
-    setOptimistic(confirmedOptimisticRef.current);
-  }, [setOptimistic]);
+    setOptimistic(confirmedOptimisticRef.current)
+  }, [setOptimistic])
 
   // ----- Persistence -------------------------------------------------------
 
   const debouncedSave = useMemo(() => {
-    if (!persistKey) return null;
+    if (!persistKey) return null
     return debounce((values: TFieldValues) => {
-      savePersistedValues(persistKey, values);
-    }, persistDebounce);
-  }, [persistKey, persistDebounce]);
+      savePersistedValues(persistKey, values)
+    }, persistDebounce)
+  }, [persistKey, persistDebounce])
 
   useEffect(() => {
-    if (!persistKey || !debouncedSave) return;
+    if (!persistKey || !debouncedSave) return
 
     const subscription = form.watch((values) => {
-      debouncedSave(values as TFieldValues);
-    });
+      debouncedSave(values as TFieldValues)
+    })
 
-    return () => subscription.unsubscribe();
-  }, [persistKey, debouncedSave, form]);
+    return () => subscription.unsubscribe()
+  }, [persistKey, debouncedSave, form])
 
   // ----- Client-side Zod validation (onChange / onBlur) ---------------------
 
   useEffect(() => {
-    if (!resolvedSchema || resolvedValidationMode === "onSubmit") return;
+    if (!resolvedSchema || resolvedValidationMode === 'onSubmit') return
 
     const subscription = form.watch((values, { name, type }) => {
-      if (!name) return;
+      if (!name) return
 
-      if (resolvedValidationMode === "onChange" || type === "blur") {
-        const fieldResult = resolvedSchema.safeParse(values);
+      if (resolvedValidationMode === 'onChange' || type === 'blur') {
+        const fieldResult = resolvedSchema.safeParse(values)
         if (fieldResult.success) {
-          form.clearErrors(name as FieldPath<TFieldValues>);
+          form.clearErrors(name as FieldPath<TFieldValues>)
         } else {
-          const zodError = fieldResult.error as ZodError;
-          const flat = zodError.flatten();
-          const fieldErrors = flat.fieldErrors[name];
+          const zodError = fieldResult.error as ZodError
+          const flat = zodError.flatten()
+          const fieldErrors = flat.fieldErrors[name]
 
           if (fieldErrors && fieldErrors.length > 0) {
             form.setError(name as FieldPath<TFieldValues>, {
-              type: "validation",
+              type: 'validation',
               message: fieldErrors[0],
-            });
+            })
           } else {
-            form.clearErrors(name as FieldPath<TFieldValues>);
+            form.clearErrors(name as FieldPath<TFieldValues>)
           }
         }
       }
-    });
+    })
 
-    return () => subscription.unsubscribe();
-  }, [resolvedSchema, resolvedValidationMode, form]);
+    return () => subscription.unsubscribe()
+  }, [resolvedSchema, resolvedValidationMode, form])
 
   // ----- Plugin lifecycle: onMount -----------------------------------------
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: plugins identity changes every render; run once on mount
   useEffect(() => {
-    const cleanups = plugins.map((p) => p.onMount?.()).filter(Boolean) as (() => void)[];
+    const cleanups = plugins.map((p) => p.onMount?.()).filter(Boolean) as (() => void)[]
 
     return () => {
       for (const cleanup of cleanups) {
-        cleanup();
+        cleanup()
       }
-    };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps -- run once on mount
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- run once on mount
 
   // ----- Manual persist / clear --------------------------------------------
 
   const persist = useCallback(() => {
-    if (!persistKey) return;
-    savePersistedValues(persistKey, form.getValues());
-  }, [persistKey, form]);
+    if (!persistKey) return
+    savePersistedValues(persistKey, form.getValues())
+  }, [persistKey, form])
 
   const clearPersistedData = useCallback(() => {
-    if (!persistKey) return;
-    clearPersistedValues(persistKey);
-  }, [persistKey]);
+    if (!persistKey) return
+    clearPersistedValues(persistKey)
+  }, [persistKey])
 
-  const clearPersisted = clearPersistedData;
+  const clearPersisted = clearPersistedData
 
   // ----- Set a server error on a field -------------------------------------
 
   const setSubmitError = useCallback(
     (field: keyof TFieldValues & string, message: string) => {
-      form.setError(field as never, { type: "server", message });
+      form.setError(field as never, { type: 'server', message })
     },
     [form],
-  );
+  )
 
-  const setServerError = setSubmitError;
+  const setServerError = setSubmitError
 
   // ----- Map server errors to RHF ------------------------------------------
 
@@ -257,24 +266,24 @@ export function useActionFormCore<
       for (const [field, messages] of Object.entries(errors)) {
         if (messages && messages.length > 0) {
           form.setError(field as never, {
-            type: "server",
+            type: 'server',
             message: messages[0],
-          });
+          })
         }
       }
     },
     [form],
-  );
+  )
 
   // ----- Core submit logic -------------------------------------------------
 
   const executeSubmit = useCallback(
     async (data: TFieldValues) => {
       // Client-side schema validation (for onSubmit mode)
-      if (resolvedSchema && resolvedValidationMode === "onSubmit") {
-        const clientErrors = validateWithSchema(resolvedSchema, data as Record<string, unknown>);
+      if (resolvedSchema && resolvedValidationMode === 'onSubmit') {
+        const clientErrors = validateWithSchema(resolvedSchema, data as Record<string, unknown>)
         if (clientErrors) {
-          applyServerErrors(clientErrors);
+          applyServerErrors(clientErrors)
           setActionState({
             isSubmitting: false,
             isSubmitSuccessful: false,
@@ -283,16 +292,16 @@ export function useActionFormCore<
             serverErrors: clientErrors,
             lastResult: null,
             isPending: false,
-          });
-          return;
+          })
+          return
         }
       }
 
       // Plugin: onBeforeSubmit
       for (const plugin of plugins) {
         if (plugin.onBeforeSubmit) {
-          const shouldContinue = await plugin.onBeforeSubmit(data);
-          if (shouldContinue === false) return;
+          const shouldContinue = await plugin.onBeforeSubmit(data)
+          if (shouldContinue === false) return
         }
       }
 
@@ -302,20 +311,20 @@ export function useActionFormCore<
         isPending: true,
         submitErrors: null,
         serverErrors: null,
-      }));
+      }))
 
       // Apply optimistic update before the action runs
       if (hasOptimistic && resolvedOptimisticData) {
-        const optimisticResult = resolvedOptimisticData(confirmedOptimisticRef.current, data);
-        setOptimistic(optimisticResult);
+        const optimisticResult = resolvedOptimisticData(confirmedOptimisticRef.current, data)
+        setOptimistic(optimisticResult)
       }
 
-      const startTime = Date.now();
+      const startTime = Date.now()
 
       try {
-        const result = await submit(data);
+        const result = await submit(data)
 
-        const fieldErrors = errorMapper(result);
+        const fieldErrors = errorMapper(result)
 
         // Record submission for DevTools
         const record: SubmissionRecord<TResult> = {
@@ -326,14 +335,14 @@ export function useActionFormCore<
           error: null,
           duration: Date.now() - startTime,
           success: !fieldErrors || Object.keys(fieldErrors).length === 0,
-        };
-        submissionHistoryRef.current = [...submissionHistoryRef.current.slice(-49), record];
+        }
+        submissionHistoryRef.current = [...submissionHistoryRef.current.slice(-49), record]
 
         if (fieldErrors && Object.keys(fieldErrors).length > 0) {
-          applyServerErrors(fieldErrors);
+          applyServerErrors(fieldErrors)
 
           if (hasOptimistic) {
-            rollbackOptimistic();
+            rollbackOptimistic()
           }
 
           setActionState({
@@ -344,22 +353,25 @@ export function useActionFormCore<
             serverErrors: fieldErrors,
             lastResult: result,
             isPending: false,
-          });
+          })
 
           // Plugin: onError
           for (const plugin of plugins) {
-            plugin.onError?.(result, data);
+            plugin.onError?.(result, data)
           }
 
-          onError?.(result);
+          onError?.(result)
         } else {
           // Success – update confirmed optimistic state
           if (hasOptimistic && resolvedOptimisticData) {
-            confirmedOptimisticRef.current = resolvedOptimisticData(confirmedOptimisticRef.current, data);
+            confirmedOptimisticRef.current = resolvedOptimisticData(
+              confirmedOptimisticRef.current,
+              data,
+            )
           }
 
           // Clear persisted data
-          if (persistKey) clearPersistedValues(persistKey);
+          if (persistKey) clearPersistedValues(persistKey)
 
           setActionState({
             isSubmitting: false,
@@ -369,14 +381,14 @@ export function useActionFormCore<
             serverErrors: null,
             lastResult: result,
             isPending: false,
-          });
+          })
 
           // Plugin: onSuccess
           for (const plugin of plugins) {
-            plugin.onSuccess?.(result, data);
+            plugin.onSuccess?.(result, data)
           }
 
-          onSuccess?.(result);
+          onSuccess?.(result)
         }
       } catch (error) {
         // Record failed submission for DevTools
@@ -388,11 +400,11 @@ export function useActionFormCore<
           error: error instanceof Error ? error : new Error(String(error)),
           duration: Date.now() - startTime,
           success: false,
-        };
-        submissionHistoryRef.current = [...submissionHistoryRef.current.slice(-49), record];
+        }
+        submissionHistoryRef.current = [...submissionHistoryRef.current.slice(-49), record]
 
         if (hasOptimistic) {
-          rollbackOptimistic();
+          rollbackOptimistic()
         }
 
         setActionState((prev) => ({
@@ -400,16 +412,16 @@ export function useActionFormCore<
           isSubmitting: false,
           isSubmitSuccessful: false,
           isPending: false,
-        }));
+        }))
 
-        const wrappedError = error instanceof Error ? error : new Error(String(error));
+        const wrappedError = error instanceof Error ? error : new Error(String(error))
 
         // Plugin: onError
         for (const plugin of plugins) {
-          plugin.onError?.(wrappedError as TResult & Error, data);
+          plugin.onError?.(wrappedError as TResult & Error, data)
         }
 
-        onError?.(wrappedError);
+        onError?.(wrappedError)
       }
     },
     [
@@ -427,23 +439,23 @@ export function useActionFormCore<
       rollbackOptimistic,
       plugins,
     ],
-  );
+  )
 
   // ----- handleSubmit wrapper ----------------------------------------------
 
   const handleSubmit = useCallback(
     (onValid?: (data: TFieldValues) => void | Promise<void>) => {
       return form.handleSubmit(async (data) => {
-        if (onValid) await onValid(data);
+        if (onValid) await onValid(data)
 
         // @ts-ignore – React 19 supports async transitions; React 18 ignores the promise
         startTransition(async () => {
-          await executeSubmit(data);
-        });
-      });
+          await executeSubmit(data)
+        })
+      })
     },
     [form, executeSubmit, startTransition],
-  );
+  )
 
   // ----- Compose return value ----------------------------------------------
 
@@ -464,30 +476,30 @@ export function useActionFormCore<
       isPending: isTransitioning || actionState.isPending,
     }),
     [form.formState, actionState, isTransitioning],
-  );
+  )
 
   // ----- Compose optimistic return -----------------------------------------
 
   const optimisticReturn = useMemo(() => {
-    if (!hasOptimistic) return undefined;
+    if (!hasOptimistic) return undefined
     return {
       data: optimisticState,
       isPending: isTransitioning || actionState.isPending,
       rollback: rollbackOptimistic,
-    } as OptimisticState<TOptimistic>;
-  }, [hasOptimistic, optimisticState, isTransitioning, actionState.isPending, rollbackOptimistic]);
+    } as OptimisticState<TOptimistic>
+  }, [hasOptimistic, optimisticState, isTransitioning, actionState.isPending, rollbackOptimistic])
 
   // ----- Compose control with DevTools metadata ----------------------------
 
   const enhancedControl = useMemo(() => {
     const ctrl = form.control as typeof form.control & {
-      _submissionHistory: SubmissionRecord<TResult>[];
-      _actionFormState: ActionFormState<TResult>;
-    };
-    ctrl._submissionHistory = submissionHistoryRef.current;
-    ctrl._actionFormState = actionState;
-    return ctrl;
-  }, [form.control, actionState]);
+      _submissionHistory: SubmissionRecord<TResult>[]
+      _actionFormState: ActionFormState<TResult>
+    }
+    ctrl._submissionHistory = submissionHistoryRef.current
+    ctrl._actionFormState = actionState
+    return ctrl
+  }, [form.control, actionState])
 
   return {
     ...form,
@@ -500,5 +512,5 @@ export function useActionFormCore<
     clearPersistedData,
     clearPersisted,
     optimistic: optimisticReturn,
-  } as UseActionFormCoreReturn<TFieldValues, TResult, TOptimistic>;
+  } as UseActionFormCoreReturn<TFieldValues, TResult, TOptimistic>
 }

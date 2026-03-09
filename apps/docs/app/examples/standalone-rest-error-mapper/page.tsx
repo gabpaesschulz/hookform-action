@@ -1,4 +1,4 @@
-import { ExampleShell } from "../_components/example-shell";
+import { ExampleShell } from '../_components/example-shell'
 
 export default function StandaloneRestErrorMapperPage() {
   return (
@@ -35,6 +35,5 @@ const form = useActionForm({
         Strategic point: this removes one of the most common adoption blockers in enterprise apps.
       </p>
     </ExampleShell>
-  );
+  )
 }
-

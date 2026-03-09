@@ -16,9 +16,8 @@ export default function ApiReferencePage() {
         </p>
         <p className="text-xs text-gray-500">
           Legacy aliases are still supported for backward compatibility (
-          <code>clientValidation</code>, <code>optimisticReducer</code>,{" "}
-          <code>serverErrors</code>, <code>lastResult</code>, <code>setServerError</code>,{" "}
-          <code>clearPersisted</code>).
+          <code>clientValidation</code>, <code>optimisticReducer</code>, <code>serverErrors</code>,{' '}
+          <code>lastResult</code>, <code>setServerError</code>, <code>clearPersisted</code>).
         </p>
       </div>
 

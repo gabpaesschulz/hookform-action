@@ -1,7 +1,7 @@
-import { ExampleShell } from "../_components/example-shell";
-import { ValidationForm } from "../validation/validation-form";
+import { ExampleShell } from '../_components/example-shell'
+import { ValidationForm } from '../validation/validation-form'
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 export default function NextSchemaOnceSignupPage() {
   return (
@@ -28,5 +28,5 @@ const form = useActionForm(signupAction, {
 });`}</pre>
       </div>
     </ExampleShell>
-  );
+  )
 }

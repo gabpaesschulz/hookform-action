@@ -16,8 +16,9 @@ export default function ModalFormPage() {
         </div>
         <h1 className="text-3xl font-bold mb-3">Modal / Dialog Form</h1>
         <p className="text-lg text-gray-400">
-          Forms inside modals have a different lifecycle — they must reset when opened, close on success, and handle
-          focus correctly. This recipe covers the canonical pattern and Shadcn/ui Dialog integration.
+          Forms inside modals have a different lifecycle — they must reset when opened, close on
+          success, and handle focus correctly. This recipe covers the canonical pattern and
+          Shadcn/ui Dialog integration.
         </p>
       </div>
 
@@ -25,16 +26,17 @@ export default function ModalFormPage() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-3">Why it matters</h2>
         <p className="text-gray-400 leading-relaxed">
-          A form inside a modal behaves differently from a page-level form. If the modal does not unmount when closed,
-          the form keeps its state — including errors from the last submission. When the user opens it again, they see
-          stale data. When they close it after a success, they may briefly see an empty form before the animation
-          completes.
+          A form inside a modal behaves differently from a page-level form. If the modal does not
+          unmount when closed, the form keeps its state — including errors from the last submission.
+          When the user opens it again, they see stale data. When they close it after a success,
+          they may briefly see an empty form before the animation completes.
         </p>
         <p className="text-gray-400 leading-relaxed mt-3">
-          This recipe solves these issues with two patterns: the{" "}
-          <strong className="text-gray-200">useEffect reset</strong> pattern (for modals that stay mounted) and the{" "}
-          <strong className="text-gray-200">key remount</strong> pattern (the nuclear option that guarantees a fresh
-          form). It also shows Shadcn/ui <code>Dialog</code> integration.
+          This recipe solves these issues with two patterns: the{' '}
+          <strong className="text-gray-200">useEffect reset</strong> pattern (for modals that stay
+          mounted) and the <strong className="text-gray-200">key remount</strong> pattern (the
+          nuclear option that guarantees a fresh form). It also shows Shadcn/ui <code>Dialog</code>{' '}
+          integration.
         </p>
       </section>
 
@@ -42,8 +44,8 @@ export default function ModalFormPage() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-2">Pattern 1 — useEffect reset (stays mounted)</h2>
         <p className="text-gray-400 text-sm mb-5">
-          Best for modals that are conditionally rendered but not unmounted on close (e.g. animated with CSS opacity).
-          Reset the form when the modal opens and close it on success.
+          Best for modals that are conditionally rendered but not unmounted on close (e.g. animated
+          with CSS opacity). Reset the form when the modal opens and close it on success.
         </p>
 
         <div className="mb-5">
@@ -157,9 +159,9 @@ export function CreateItemModal({ isOpen, onClose }: CreateItemModalProps) {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-2">Pattern 2 — key remount (unmount on close)</h2>
         <p className="text-gray-400 text-sm mb-5">
-          The simplest approach: unmount and remount the form component on every open by passing a <code>key</code> that
-          changes. React destroys and recreates the component, giving you a guaranteed fresh state. Best for modals
-          where no CSS animation is needed.
+          The simplest approach: unmount and remount the form component on every open by passing a{' '}
+          <code>key</code> that changes. React destroys and recreates the component, giving you a
+          guaranteed fresh state. Best for modals where no CSS animation is needed.
         </p>
 
         <div className="mb-5">
@@ -202,8 +204,9 @@ export function ItemList() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-2">Shadcn/ui Dialog integration</h2>
         <p className="text-gray-400 text-sm mb-5">
-          Shadcn&apos;s <code>Dialog</code> keeps content mounted by default. Use the <code>useEffect</code> reset
-          pattern and wire <code>onOpenChange</code> to close the modal.
+          Shadcn&apos;s <code>Dialog</code> keeps content mounted by default. Use the{' '}
+          <code>useEffect</code> reset pattern and wire <code>onOpenChange</code> to close the
+          modal.
         </p>
 
         <div className="mb-5">
@@ -291,22 +294,24 @@ export function CreateItemDialog({ open, onOpenChange }: CreateItemDialogProps) 
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">reset() in useEffect on open</code>
             <p className="text-gray-400 text-sm mt-1">
-              When the modal opens, reset the form to clear any state from the previous session. This is essential for
-              modals that stay mounted between opens (e.g. animated with CSS).
+              When the modal opens, reset the form to clear any state from the previous session.
+              This is essential for modals that stay mounted between opens (e.g. animated with CSS).
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">setTimeout before reset on close</code>
             <p className="text-gray-400 text-sm mt-1">
-              If you call <code>reset()</code> synchronously in <code>onSuccess</code> before closing the modal, the
-              user briefly sees an empty form during the close animation. A small delay prevents the flash.
+              If you call <code>reset()</code> synchronously in <code>onSuccess</code> before
+              closing the modal, the user briefly sees an empty form during the close animation. A
+              small delay prevents the flash.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">autoFocus on first field</code>
             <p className="text-gray-400 text-sm mt-1">
-              Always add <code>autoFocus</code> to the first input in the modal for accessibility. Screen reader users
-              and keyboard users expect focus to move to the dialog content when it opens.
+              Always add <code>autoFocus</code> to the first input in the modal for accessibility.
+              Screen reader users and keyboard users expect focus to move to the dialog content when
+              it opens.
             </p>
           </div>
         </div>
@@ -319,11 +324,14 @@ export function CreateItemDialog({ open, onOpenChange }: CreateItemDialogProps) 
           <li className="flex gap-3 bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4">
             <span className="text-yellow-400 shrink-0 mt-0.5">⚠</span>
             <div>
-              <p className="text-sm font-medium text-gray-200">Hiding the modal with CSS instead of unmounting</p>
+              <p className="text-sm font-medium text-gray-200">
+                Hiding the modal with CSS instead of unmounting
+              </p>
               <p className="text-sm text-gray-400 mt-1">
-                If you use <code>display: none</code> or <code>visibility: hidden</code> to hide the modal, the form
-                component stays mounted and retains all its state. The user will see stale errors and values on the next
-                open. Always pair this approach with an explicit <code>useEffect</code> reset.
+                If you use <code>display: none</code> or <code>visibility: hidden</code> to hide the
+                modal, the form component stays mounted and retains all its state. The user will see
+                stale errors and values on the next open. Always pair this approach with an explicit{' '}
+                <code>useEffect</code> reset.
               </p>
             </div>
           </li>
@@ -334,9 +342,9 @@ export function CreateItemDialog({ open, onOpenChange }: CreateItemDialogProps) 
                 Using <code>isSubmitSuccessful</code> to close the modal
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                <code>isSubmitSuccessful</code> does not give you access to the action result. Prefer{" "}
-                <code>onSuccess</code>, which receives the full typed result and is a cleaner place to trigger{" "}
-                <code>onClose()</code>.
+                <code>isSubmitSuccessful</code> does not give you access to the action result.
+                Prefer <code>onSuccess</code>, which receives the full typed result and is a cleaner
+                place to trigger <code>onClose()</code>.
               </p>
             </div>
           </li>
@@ -347,17 +355,26 @@ export function CreateItemDialog({ open, onOpenChange }: CreateItemDialogProps) 
       <section className="border-t border-gray-800 pt-8">
         <h2 className="text-lg font-semibold mb-4">Related</h2>
         <div className="flex flex-wrap gap-4 text-sm">
-          <a href="/recipes/reset-after-success" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/reset-after-success"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Reset After Success
           </a>
-          <a href="/recipes/edit-server-data" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/edit-server-data"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Edit Form with Server Data
           </a>
-          <a href="/api-reference" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/api-reference"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → API Reference
           </a>
         </div>
       </section>
     </div>
-  );
+  )
 }

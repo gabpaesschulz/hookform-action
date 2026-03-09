@@ -1,7 +1,7 @@
-import { ExampleShell } from "../_components/example-shell";
-import { WizardForm } from "../wizard/wizard-form";
+import { ExampleShell } from '../_components/example-shell'
+import { WizardForm } from '../wizard/wizard-form'
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 export default function NextWizardOnboardingPersistPage() {
   return (
@@ -32,6 +32,5 @@ export default function NextWizardOnboardingPersistPage() {
 });`}</pre>
       </div>
     </ExampleShell>
-  );
+  )
 }
-

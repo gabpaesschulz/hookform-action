@@ -16,8 +16,8 @@ export default function ResetAfterSuccessPage() {
         </div>
         <h1 className="text-3xl font-bold mb-3">Reset After Success</h1>
         <p className="text-lg text-gray-400">
-          Three canonical patterns for post-submission UX: redirect, in-place reset with a toast, and showing a success
-          state. Choosing the wrong one leads to subtle bugs.
+          Three canonical patterns for post-submission UX: redirect, in-place reset with a toast,
+          and showing a success state. Choosing the wrong one leads to subtle bugs.
         </p>
       </div>
 
@@ -25,14 +25,15 @@ export default function ResetAfterSuccessPage() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-3">Why it matters</h2>
         <p className="text-gray-400 leading-relaxed">
-          &quot;The form doesn&apos;t clear after I submit&quot; is one of the most common issues raised by developers
-          new to the library. The reason is that <code>isSubmitSuccessful</code> stays <code>true</code> indefinitely,
-          and <code>reset()</code> needs to be called explicitly. These are intentional RHF behaviours — but they need
-          to be wired correctly.
+          &quot;The form doesn&apos;t clear after I submit&quot; is one of the most common issues
+          raised by developers new to the library. The reason is that{' '}
+          <code>isSubmitSuccessful</code> stays <code>true</code> indefinitely, and{' '}
+          <code>reset()</code> needs to be called explicitly. These are intentional RHF behaviours —
+          but they need to be wired correctly.
         </p>
         <p className="text-gray-400 leading-relaxed mt-3">
-          There are three distinct patterns depending on your UX goal. Pick the right one and you avoid ghost states,
-          stale data, and infinite success screens.
+          There are three distinct patterns depending on your UX goal. Pick the right one and you
+          avoid ghost states, stale data, and infinite success screens.
         </p>
       </section>
 
@@ -40,8 +41,9 @@ export default function ResetAfterSuccessPage() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-2">Pattern 1 — Redirect after submit</h2>
         <p className="text-gray-400 text-sm mb-5">
-          Best for create-and-navigate flows: create a post, place an order, complete onboarding. The server calls{" "}
-          <code>redirect()</code> and the page navigates away — no client-side reset needed.
+          Best for create-and-navigate flows: create a post, place an order, complete onboarding.
+          The server calls <code>redirect()</code> and the page navigates away — no client-side
+          reset needed.
         </p>
 
         <div className="mb-5">
@@ -64,8 +66,9 @@ export const createPostAction = withZod(postSchema, async (data) => {
 
         <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-4 text-sm text-gray-400">
           <span className="text-blue-400 font-medium">Note: </span>
-          After <code>redirect()</code> the hook sets <code>isSubmitSuccessful = true</code>, but the page navigates
-          away immediately so this state is never rendered. You do not need to handle it on the client.
+          After <code>redirect()</code> the hook sets <code>isSubmitSuccessful = true</code>, but
+          the page navigates away immediately so this state is never rendered. You do not need to
+          handle it on the client.
         </div>
       </section>
 
@@ -73,8 +76,9 @@ export const createPostAction = withZod(postSchema, async (data) => {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-2">Pattern 2 — In-place reset with onSuccess</h2>
         <p className="text-gray-400 text-sm mb-5">
-          Best for forms that stay on the same page after submission: comment boxes, subscription forms, quick-add
-          widgets. Use <code>onSuccess</code> to call <code>reset()</code> and optionally show a toast.
+          Best for forms that stay on the same page after submission: comment boxes, subscription
+          forms, quick-add widgets. Use <code>onSuccess</code> to call <code>reset()</code> and
+          optionally show a toast.
         </p>
 
         <div className="mb-5">
@@ -134,8 +138,8 @@ export function CommentForm() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-2">Pattern 3 — isSubmitSuccessful guard</h2>
         <p className="text-gray-400 text-sm mb-5">
-          Best for single-use forms where you want to replace the form with a success message: contact forms, RSVP
-          forms, one-time redemptions.
+          Best for single-use forms where you want to replace the form with a success message:
+          contact forms, RSVP forms, one-time redemptions.
         </p>
 
         <div className="mb-5">
@@ -188,9 +192,9 @@ export function ContactForm() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-2">Bonus — Clearing persistence after wizard submit</h2>
         <p className="text-gray-400 text-sm mb-5">
-          When using <code>persistKey</code>, always call <code>clearPersistedData()</code> in <code>onSuccess</code> to
-          remove the saved draft from <code>sessionStorage</code>. Otherwise the user will see stale data if they open
-          the form again.
+          When using <code>persistKey</code>, always call <code>clearPersistedData()</code> in{' '}
+          <code>onSuccess</code> to remove the saved draft from <code>sessionStorage</code>.
+          Otherwise the user will see stale data if they open the form again.
         </p>
 
         <div className="code-block text-gray-300">
@@ -212,24 +216,26 @@ export function ContactForm() {
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">reset()</code>
             <p className="text-gray-400 text-sm mt-1">
-              Resets all fields to <code>defaultValues</code>, clears all errors, and resets RHF state (
-              <code>isDirty</code>, <code>isSubmitSuccessful</code>, etc.). <code>reset(newValues)</code> additionally
-              updates the stored default values — useful after editing a record.
+              Resets all fields to <code>defaultValues</code>, clears all errors, and resets RHF
+              state (<code>isDirty</code>, <code>isSubmitSuccessful</code>, etc.).{' '}
+              <code>reset(newValues)</code> additionally updates the stored default values — useful
+              after editing a record.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">isSubmitSuccessful</code>
             <p className="text-gray-400 text-sm mt-1">
-              Becomes <code>true</code> after a successful action call (no field errors returned) and stays{" "}
-              <code>true</code> until <code>reset()</code> is called or the component unmounts. This is intentional —
-              use it as the guard for your success UI.
+              Becomes <code>true</code> after a successful action call (no field errors returned)
+              and stays <code>true</code> until <code>reset()</code> is called or the component
+              unmounts. This is intentional — use it as the guard for your success UI.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">onSuccess callback</code>
             <p className="text-gray-400 text-sm mt-1">
-              Receives the full action result and fires only when the action succeeds (no field errors). The best place
-              to call <code>reset()</code>, show a toast, or trigger a router navigation.
+              Receives the full action result and fires only when the action succeeds (no field
+              errors). The best place to call <code>reset()</code>, show a toast, or trigger a
+              router navigation.
             </p>
           </div>
         </div>
@@ -243,22 +249,25 @@ export function ContactForm() {
             <span className="text-yellow-400 shrink-0 mt-0.5">⚠</span>
             <div>
               <p className="text-sm font-medium text-gray-200">
-                Calling <code>reset()</code> in a <code>useEffect</code> watching <code>isSubmitSuccessful</code>
+                Calling <code>reset()</code> in a <code>useEffect</code> watching{' '}
+                <code>isSubmitSuccessful</code>
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                This creates a double-render cycle. Prefer <code>onSuccess</code> — it fires synchronously after the
-                action resolves, before any re-render.
+                This creates a double-render cycle. Prefer <code>onSuccess</code> — it fires
+                synchronously after the action resolves, before any re-render.
               </p>
             </div>
           </li>
           <li className="flex gap-3 bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4">
             <span className="text-yellow-400 shrink-0 mt-0.5">⚠</span>
             <div>
-              <p className="text-sm font-medium text-gray-200">Resetting inside a modal — flash of empty form</p>
+              <p className="text-sm font-medium text-gray-200">
+                Resetting inside a modal — flash of empty form
+              </p>
               <p className="text-sm text-gray-400 mt-1">
-                If you <code>reset()</code> and then close the modal in <code>onSuccess</code>, the form briefly shows
-                empty before the modal animation completes. Prefer resetting in the <code>onClose</code> handler
-                instead, or use a <code>key</code> prop to remount.
+                If you <code>reset()</code> and then close the modal in <code>onSuccess</code>, the
+                form briefly shows empty before the modal animation completes. Prefer resetting in
+                the <code>onClose</code> handler instead, or use a <code>key</code> prop to remount.
               </p>
             </div>
           </li>
@@ -269,9 +278,9 @@ export function ContactForm() {
                 <code>reset()</code> without arguments on an edit form
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                If <code>defaultValues</code> came from the server and the user just saved new data, calling{" "}
-                <code>reset()</code> reverts to the old server data. Use <code>reset(result.data)</code> to update the
-                baseline after a successful edit.
+                If <code>defaultValues</code> came from the server and the user just saved new data,
+                calling <code>reset()</code> reverts to the old server data. Use{' '}
+                <code>reset(result.data)</code> to update the baseline after a successful edit.
               </p>
             </div>
           </li>
@@ -282,20 +291,32 @@ export function ContactForm() {
       <section className="border-t border-gray-800 pt-8">
         <h2 className="text-lg font-semibold mb-4">Related</h2>
         <div className="flex flex-wrap gap-4 text-sm">
-          <a href="/recipes/login-form" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/login-form"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Login Form
           </a>
-          <a href="/recipes/modal-form" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/modal-form"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Modal / Dialog Form
           </a>
-          <a href="/recipes/multi-step-wizard" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/multi-step-wizard"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Multi-Step Wizard
           </a>
-          <a href="/api-reference" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/api-reference"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → API Reference
           </a>
         </div>
       </section>
     </div>
-  );
+  )
 }

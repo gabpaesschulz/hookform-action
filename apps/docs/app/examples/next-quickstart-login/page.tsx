@@ -1,7 +1,7 @@
-import { LoginForm } from "../login/login-form";
-import { ExampleShell } from "../_components/example-shell";
+import { ExampleShell } from '../_components/example-shell'
+import { LoginForm } from '../login/login-form'
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 export default function NextQuickstartLoginPage() {
   return (
@@ -18,8 +18,8 @@ export default function NextQuickstartLoginPage() {
 
       <h2 className="text-xl font-semibold mb-3">Why this sells the library</h2>
       <p className="text-gray-400 mb-6">
-        This is the shortest path from install to success. It proves pending state, server validation,
-        and field-level error mapping in one place.
+        This is the shortest path from install to success. It proves pending state, server
+        validation, and field-level error mapping in one place.
       </p>
 
       <div className="code-block text-gray-300">
@@ -34,6 +34,5 @@ export default function NextQuickstartLoginPage() {
 </form>`}</pre>
       </div>
     </ExampleShell>
-  );
+  )
 }
-

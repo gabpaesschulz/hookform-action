@@ -1,4 +1,4 @@
-import { ExampleShell } from "../_components/example-shell";
+import { ExampleShell } from '../_components/example-shell'
 
 export default function StandaloneQuickstartLoginPage() {
   return (
@@ -52,5 +52,5 @@ export function LoginForm() {
         Strategic point: this removes framework lock-in objections during evaluation.
       </p>
     </ExampleShell>
-  );
+  )
 }

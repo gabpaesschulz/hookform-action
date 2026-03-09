@@ -9,7 +9,7 @@ export default function WhyPage() {
 
       <h1 className="text-4xl font-extrabold mb-4">Manual setup vs hookform-action</h1>
       <p className="text-gray-400 text-lg mb-16 max-w-2xl">
-        A concrete comparison of wiring React Hook Form with Server Actions by hand, versus using{" "}
+        A concrete comparison of wiring React Hook Form with Server Actions by hand, versus using{' '}
         <code>hookform-action</code> as the integration layer.
       </p>
 
@@ -46,13 +46,15 @@ export default function WhyPage() {
                   Call <code>setError()</code> for each field after parsing the action result
                 </td>
                 <td className="py-3.5 text-gray-300">
-                  Automatic via <code>defaultErrorMapper</code> — override with <code>errorMapper</code> when needed
+                  Automatic via <code>defaultErrorMapper</code> — override with{' '}
+                  <code>errorMapper</code> when needed
                 </td>
               </tr>
               <tr>
                 <td className="py-3.5 pr-6 font-medium">Client-side validation</td>
                 <td className="py-3.5 pr-6 text-gray-400">
-                  Pass <code>resolver</code> to <code>useForm</code> and keep schema in sync with server
+                  Pass <code>resolver</code> to <code>useForm</code> and keep schema in sync with
+                  server
                 </td>
                 <td className="py-3.5 text-gray-300">
                   Set <code>validationMode</code> — schema auto-detected from <code>withZod</code>
@@ -61,7 +63,8 @@ export default function WhyPage() {
               <tr>
                 <td className="py-3.5 pr-6 font-medium">Pending / loading state</td>
                 <td className="py-3.5 pr-6 text-gray-400">
-                  <code>useTransition</code> + <code>useState</code> wiring around <code>startTransition</code>
+                  <code>useTransition</code> + <code>useState</code> wiring around{' '}
+                  <code>startTransition</code>
                 </td>
                 <td className="py-3.5 text-gray-300">
                   <code>formState.isPending</code> backed by <code>useTransition</code> internally
@@ -130,30 +133,35 @@ export default function WhyPage() {
                 Pass <code>zodResolver(schema)</code> to <code>useForm</code>
               </li>
               <li>
-                In the Server Action: call <code>schema.safeParse(data)</code>, format <code>fieldErrors</code>, return
-                them
+                In the Server Action: call <code>schema.safeParse(data)</code>, format{' '}
+                <code>fieldErrors</code>, return them
               </li>
               <li>
-                In the component: inspect action result, loop over errors, call <code>setError(field, …)</code> for each
+                In the component: inspect action result, loop over errors, call{' '}
+                <code>setError(field, …)</code> for each
               </li>
               <li>
                 Wire <code>useTransition</code> around the action call to get <code>isPending</code>
               </li>
               <li>
-                If you need optimistic UI: add <code>useOptimistic</code>, compute next state, pass to{" "}
-                <code>startTransition</code>, handle rollback
+                If you need optimistic UI: add <code>useOptimistic</code>, compute next state, pass
+                to <code>startTransition</code>, handle rollback
               </li>
               <li>
-                If you need persistence: write a <code>useEffect</code> to save/restore from <code>sessionStorage</code>
-                , debounce it, clear on unmount
+                If you need persistence: write a <code>useEffect</code> to save/restore from{' '}
+                <code>sessionStorage</code>, debounce it, clear on unmount
               </li>
             </ol>
-            <p className="mt-4 text-xs text-red-400/70">Each new form repeats steps 3–7 from scratch.</p>
+            <p className="mt-4 text-xs text-red-400/70">
+              Each new form repeats steps 3–7 from scratch.
+            </p>
           </div>
 
           {/* hookform-action */}
           <div className="border border-brand-700/40 bg-brand-950/10 rounded-xl p-6">
-            <h3 className="text-base font-semibold text-brand-400 mb-4">hookform-action — steps per form</h3>
+            <h3 className="text-base font-semibold text-brand-400 mb-4">
+              hookform-action — steps per form
+            </h3>
             <ol className="space-y-3 text-sm text-gray-300 list-decimal list-inside marker:text-brand-600">
               <li>
                 Wrap server action with <code>withZod(schema, handler)</code>
@@ -162,12 +170,12 @@ export default function WhyPage() {
                 Call <code>useActionForm(action, options)</code> in the component
               </li>
               <li>
-                Use <code>register</code>, <code>handleSubmit()</code>, and <code>formState.errors</code> as you
-                normally would with RHF
+                Use <code>register</code>, <code>handleSubmit()</code>, and{' '}
+                <code>formState.errors</code> as you normally would with RHF
               </li>
             </ol>
             <p className="mt-4 text-xs text-brand-400/70">
-              Steps 4–7 from the manual list become opt-in options: <code>validationMode</code>,{" "}
+              Steps 4–7 from the manual list become opt-in options: <code>validationMode</code>,{' '}
               <code>optimisticData</code>, <code>persistKey</code>.
             </p>
           </div>
@@ -189,7 +197,9 @@ export default function WhyPage() {
         </h3>
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div>
-            <p className="text-xs text-red-400 font-medium mb-2 uppercase tracking-widest">Manual</p>
+            <p className="text-xs text-red-400 font-medium mb-2 uppercase tracking-widest">
+              Manual
+            </p>
             <div className="code-block text-gray-300 text-xs leading-relaxed">
               <pre>{`// actions.ts
 'use server'
@@ -221,7 +231,9 @@ export async function loginAction(data: unknown) {
             </div>
           </div>
           <div>
-            <p className="text-xs text-brand-400 font-medium mb-2 uppercase tracking-widest">hookform-action</p>
+            <p className="text-xs text-brand-400 font-medium mb-2 uppercase tracking-widest">
+              hookform-action
+            </p>
             <div className="code-block text-gray-300 text-xs leading-relaxed">
               <pre>{`// actions.ts
 'use server'
@@ -255,7 +267,9 @@ export const loginAction = withZod(
         </h3>
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <p className="text-xs text-red-400 font-medium mb-2 uppercase tracking-widest">Manual</p>
+            <p className="text-xs text-red-400 font-medium mb-2 uppercase tracking-widest">
+              Manual
+            </p>
             <div className="code-block text-gray-300 text-xs leading-relaxed">
               <pre>{`// LoginForm.tsx
 'use client'
@@ -317,7 +331,9 @@ export function LoginForm() {
             </div>
           </div>
           <div>
-            <p className="text-xs text-brand-400 font-medium mb-2 uppercase tracking-widest">hookform-action</p>
+            <p className="text-xs text-brand-400 font-medium mb-2 uppercase tracking-widest">
+              hookform-action
+            </p>
             <div className="code-block text-gray-300 text-xs leading-relaxed">
               <pre>{`// LoginForm.tsx
 'use client'
@@ -367,7 +383,9 @@ export function LoginForm() {
           </div>
           <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4">
             <p className="text-2xl font-bold text-emerald-400 mb-1">−3</p>
-            <p className="text-gray-500 text-xs">concepts to keep in sync (resolver, transition, setError loop)</p>
+            <p className="text-gray-500 text-xs">
+              concepts to keep in sync (resolver, transition, setError loop)
+            </p>
           </div>
         </div>
       </section>
@@ -379,20 +397,20 @@ export function LoginForm() {
         <h2 className="text-2xl font-bold mb-4">Bottom line</h2>
         <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-8 space-y-4 text-gray-300 leading-relaxed">
           <p>
-            The manual approach works. React Hook Form, Zod, and Server Actions are well-designed primitives and wiring
-            them yourself is absolutely viable on a small form.
+            The manual approach works. React Hook Form, Zod, and Server Actions are well-designed
+            primitives and wiring them yourself is absolutely viable on a small form.
           </p>
           <p>
-            The friction compounds as the app grows: every new form repeats the same <code>safeParse</code> boilerplate
-            on the server, the same <code>setError</code> loop on the client, the same <code>useTransition</code>{" "}
-            wrapper for pending state. When you add optimistic updates or multi-step persistence the surface area grows
-            further.
+            The friction compounds as the app grows: every new form repeats the same{' '}
+            <code>safeParse</code> boilerplate on the server, the same <code>setError</code> loop on
+            the client, the same <code>useTransition</code> wrapper for pending state. When you add
+            optimistic updates or multi-step persistence the surface area grows further.
           </p>
           <p>
-            <code>hookform-action</code> doesn&apos;t hide any of those primitives — it codifies the patterns you would
-            write anyway into a single hook and a single server wrapper. You keep full access to the underlying{" "}
-            <code>useForm</code> instance and can still pass any RHF option. The goal is to remove the repetitive
-            plumbing, not to abstract away control.
+            <code>hookform-action</code> doesn&apos;t hide any of those primitives — it codifies the
+            patterns you would write anyway into a single hook and a single server wrapper. You keep
+            full access to the underlying <code>useForm</code> instance and can still pass any RHF
+            option. The goal is to remove the repetitive plumbing, not to abstract away control.
           </p>
           <div className="pt-2 flex gap-4">
             <a
@@ -411,5 +429,5 @@ export function LoginForm() {
         </div>
       </section>
     </div>
-  );
+  )
 }

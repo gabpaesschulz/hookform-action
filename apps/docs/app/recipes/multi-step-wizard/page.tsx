@@ -17,8 +17,8 @@ export default function MultiStepWizardPage() {
         </div>
         <h1 className="text-3xl font-bold mb-3">Multi-Step Wizard</h1>
         <p className="text-lg text-gray-400">
-          Per-step validation, sessionStorage-backed progress, and safe cleanup on final submit — the most complete
-          demonstration of what makes this library different.
+          Per-step validation, sessionStorage-backed progress, and safe cleanup on final submit —
+          the most complete demonstration of what makes this library different.
         </p>
         <a
           href="/examples/wizard"
@@ -32,15 +32,16 @@ export default function MultiStepWizardPage() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-3">Why it matters</h2>
         <p className="text-gray-400 leading-relaxed">
-          Multi-step wizards are notoriously painful to implement: you need to validate only the current step&apos;s
-          fields before advancing, persist progress so the user can close the tab and come back, and cleanly submit all
-          steps&apos; data in a single action at the end.
+          Multi-step wizards are notoriously painful to implement: you need to validate only the
+          current step&apos;s fields before advancing, persist progress so the user can close the
+          tab and come back, and cleanly submit all steps&apos; data in a single action at the end.
         </p>
         <p className="text-gray-400 leading-relaxed mt-3">
           <code>hookform-action</code> solves this with a single hook instance spanning all steps.
-          <code>trigger(fields)</code> validates a subset of fields without submitting. <code>persistKey</code>{" "}
-          automatically serialises form state to <code>sessionStorage</code> on every change. And{" "}
-          <code>clearPersistedData()</code> removes the draft cleanly on success. No external state manager needed.
+          <code>trigger(fields)</code> validates a subset of fields without submitting.{' '}
+          <code>persistKey</code> automatically serialises form state to <code>sessionStorage</code>{' '}
+          on every change. And <code>clearPersistedData()</code> removes the draft cleanly on
+          success. No external state manager needed.
         </p>
       </section>
 
@@ -241,33 +242,36 @@ export function OnboardingWizard() {
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">trigger(fields)</code>
             <p className="text-gray-400 text-sm mt-1">
-              Runs client-side validation on a specific subset of fields and returns <code>true</code> if all pass. Pass
-              only the fields of the current step to avoid surfacing errors from future steps prematurely. Calling{" "}
-              <code>trigger()</code> with no arguments validates everything — avoid this between steps.
+              Runs client-side validation on a specific subset of fields and returns{' '}
+              <code>true</code> if all pass. Pass only the fields of the current step to avoid
+              surfacing errors from future steps prematurely. Calling <code>trigger()</code> with no
+              arguments validates everything — avoid this between steps.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">persistKey + persistDebounce</code>
             <p className="text-gray-400 text-sm mt-1">
-              <code>persistKey</code> enables automatic <code>sessionStorage</code> persistence. The form state is saved
-              under this key on every change (debounced by <code>persistDebounce</code> ms, default 300) and restored on
-              mount. The user can close the browser and return to find their progress intact.
+              <code>persistKey</code> enables automatic <code>sessionStorage</code> persistence. The
+              form state is saved under this key on every change (debounced by{' '}
+              <code>persistDebounce</code> ms, default 300) and restored on mount. The user can
+              close the browser and return to find their progress intact.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">clearPersistedData()</code>
             <p className="text-gray-400 text-sm mt-1">
-              Manually removes the persisted state for this form&apos;s <code>persistKey</code>. Always call it in{" "}
-              <code>onSuccess</code> after wizard completion — otherwise the next user to open the form (or the current
-              user if they start again) will see the completed wizard&apos;s data pre-filled.
+              Manually removes the persisted state for this form&apos;s <code>persistKey</code>.
+              Always call it in <code>onSuccess</code> after wizard completion — otherwise the next
+              user to open the form (or the current user if they start again) will see the completed
+              wizard&apos;s data pre-filled.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">Single hook instance across all steps</code>
             <p className="text-gray-400 text-sm mt-1">
-              All fields are registered in one <code>useActionForm</code> call. The active step is controlled by plain{" "}
-              <code>useState</code>. This means the entire form state is consistent at all times, and the final submit
-              sends all fields in one action call.
+              All fields are registered in one <code>useActionForm</code> call. The active step is
+              controlled by plain <code>useState</code>. This means the entire form state is
+              consistent at all times, and the final submit sends all fields in one action call.
             </p>
           </div>
         </div>
@@ -284,8 +288,9 @@ export function OnboardingWizard() {
                 Calling <code>trigger()</code> without arguments between steps
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                This validates all fields — including ones in future steps the user has not seen yet — and shows errors
-                prematurely. Always pass the explicit list of fields for the current step.
+                This validates all fields — including ones in future steps the user has not seen yet
+                — and shows errors prematurely. Always pass the explicit list of fields for the
+                current step.
               </p>
             </div>
           </li>
@@ -296,8 +301,9 @@ export function OnboardingWizard() {
                 Using <code>isSubmitSuccessful</code> to advance between steps
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                <code>isSubmitSuccessful</code> only becomes <code>true</code> after the final action call succeeds. Use
-                it exclusively as the guard for the completion screen. Step navigation is purely local state.
+                <code>isSubmitSuccessful</code> only becomes <code>true</code> after the final
+                action call succeeds. Use it exclusively as the guard for the completion screen.
+                Step navigation is purely local state.
               </p>
             </div>
           </li>
@@ -308,20 +314,24 @@ export function OnboardingWizard() {
                 Forgetting <code>clearPersistedData()</code> after submission
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                The persistence happens automatically on every change. After success, the persisted data is not removed
-                automatically — you must call <code>clearPersistedData()</code> in <code>onSuccess</code>, or the next
-                visit to the form will restore the completed wizard.
+                The persistence happens automatically on every change. After success, the persisted
+                data is not removed automatically — you must call <code>clearPersistedData()</code>{' '}
+                in <code>onSuccess</code>, or the next visit to the form will restore the completed
+                wizard.
               </p>
             </div>
           </li>
           <li className="flex gap-3 bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4">
             <span className="text-yellow-400 shrink-0 mt-0.5">⚠</span>
             <div>
-              <p className="text-sm font-medium text-gray-200">The current step is not persisted by default</p>
+              <p className="text-sm font-medium text-gray-200">
+                The current step is not persisted by default
+              </p>
               <p className="text-sm text-gray-400 mt-1">
-                <code>persistKey</code> saves field values, not the step index. If the user returns after a refresh, the
-                form starts at step 0 with the field values intact. To also persist the step, store it in{" "}
-                <code>sessionStorage</code> alongside the form, or include a hidden <code>currentStep</code> field.
+                <code>persistKey</code> saves field values, not the step index. If the user returns
+                after a refresh, the form starts at step 0 with the field values intact. To also
+                persist the step, store it in <code>sessionStorage</code> alongside the form, or
+                include a hidden <code>currentStep</code> field.
               </p>
             </div>
           </li>
@@ -332,20 +342,32 @@ export function OnboardingWizard() {
       <section className="border-t border-gray-800 pt-8">
         <h2 className="text-lg font-semibold mb-4">Related</h2>
         <div className="flex flex-wrap gap-4 text-sm">
-          <a href="/recipes/reset-after-success" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/reset-after-success"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Reset After Success
           </a>
-          <a href="/recipes/signup-server-errors" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/signup-server-errors"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Sign Up with Server Errors
           </a>
-          <a href="/examples/wizard" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/examples/wizard"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Live Wizard Example
           </a>
-          <a href="/api-reference" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/api-reference"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → API Reference
           </a>
         </div>
       </section>
     </div>
-  );
+  )
 }

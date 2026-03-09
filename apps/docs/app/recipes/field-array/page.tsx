@@ -16,8 +16,8 @@ export default function FieldArrayPage() {
         </div>
         <h1 className="text-3xl font-bold mb-3">Dynamic Fields with useFieldArray</h1>
         <p className="text-lg text-gray-400">
-          Add and remove array items at runtime, validate each row independently, and submit the full typed array to
-          your server action.
+          Add and remove array items at runtime, validate each row independently, and submit the
+          full typed array to your server action.
         </p>
       </div>
 
@@ -25,15 +25,16 @@ export default function FieldArrayPage() {
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-3">Why it matters</h2>
         <p className="text-gray-400 leading-relaxed">
-          Dynamic lists — invoice line items, contact addresses, team members, skill tags — are one of the most common
-          patterns in real-world forms. React Hook Form&apos;s <code>useFieldArray</code> is the standard solution, but
-          integrating it with <code>useActionForm</code> has nuances: the <code>control</code> object must come from the
-          hook, arrays don&apos;t play well with <code>FormData</code> actions, and per-item error paths have a specific
-          shape.
+          Dynamic lists — invoice line items, contact addresses, team members, skill tags — are one
+          of the most common patterns in real-world forms. React Hook Form&apos;s{' '}
+          <code>useFieldArray</code> is the standard solution, but integrating it with{' '}
+          <code>useActionForm</code> has nuances: the <code>control</code> object must come from the
+          hook, arrays don&apos;t play well with <code>FormData</code> actions, and per-item error
+          paths have a specific shape.
         </p>
         <p className="text-gray-400 leading-relaxed mt-3">
-          This recipe shows a complete address list form with add, remove, per-field errors, and a <code>withZod</code>{" "}
-          server action that receives and validates the full typed array.
+          This recipe shows a complete address list form with add, remove, per-field errors, and a{' '}
+          <code>withZod</code> server action that receives and validates the full typed array.
         </p>
       </section>
 
@@ -207,32 +208,34 @@ export function AddressForm() {
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">useFieldArray requires control</code>
             <p className="text-gray-400 text-sm mt-1">
-              <code>useFieldArray</code> is from <code>react-hook-form</code> (not this library). It needs the{" "}
-              <code>control</code> object from <code>useActionForm</code>. You cannot use it with the standalone{" "}
-              <code>register</code> spread pattern.
+              <code>useFieldArray</code> is from <code>react-hook-form</code> (not this library). It
+              needs the <code>control</code> object from <code>useActionForm</code>. You cannot use
+              it with the standalone <code>register</code> spread pattern.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">field.id as key (not index)</code>
             <p className="text-gray-400 text-sm mt-1">
-              <code>useFieldArray</code> generates stable IDs for each row. Always use <code>field.id</code> as the
-              React <code>key</code>, not the array index. Index-based keys cause incorrect animations and state
-              mismatches when rows are removed.
+              <code>useFieldArray</code> generates stable IDs for each row. Always use{' '}
+              <code>field.id</code> as the React <code>key</code>, not the array index. Index-based
+              keys cause incorrect animations and state mismatches when rows are removed.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
-            <code className="text-brand-400">{`register(\`name.\${index}.field\`)`} — dot notation</code>
+            <code className="text-brand-400">
+              {'register(`name.${index}.field`)'} — dot notation
+            </code>
             <p className="text-gray-400 text-sm mt-1">
-              Use template literal dot-notation to register nested array fields. RHF will collect them into a properly
-              structured array in <code>getValues()</code> and on submit.
+              Use template literal dot-notation to register nested array fields. RHF will collect
+              them into a properly structured array in <code>getValues()</code> and on submit.
             </p>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
             <code className="text-brand-400">Use withZod (JSON action), not FormData</code>
             <p className="text-gray-400 text-sm mt-1">
-              FormData doesn&apos;t natively support nested arrays. Always use <code>withZod</code> (which sends JSON)
-              for forms with <code>useFieldArray</code>. If you must use a FormData action, serialize the array manually
-              with <code>JSON.stringify</code>.
+              FormData doesn&apos;t natively support nested arrays. Always use <code>withZod</code>{' '}
+              (which sends JSON) for forms with <code>useFieldArray</code>. If you must use a
+              FormData action, serialize the array manually with <code>JSON.stringify</code>.
             </p>
           </div>
         </div>
@@ -249,8 +252,9 @@ export function AddressForm() {
                 Using the array index as <code>key</code>
               </p>
               <p className="text-sm text-gray-400 mt-1">
-                When you remove item at index 1 from [0, 1, 2], React reuses the DOM node for the new index 1
-                (previously index 2). Input values get mixed up. Always use <code>field.id</code>.
+                When you remove item at index 1 from [0, 1, 2], React reuses the DOM node for the
+                new index 1 (previously index 2). Input values get mixed up. Always use{' '}
+                <code>field.id</code>.
               </p>
             </div>
           </li>
@@ -259,19 +263,22 @@ export function AddressForm() {
             <div>
               <p className="text-sm font-medium text-gray-200">Per-item errors path typo</p>
               <p className="text-sm text-gray-400 mt-1">
-                The errors path is <code>errors.addresses?.[index]?.street?.message</code> — note the optional chaining
-                at each level. Missing any level causes a runtime error when there are no errors.
+                The errors path is <code>errors.addresses?.[index]?.street?.message</code> — note
+                the optional chaining at each level. Missing any level causes a runtime error when
+                there are no errors.
               </p>
             </div>
           </li>
           <li className="flex gap-3 bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4">
             <span className="text-yellow-400 shrink-0 mt-0.5">⚠</span>
             <div>
-              <p className="text-sm font-medium text-gray-200">EMPTY_ADDRESS defined inside the component</p>
+              <p className="text-sm font-medium text-gray-200">
+                EMPTY_ADDRESS defined inside the component
+              </p>
               <p className="text-sm text-gray-400 mt-1">
-                Define the empty item template outside the component (or with <code>useCallback</code> /{" "}
-                <code>useMemo</code>). An inline object creates a new reference on every render and can cause unexpected{" "}
-                <code>append</code> behaviour.
+                Define the empty item template outside the component (or with{' '}
+                <code>useCallback</code> / <code>useMemo</code>). An inline object creates a new
+                reference on every render and can cause unexpected <code>append</code> behaviour.
               </p>
             </div>
           </li>
@@ -282,10 +289,16 @@ export function AddressForm() {
       <section className="border-t border-gray-800 pt-8">
         <h2 className="text-lg font-semibold mb-4">Related</h2>
         <div className="flex flex-wrap gap-4 text-sm">
-          <a href="/recipes/nested-fields" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/nested-fields"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Nested Fields &amp; Sub-components
           </a>
-          <a href="/recipes/signup-server-errors" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/recipes/signup-server-errors"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → Sign Up with Server Errors
           </a>
           <a
@@ -296,11 +309,14 @@ export function AddressForm() {
           >
             → RHF useFieldArray docs ↗
           </a>
-          <a href="/api-reference" className="text-brand-400 hover:text-brand-300 transition-colors">
+          <a
+            href="/api-reference"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
             → API Reference
           </a>
         </div>
       </section>
     </div>
-  );
+  )
 }
