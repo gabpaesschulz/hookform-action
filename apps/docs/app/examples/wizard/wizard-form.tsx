@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionForm } from 'hookform-action-core'
+import { useActionForm } from 'hookform-action'
 import { useState } from 'react'
 import { wizardAction } from './actions'
 
@@ -14,7 +14,7 @@ export function WizardForm() {
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
     trigger,
-    getValues,
+    watch,
   } = useActionForm(wizardAction, {
     defaultValues: {
       firstName: '',
@@ -28,6 +28,8 @@ export function WizardForm() {
     persistKey: 'wizard-onboarding',
     persistDebounce: 200,
   })
+
+  const selectedPlan = watch('plan')
 
   if (isSubmitSuccessful) {
     return (
@@ -156,7 +158,7 @@ export function WizardForm() {
                   <label
                     key={plan}
                     className={`relative flex flex-col items-center p-4 border rounded-lg cursor-pointer transition-colors ${
-                      getValues('plan') === plan
+                      selectedPlan === plan
                         ? 'border-brand-500 bg-brand-500/10'
                         : 'border-gray-700 hover:border-gray-600'
                     }`}

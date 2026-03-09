@@ -74,7 +74,8 @@ export default function ValidationExamplePage() {
         <div className="code-block text-gray-300">
           <pre>{`'use client'
 import { useActionForm } from 'hookform-action'
-import { signupAction, signupSchema } from './actions'
+import { signupAction } from './actions'
+import { signupSchema } from './schema'
 
 export function SignupForm() {
   // Same Zod schema used on both client and server

@@ -23,6 +23,9 @@ importers:
 
   apps/docs:
     dependencies:
+      hookform-action:
+        specifier: workspace:*
+        version: link:../../packages/next
       hookform-action-core:
         specifier: workspace:*
         version: link:../../packages/core
