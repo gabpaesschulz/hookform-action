@@ -1,6 +1,6 @@
 {
   "name": "hookform-action-core",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Framework-agnostic core for typed React Hook Form submit flows: withZod, error mapping, optimistic UI, and persistence.",
   "keywords": [
     "next.js",
@@ -78,7 +78,11 @@
       }
     }
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
