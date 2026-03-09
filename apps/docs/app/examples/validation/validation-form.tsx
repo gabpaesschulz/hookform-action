@@ -1,7 +1,8 @@
 'use client'
 
-import { useActionForm } from 'hookform-action-core'
-import { signupAction, signupSchema } from './actions'
+import { useActionForm } from 'hookform-action'
+import { signupAction } from './actions'
+import { signupSchema } from './schema'
 
 export function ValidationForm() {
   const {

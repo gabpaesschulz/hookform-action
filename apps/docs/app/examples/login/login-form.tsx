@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionForm } from 'hookform-action-core'
+import { useActionForm } from 'hookform-action'
 import { loginAction } from './actions'
 
 export function LoginForm() {

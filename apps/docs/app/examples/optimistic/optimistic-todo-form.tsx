@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionForm } from 'hookform-action-core'
+import { useActionForm } from 'hookform-action'
 import { type Todo, addTodoAction } from './actions'
 
 const initialTodos: Todo[] = [
@@ -9,14 +9,21 @@ const initialTodos: Todo[] = [
   { id: '3', text: 'Add optimistic UI to my app', done: false },
 ]
 
+type AddTodoResult = {
+  todos: Todo[]
+  errors?: {
+    text?: string[]
+  }
+}
+
 export function OptimisticTodoForm() {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isPending },
+    formState: { errors, isPending, actionResult },
     optimistic,
-  } = useActionForm(addTodoAction, {
+  } = useActionForm<{ text: string }, AddTodoResult, Todo[]>(addTodoAction, {
     defaultValues: { text: '' },
     optimisticKey: 'todos',
     optimisticInitial: initialTodos,
@@ -26,7 +33,8 @@ export function OptimisticTodoForm() {
     ],
   })
 
-  const todos = optimistic?.data ?? initialTodos
+  const confirmedTodos = actionResult?.todos ?? initialTodos
+  const todos = optimistic?.isPending ? (optimistic.data ?? confirmedTodos) : confirmedTodos
 
   return (
     <div className="space-y-6">
