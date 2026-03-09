@@ -1,5 +1,11 @@
 # next-action-form
 
+## 4.0.4
+
+### Patch Changes
+
+- 75f54f6: Publish a patch release with the latest docs, examples, lint/format alignment, and core adapter consistency updates.
+
 ## 5.0.0
 
 ### Major Changes

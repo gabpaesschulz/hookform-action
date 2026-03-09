@@ -1,6 +1,6 @@
 {
   "name": "hookform-action-standalone",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Standalone typed submit flows for React Hook Form with Zod mapping, optimistic UI, persistence, and DevTools.",
   "keywords": [
     "react",
@@ -35,7 +35,11 @@
       }
     }
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",

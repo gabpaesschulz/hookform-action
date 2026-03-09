@@ -1,8 +1,15 @@
 {
   "name": "hookform-action",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Typed submit flows for React Hook Form + Next.js Server Actions, with Zod mapping, optimistic UI, persistence, and DevTools.",
-  "keywords": ["next.js", "react-hook-form", "server-actions", "form", "validation", "typescript"],
+  "keywords": [
+    "next.js",
+    "react-hook-form",
+    "server-actions",
+    "form",
+    "validation",
+    "typescript"
+  ],
   "license": "MIT",
   "author": "",
   "repository": {
@@ -25,7 +32,11 @@
       }
     }
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
