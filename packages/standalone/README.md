@@ -1,6 +1,6 @@
 # hookform-action-standalone
 
-Standalone React adapter for **hookform-action** — use the same API without Next.js. Works with **Vite**, **Remix**, **Astro**, or any React SPA.
+Typed submit flows for **React Hook Form** in **Vite**, **Remix**, **Astro**, and any React SPA. Same API, no Server Actions required.
 
 [![npm version](https://img.shields.io/npm/v/hookform-action-standalone?style=flat-square&color=5c7cfa)](https://www.npmjs.com/package/hookform-action-standalone)
 [![npm downloads](https://img.shields.io/npm/dm/hookform-action-standalone?style=flat-square&color=748ffc)](https://www.npmjs.com/package/hookform-action-standalone)
@@ -59,6 +59,22 @@ export function LoginForm() {
   );
 }
 ```
+
+## Mental Model
+
+`hookform-action-standalone` gives you the same `useActionForm` API as the Next.js adapter — without any framework requirement. Instead of passing a Server Action, you pass a `submit` function (fetch, Axios, tRPC, or anything async).
+
+The submit flow is identical to the Next.js adapter:
+
+```
+handleSubmit()
+  → client-side Zod validation (if schema provided)
+  → your submit function called  →  isPending = true
+  → result errors mapped back to RHF fields
+  → onSuccess / onError fired
+```
+
+All optional features — real-time validation (`validationMode`), optimistic UI (`optimisticKey`), multi-step persistence (`persistKey`) — work exactly the same as in `hookform-action`.
 
 ## API
 

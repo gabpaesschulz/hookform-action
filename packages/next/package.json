@@ -1,7 +1,7 @@
 {
   "name": "hookform-action",
   "version": "4.0.3",
-  "description": "Next.js adapter for hookform-action – bridges React Hook Form with Server Actions.",
+  "description": "Typed submit flows for React Hook Form + Next.js Server Actions, with Zod mapping, optimistic UI, persistence, and DevTools.",
   "keywords": ["next.js", "react-hook-form", "server-actions", "form", "validation", "typescript"],
   "license": "MIT",
   "author": "",

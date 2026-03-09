@@ -1,7 +1,7 @@
 {
   "name": "hookform-action-devtools",
   "version": "4.0.3",
-  "description": "DevTools panel for hookform-action – inspect form state, submission history, and debug optimistic UI.",
+  "description": "DevTools panel for hookform-action typed submit flows: inspect form state, submissions, and optimistic UI behavior.",
   "keywords": ["react-hook-form", "devtools", "form", "debug", "inspector"],
   "license": "MIT",
   "author": "",

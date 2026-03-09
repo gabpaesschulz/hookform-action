@@ -52,7 +52,7 @@ export default function WizardExamplePage() {
           <pre>{`const {
   register,
   handleSubmit,
-  formState: { errors, isSubmitting },
+  formState: { errors, isPending },
   trigger,
 } = useActionForm(wizardAction, {
   defaultValues: {

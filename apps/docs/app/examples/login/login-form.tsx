@@ -7,7 +7,7 @@ export function LoginForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isPending, isSubmitSuccessful },
   } = useActionForm(loginAction, {
     defaultValues: { email: '', password: '' },
   })
@@ -55,10 +55,10 @@ export function LoginForm() {
 
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isPending}
         className="w-full py-2.5 bg-brand-600 hover:bg-brand-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors"
       >
-        {isSubmitting ? (
+        {isPending ? (
           <span className="inline-flex items-center gap-2">
             <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
               <circle

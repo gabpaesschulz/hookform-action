@@ -14,7 +14,7 @@ export default function ValidationExamplePage() {
       <div className="flex items-center gap-3 mb-2">
         <h1 className="text-3xl font-bold">Client-Side Validation Example</h1>
         <span className="text-xs font-medium bg-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full">
-          v2
+          v4
         </span>
       </div>
       <p className="text-gray-400 mb-8">
