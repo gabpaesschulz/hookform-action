@@ -1,6 +1,6 @@
 {
   "name": "hookform-action-standalone",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Standalone React adapter for hookform-action – use the same API without Next.js (Vite, Remix, Astro, SPAs).",
   "keywords": [
     "react",

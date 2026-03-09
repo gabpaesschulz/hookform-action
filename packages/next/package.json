@@ -1,6 +1,6 @@
 {
   "name": "hookform-action",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Next.js adapter for hookform-action – bridges React Hook Form with Server Actions.",
   "keywords": [
     "next.js",

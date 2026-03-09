@@ -486,6 +486,15 @@ export function useActionForm<
   const composedFormState = useMemo(
     () => ({
       ...form.formState,
+      // Explicitly read proxy-tracked properties from RHF's formState
+      // so they survive the spread (RHF uses a Proxy internally).
+      errors: form.formState.errors,
+      isDirty: form.formState.isDirty,
+      isValid: form.formState.isValid,
+      touchedFields: form.formState.touchedFields,
+      dirtyFields: form.formState.dirtyFields,
+      isLoading: form.formState.isLoading,
+      isValidating: form.formState.isValidating,
       ...actionState,
       // RHF's own isSubmitting OR our action isSubmitting
       isSubmitting: form.formState.isSubmitting || actionState.isSubmitting,

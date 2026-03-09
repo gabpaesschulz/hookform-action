@@ -1,9 +1,11 @@
 <p align="center">
   <h1 align="center">⚡ hookform-action</h1>
   <p align="center">
-    Seamless integration between <strong>React Hook Form</strong> and <strong>any React framework</strong><br />
-    with Zod validation, automatic type inference, optimistic UI, multi-step persistence, and DevTools.
-  </p>
+    Seamless integration between <strong>React Hook Form</strong> and <strong>any React framework</strong><br />
+    with Zod validation, automatic type inference, optimistic UI, multi-step persistence, and DevTools.
+    <br />
+    <a href="https://hookform-action-docs.vercel.app/"><strong>📚 Explore the Docs »</strong></a>
+  </p>
 </p>
 
 <p align="center">
@@ -239,17 +241,17 @@ const form = useActionForm(wizardAction, {
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────┐
-│        hookform-action-core (core)           │
+┌────────────────────────────────────────────────┐
+│        hookform-action-core (core)             │
 │   useActionFormCore · withZod · Form · persist │
-├────────────────────┬────────────────────────┤
-│   hookform-action  │  hookform-action       │
-│    (Next.js)       │    -standalone         │
-│  (Server Actions)  │  (fetch / REST / gRPC)  │
-└────────────────────┴────────────────────────┘
+├────────────────────┬───────────────────────────┤
+│   hookform-action  │  hookform-action          │
+│    (Next.js)       │    -standalone            │
+│  (Server Actions)  │  (fetch / REST / gRPC)    │
+└────────────────────┴───────────────────────────┘
           ┌──────────────────────┐
-          │ hookform-action    │
-          │     -devtools      │
+          │ hookform-action      │
+          │     -devtools        │
           │  (FormDevTool panel) │
           └──────────────────────┘
 ```

@@ -1,6 +1,6 @@
 {
   "name": "hookform-action-devtools",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "DevTools panel for hookform-action – inspect form state, submission history, and debug optimistic UI.",
   "keywords": [
     "react-hook-form",
