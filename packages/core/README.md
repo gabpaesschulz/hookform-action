@@ -1,10 +1,20 @@
 # hookform-action-core
 
-Framework-agnostic core for **hookform-action** — provides the foundational hooks, Zod integration, persistence helpers, and type system shared by all adapters.
+The framework-agnostic core of **hookform-action** for typed React Hook Form submit flows: `withZod`, automatic Zod error mapping, persistence, and optimistic UI. Shared by all adapters.
 
 [![npm version](https://img.shields.io/npm/v/hookform-action-core?style=flat-square&color=5c7cfa)](https://www.npmjs.com/package/hookform-action-core)
 [![npm downloads](https://img.shields.io/npm/dm/hookform-action-core?style=flat-square&color=748ffc)](https://www.npmjs.com/package/hookform-action-core)
 [![license](https://img.shields.io/npm/l/hookform-action-core?style=flat-square)](https://github.com/gabpaesschulz/hookform-action/blob/main/LICENSE)
+
+## Mental Model
+
+`hookform-action-core` is the **framework-agnostic engine**. It doesn't know about Next.js routing or `fetch` — it only understands: _"I have an async function and a schema; wire them into React Hook Form."_
+
+- **`withZod`** — wraps your handler with Zod validation on the server and attaches the schema so the client hook can detect it automatically for real-time validation
+- **`useActionFormCore`** — low-level hook managing the full submit lifecycle (client validation → async call → error mapping → optimistic state → persistence)
+- **Adapters** (`hookform-action`, `hookform-action-standalone`) are thin wrappers that call `useActionFormCore` with environment-specific submission logic
+
+Most users never install this package directly — they install an adapter instead.
 
 > **Most users should install an adapter instead:**
 >

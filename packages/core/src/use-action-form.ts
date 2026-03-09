@@ -122,11 +122,18 @@ export function useActionForm<
     onError,
     persistDebounce = 300,
     schema: optionsSchema,
-    validationMode = 'onSubmit',
+    validationMode,
+    clientValidation,
     optimisticKey,
     optimisticData,
     optimisticInitial,
+    optimisticReducer,
+    optimisticDefault,
   } = options
+
+  const resolvedValidationMode = validationMode ?? clientValidation ?? 'onSubmit'
+  const resolvedOptimisticData = optimisticData ?? optimisticReducer
+  const resolvedOptimisticInitial = (optimisticInitial ?? optimisticDefault) as TOptimistic
 
   // ----- Resolve Zod schema (explicit or auto-detected from withZod) -------
 
@@ -169,6 +176,8 @@ export function useActionForm<
     isSubmitSuccessful: false,
     submitErrors: null,
     actionResult: null,
+    serverErrors: null,
+    lastResult: null,
     isPending: false,
   })
 
@@ -179,16 +188,17 @@ export function useActionForm<
 
   // ----- Optimistic UI (React 19 only) -------------------------------------
 
-  const hasOptimistic = optimisticKey != null && optimisticData != null
+  const hasOptimistic =
+    resolvedOptimisticData != null && (optimisticKey != null || optimisticReducer != null)
 
   // We use the React 19 useOptimistic when available, otherwise a simple state fallback.
   const useOptimisticHook =
     hasUseOptimistic && useOptimisticReact19 ? useOptimisticReact19 : useOptimisticFallback
 
-  const [optimisticState, setOptimistic] = useOptimisticHook(optimisticInitial as TOptimistic)
+  const [optimisticState, setOptimistic] = useOptimisticHook(resolvedOptimisticInitial)
 
   // Track confirmed state for rollback
-  const confirmedOptimisticRef = useRef<TOptimistic>(optimisticInitial as TOptimistic)
+  const confirmedOptimisticRef = useRef<TOptimistic>(resolvedOptimisticInitial)
 
   const rollbackOptimistic = useCallback(() => {
     setOptimistic(confirmedOptimisticRef.current)
@@ -217,14 +227,14 @@ export function useActionForm<
   // ----- Client-side Zod validation (onChange / onBlur) ---------------------
 
   useEffect(() => {
-    if (!resolvedSchema || validationMode === 'onSubmit') return
+    if (!resolvedSchema || resolvedValidationMode === 'onSubmit') return
 
     const subscription = form.watch((values, { name, type }) => {
       if (!name) return
 
       // For onBlur mode, only validate if the event type is blur
       // (RHF watch fires on all changes, so we validate on onChange mode always)
-      if (validationMode === 'onChange' || type === 'blur') {
+      if (resolvedValidationMode === 'onChange' || type === 'blur') {
         // Validate the single changed field
         const fieldResult = resolvedSchema.safeParse(values)
         if (fieldResult.success) {
@@ -248,7 +258,7 @@ export function useActionForm<
     })
 
     return () => subscription.unsubscribe()
-  }, [resolvedSchema, validationMode, form])
+  }, [resolvedSchema, resolvedValidationMode, form])
 
   // ----- Manual persist / clear --------------------------------------------
 
@@ -257,10 +267,12 @@ export function useActionForm<
     savePersistedValues(persistKey, form.getValues())
   }, [persistKey, form])
 
-  const clearPersisted = useCallback(() => {
+  const clearPersistedData = useCallback(() => {
     if (!persistKey) return
     clearPersistedValues(persistKey)
   }, [persistKey])
+
+  const clearPersisted = clearPersistedData
 
   // ----- Set a server error on a field -------------------------------------
 
@@ -270,6 +282,8 @@ export function useActionForm<
     },
     [form],
   )
+
+  const setServerError = setSubmitError
 
   // ----- Map server errors to RHF ------------------------------------------
 
@@ -297,7 +311,7 @@ export function useActionForm<
   const executeAction = useCallback(
     async (data: TFieldValues | FormData, isFormDataSubmission: boolean) => {
       // Client-side schema validation (for onSubmit mode)
-      if (resolvedSchema && validationMode === 'onSubmit' && !(data instanceof FormData)) {
+      if (resolvedSchema && resolvedValidationMode === 'onSubmit' && !(data instanceof FormData)) {
         const clientErrors = validateWithSchema(resolvedSchema, data as Record<string, unknown>)
         if (clientErrors) {
           applyServerErrors(clientErrors)
@@ -306,6 +320,8 @@ export function useActionForm<
             isSubmitSuccessful: false,
             submitErrors: clientErrors,
             actionResult: null,
+            serverErrors: clientErrors,
+            lastResult: null,
             isPending: false,
           })
           return
@@ -317,11 +333,12 @@ export function useActionForm<
         isSubmitting: true,
         isPending: true,
         submitErrors: null,
+        serverErrors: null,
       }))
 
       // Apply optimistic update before the action runs
-      if (hasOptimistic && optimisticData && !(data instanceof FormData)) {
-        const optimisticResult = optimisticData(
+      if (hasOptimistic && resolvedOptimisticData && !(data instanceof FormData)) {
+        const optimisticResult = resolvedOptimisticData(
           confirmedOptimisticRef.current,
           data as TFieldValues,
         )
@@ -396,13 +413,15 @@ export function useActionForm<
             isSubmitSuccessful: false,
             submitErrors: fieldErrors,
             actionResult: result,
+            serverErrors: fieldErrors,
+            lastResult: result,
             isPending: false,
           })
           onError?.(result)
         } else {
           // Success – update confirmed optimistic state
-          if (hasOptimistic && optimisticData && !(data instanceof FormData)) {
-            confirmedOptimisticRef.current = optimisticData(
+          if (hasOptimistic && resolvedOptimisticData && !(data instanceof FormData)) {
+            confirmedOptimisticRef.current = resolvedOptimisticData(
               confirmedOptimisticRef.current,
               data as TFieldValues,
             )
@@ -416,6 +435,8 @@ export function useActionForm<
             isSubmitSuccessful: true,
             submitErrors: null,
             actionResult: result,
+            serverErrors: null,
+            lastResult: result,
             isPending: false,
           })
           onSuccess?.(result)
@@ -444,9 +465,9 @@ export function useActionForm<
       onError,
       persistKey,
       resolvedSchema,
-      validationMode,
+      resolvedValidationMode,
       hasOptimistic,
-      optimisticData,
+      resolvedOptimisticData,
       setOptimistic,
       rollbackOptimistic,
     ],
@@ -520,8 +541,10 @@ export function useActionForm<
     handleSubmit,
     formState: composedFormState,
     setSubmitError,
+    setServerError,
     persist,
-    clearPersistedData: clearPersisted,
+    clearPersistedData,
+    clearPersisted,
     formAction,
     optimistic: optimisticReturn,
   } as UseActionFormReturn<TFieldValues, TResult, TOptimistic>

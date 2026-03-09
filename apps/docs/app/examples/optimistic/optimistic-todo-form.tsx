@@ -25,7 +25,6 @@ export function OptimisticTodoForm() {
     optimistic,
   } = useActionForm<{ text: string }, AddTodoResult, Todo[]>(addTodoAction, {
     defaultValues: { text: '' },
-    optimisticKey: 'todos',
     optimisticInitial: initialTodos,
     optimisticData: (current: Todo[], values) => [
       ...current,

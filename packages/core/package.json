@@ -1,7 +1,7 @@
 {
   "name": "hookform-action-core",
   "version": "4.0.3",
-  "description": "Seamless integration between React Hook Form and Server Actions with Zod validation, automatic type inference, optimistic UI, and multi-step form persistence.",
+  "description": "Framework-agnostic core for typed React Hook Form submit flows: withZod, error mapping, optimistic UI, and persistence.",
   "keywords": [
     "next.js",
     "react-hook-form",

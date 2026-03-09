@@ -45,9 +45,9 @@ describe('hookform-action-standalone – useActionForm', () => {
     expect(result.current.register).toBeDefined()
     expect(result.current.handleSubmit).toBeDefined()
     expect(result.current.formState).toBeDefined()
-    expect(result.current.setSubmitError).toBeDefined()
+    expect(result.current.setServerError).toBeDefined()
     expect(result.current.persist).toBeDefined()
-    expect(result.current.clearPersistedData).toBeDefined()
+    expect(result.current.clearPersisted).toBeDefined()
   })
 
   it('does NOT have formAction (standalone has no Server Actions)', () => {
@@ -121,7 +121,7 @@ describe('hookform-action-standalone – useActionForm', () => {
     })
 
     await waitFor(() => {
-      expect(result.current.formState.submitErrors).toEqual({
+      expect(result.current.formState.serverErrors).toEqual({
         email: ['Email already exists'],
       })
     })
@@ -192,15 +192,14 @@ describe('hookform-action-standalone – useActionForm', () => {
       useActionForm({
         submit,
         defaultValues: { title: 'New Todo' },
-        optimisticKey: 'todo-1',
-        optimisticData: (
+        optimisticReducer: (
           current: Record<string, unknown>,
           formValues: Record<string, unknown>,
         ) => ({
           ...current,
           title: formValues.title,
         }),
-        optimisticInitial: { title: 'Old Todo' },
+        optimisticDefault: { title: 'Old Todo' },
       }),
     )
 

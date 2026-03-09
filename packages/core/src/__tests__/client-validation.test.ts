@@ -31,7 +31,7 @@ describe('useActionForm – client-side Zod validation (explicit schema)', () =>
       useActionForm(action, {
         defaultValues: { email: 'invalid', password: 'short' },
         schema: signupSchema,
-        validationMode: 'onSubmit',
+        clientValidation: 'onSubmit',
       }),
     )
 
@@ -44,7 +44,7 @@ describe('useActionForm – client-side Zod validation (explicit schema)', () =>
       // Action should NOT have been called because client validation failed
       expect(action).not.toHaveBeenCalled()
       // Errors should be set
-      expect(result.current.formState.submitErrors).not.toBeNull()
+      expect(result.current.formState.serverErrors).not.toBeNull()
     })
   })
 
@@ -55,7 +55,7 @@ describe('useActionForm – client-side Zod validation (explicit schema)', () =>
       useActionForm(action, {
         defaultValues: { email: 'valid@test.com', password: '12345678' },
         schema: signupSchema,
-        validationMode: 'onSubmit',
+        clientValidation: 'onSubmit',
       }),
     )
 
@@ -77,7 +77,7 @@ describe('useActionForm – client-side Zod validation (explicit schema)', () =>
       useActionForm(action, {
         defaultValues: { email: 'bad', password: '12345678' },
         schema: signupSchema,
-        validationMode: 'onSubmit',
+        clientValidation: 'onSubmit',
       }),
     )
 
@@ -93,14 +93,14 @@ describe('useActionForm – client-side Zod validation (explicit schema)', () =>
     })
   })
 
-  it('validates onChange when validationMode is onChange', async () => {
+  it('validates onChange when clientValidation is onChange', async () => {
     const action = createSuccessAction()
 
     const { result } = renderHook(() =>
       useActionForm(action, {
         defaultValues: { email: '', password: '' },
         schema: signupSchema,
-        validationMode: 'onChange',
+        clientValidation: 'onChange',
       }),
     )
 
@@ -123,7 +123,7 @@ describe('useActionForm – client-side Zod validation (explicit schema)', () =>
       useActionForm(action, {
         defaultValues: { email: '', password: '' },
         schema: signupSchema,
-        validationMode: 'onChange',
+        clientValidation: 'onChange',
       }),
     )
 
@@ -170,7 +170,7 @@ describe('useActionForm – auto-detected schema from withZod', () => {
       useActionForm(action, {
         defaultValues: { email: 'invalid', password: 'short' },
         // No explicit schema – should auto-detect from action.__schema
-        validationMode: 'onSubmit',
+        clientValidation: 'onSubmit',
       }),
     )
 
@@ -182,7 +182,7 @@ describe('useActionForm – auto-detected schema from withZod', () => {
     await waitFor(() => {
       // Handler should NOT have been called since client validation fails
       expect(handler).not.toHaveBeenCalled()
-      expect(result.current.formState.submitErrors).not.toBeNull()
+      expect(result.current.formState.serverErrors).not.toBeNull()
     })
   })
 
@@ -195,7 +195,7 @@ describe('useActionForm – auto-detected schema from withZod', () => {
       useActionForm(action, {
         defaultValues: { email: '', password: '' },
         // Auto-detects schema, validates on change
-        validationMode: 'onChange',
+        clientValidation: 'onChange',
       }),
     )
 
@@ -223,7 +223,7 @@ describe('useActionForm – auto-detected schema from withZod', () => {
       useActionForm(action, {
         defaultValues: { email: 'bad', password: '12345678' },
         schema: customSchema, // This should take priority
-        validationMode: 'onSubmit',
+        clientValidation: 'onSubmit',
       }),
     )
 

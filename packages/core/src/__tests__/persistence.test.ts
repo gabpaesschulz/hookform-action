@@ -132,7 +132,7 @@ describe('useActionForm – persistence', () => {
     expect(stored?.email).toBe('manual@test.com')
   })
 
-  it('clears persisted data via clearPersistedData()', () => {
+  it('clears persisted data via clearPersisted()', () => {
     savePersistedValues(PERSIST_KEY, { email: 'clear@test.com' })
 
     const action: ServerAction<{ success: true }> = vi.fn(async () => ({
@@ -147,7 +147,7 @@ describe('useActionForm – persistence', () => {
     )
 
     act(() => {
-      result.current.clearPersistedData()
+      result.current.clearPersisted()
     })
 
     expect(loadPersistedValues(PERSIST_KEY)).toBeNull()

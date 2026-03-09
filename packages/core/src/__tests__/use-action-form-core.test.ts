@@ -50,9 +50,9 @@ describe('useActionFormCore', () => {
     expect(result.current.register).toBeDefined()
     expect(result.current.handleSubmit).toBeDefined()
     expect(result.current.formState).toBeDefined()
-    expect(result.current.setSubmitError).toBeDefined()
+    expect(result.current.setServerError).toBeDefined()
     expect(result.current.persist).toBeDefined()
-    expect(result.current.clearPersistedData).toBeDefined()
+    expect(result.current.clearPersisted).toBeDefined()
     expect(result.current.control).toBeDefined()
   })
 
@@ -107,7 +107,7 @@ describe('useActionFormCore', () => {
 
     await waitFor(() => {
       expect(result.current.formState.isSubmitSuccessful).toBe(true)
-      expect(result.current.formState.actionResult).toEqual({ success: true, data: 'ok' })
+      expect(result.current.formState.lastResult).toEqual({ success: true, data: 'ok' })
     })
   })
 
@@ -126,7 +126,7 @@ describe('useActionFormCore', () => {
     })
 
     await waitFor(() => {
-      expect(result.current.formState.submitErrors).toEqual({
+      expect(result.current.formState.serverErrors).toEqual({
         email: ['Invalid email address'],
       })
       expect(result.current.formState.isSubmitSuccessful).toBe(false)
@@ -224,13 +224,13 @@ describe('useActionFormCore', () => {
     )
 
     await act(async () => {
-      result.current.clearPersistedData()
+      result.current.clearPersisted()
     })
 
     expect(sessionStorage.getItem('test-core-clear')).toBeNull()
   })
 
-  // ---- setSubmitError -----------------------------------------------------
+  // ---- setServerError -----------------------------------------------------
 
   it('allows manually setting a server error', async () => {
     const submit = createSuccessSubmit()
@@ -241,7 +241,7 @@ describe('useActionFormCore', () => {
     )
 
     act(() => {
-      result.current.setSubmitError('email', 'Custom server error')
+      result.current.setServerError('email', 'Custom server error')
     })
 
     await waitFor(() => {

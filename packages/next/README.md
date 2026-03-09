@@ -1,6 +1,6 @@
 # ⚡ hookform-action
 
-Seamless integration between **React Hook Form** and **Next.js Server Actions** with Zod validation, automatic type inference, optimistic UI, multi-step persistence, and DevTools.
+Typed submit flows between **React Hook Form** and **Next.js Server Actions**. Write the schema. Write the action. Skip the wiring.
 
 [![npm version](https://img.shields.io/npm/v/hookform-action?style=flat-square&color=5c7cfa)](https://www.npmjs.com/package/hookform-action)
 [![npm downloads](https://img.shields.io/npm/dm/hookform-action?style=flat-square&color=748ffc)](https://www.npmjs.com/package/hookform-action)
@@ -69,16 +69,57 @@ export function LoginForm() {
 }
 ```
 
-## Features
+## What you stop writing
 
-- 🔒 **Full Type Inference** — Types inferred from your action automatically
-- ⚡ **Auto Error Mapping** — Zod `.flatten().fieldErrors` mapped to RHF fields out of the box
-- 🚀 **Optimistic UI** — Native `useOptimistic` integration with automatic rollback
-- 🔍 **Client-Side Validation** — Real-time Zod validation (`onChange`/`onBlur`/`onSubmit`)
-- 💾 **Wizard Persistence** — Multi-step form state saved to sessionStorage with debounce
-- 🧩 **Headless `<Form>`** — Optional wrapper providing FormContext to children
+- ❌ Manual `FormData` → typed object conversion
+- ❌ `.flatten().fieldErrors` → `setError()` mapping
+- ❌ Duplicate Zod passes for client-side validation
+- ❌ `useTransition` / `startTransition` wiring
+- ❌ `useOptimistic` setup and rollback logic
+- ❌ `sessionStorage` wiring for multi-step wizards
+
+## What you get
+
+- 🔒 **Full Type Inference** — Types flow from your action to every field, error, and return value
+- ⚡ **Auto Error Mapping** — Zod `fieldErrors` mapped to RHF fields automatically, server and client
+- 🚀 **Optimistic UI** — `useOptimistic` wired in one option, with automatic rollback
+- 🔍 **Client-Side Validation** — Real-time Zod validation (`onChange` / `onBlur` / `onSubmit`)
+- 💾 **Wizard Persistence** — Multi-step state persisted to sessionStorage, debounced and SSR-safe
+- 🧩 **Headless `<Form>`** — Optional context wrapper for complex form trees
 - 📦 **Tiny Bundle** — ESM + CJS, tree-shakeable, peer deps only
 - 🧪 **81+ Tests** — Vitest + React Testing Library
+
+## Mental Model
+
+`hookform-action` is the glue between **React Hook Form** and your **Next.js Server Action**, with Zod living in exactly one place.
+
+**Your schema lives once — `withZod`**
+
+`withZod(schema, handler)` validates data on the server _and_ silently attaches the schema to the returned function (`action.__schema`). `useActionForm` detects it automatically for client-side real-time validation — no need to pass the schema twice.
+
+**The hook wires the submit flow**
+
+When the user submits, `handleSubmit()` runs this pipeline:
+
+```
+handleSubmit()
+  → client Zod validation  →  server action (inside useTransition)  →  isPending = true
+  → result.errors mapped back to RHF fields
+  → onSuccess / onError fired
+```
+
+You receive the full RHF API — `register`, `watch`, `setValue`, `formState.errors` — plus `isPending` and `optimistic`.
+
+**Features are strictly opt-in**
+
+The base `useActionForm` call has no extra behavior enabled. You opt in precisely:
+
+| Feature                     | How to enable                      |
+| --------------------------- | ---------------------------------- |
+| Real-time client validation | `validationMode: 'onChange'`       |
+| Optimistic UI               | `optimisticKey` + `optimisticData` |
+| Multi-step persistence      | `persistKey`                       |
+| DevTools panel              | `<FormDevTool form={form} />`      |
 
 ## API
 

@@ -60,7 +60,7 @@ export function LoginForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isPending, isSubmitSuccessful },
   } = useActionForm(loginAction, {
     defaultValues: { email: '', password: '' },
   })
@@ -75,8 +75,8 @@ export function LoginForm() {
       <input {...register('password')} type="password" />
       {errors.password && <span>{errors.password.message}</span>}
 
-      <button disabled={isSubmitting}>
-        {isSubmitting ? 'Signing in...' : 'Sign In'}
+      <button disabled={isPending}>
+        {isPending ? 'Signing in...' : 'Sign In'}
       </button>
     </form>
   )

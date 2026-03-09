@@ -9,6 +9,18 @@ export default function ApiReferencePage() {
 
       <h1 className="text-3xl font-bold mb-8">API Reference</h1>
 
+      <div className="mb-10 rounded-xl border border-brand-500/20 bg-brand-500/5 p-4">
+        <p className="text-sm text-gray-300 mb-2">
+          Canonical naming in v4: <code>validationMode</code>, <code>optimisticData</code>,
+          <code>submitErrors</code>, <code>actionResult</code>.
+        </p>
+        <p className="text-xs text-gray-500">
+          Legacy aliases are still supported for backward compatibility (
+          <code>clientValidation</code>, <code>optimisticReducer</code>, <code>serverErrors</code>,{' '}
+          <code>lastResult</code>, <code>setServerError</code>, <code>clearPersisted</code>).
+        </p>
+      </div>
+
       {/* useActionForm – Next.js */}
       <section className="mb-16">
         <h2 className="text-2xl font-bold mb-4 text-brand-400">useActionForm (Next.js)</h2>
@@ -128,7 +140,7 @@ export default function ApiReferencePage() {
           </code>
         </p>
         <p className="text-gray-400 mb-6">
-          <span className="text-emerald-400 text-xs font-medium mr-1">v3</span>
+          <span className="text-emerald-400 text-xs font-medium mr-1">v4</span>
           Same API, but takes an options object with <code>submit</code> instead of a Server Action.
         </p>
 
@@ -179,7 +191,7 @@ export default function ApiReferencePage() {
           </code>
         </p>
         <p className="text-gray-400 mb-6">
-          <span className="text-cyan-400 text-xs font-medium mr-1">v3</span>
+          <span className="text-cyan-400 text-xs font-medium mr-1">v4</span>
           Framework-agnostic core hook. Adapters (Next.js, standalone) wrap this. Use directly only
           for building custom adapters.
         </p>
@@ -197,6 +209,16 @@ export default function ApiReferencePage() {
         <h2 className="text-2xl font-bold mb-4 text-brand-400">Return Value</h2>
         <p className="text-gray-400 text-sm mb-4">
           Returns everything from React Hook Form&apos;s <code>useForm</code>, plus:
+        </p>
+        <p className="text-xs text-gray-500 mb-4">
+          Need a full timeline and state-by-state guide? See{' '}
+          <a
+            href="/submit-lifecycle"
+            className="text-brand-400 hover:text-brand-300 transition-colors"
+          >
+            Submit Lifecycle
+          </a>
+          .
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
@@ -216,27 +238,39 @@ export default function ApiReferencePage() {
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">formState.isSubmitting</td>
                 <td className="py-3 pr-4 font-mono text-xs">boolean</td>
-                <td className="py-3 text-gray-400">True while action is running.</td>
+                <td className="py-3 text-gray-400">
+                  Submit-in-progress flag (RHF + internal action state). Prefer{' '}
+                  <code>isPending</code> for UX locking/loading.
+                </td>
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">formState.isPending</td>
                 <td className="py-3 pr-4 font-mono text-xs">boolean</td>
-                <td className="py-3 text-gray-400">True during transition.</td>
+                <td className="py-3 text-gray-400">
+                  True while transition/request is pending. Primary state for disabled buttons and
+                  spinners.
+                </td>
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">formState.isSubmitSuccessful</td>
                 <td className="py-3 pr-4 font-mono text-xs">boolean</td>
-                <td className="py-3 text-gray-400">True after success.</td>
+                <td className="py-3 text-gray-400">
+                  True when the last completed submit succeeded (no field errors).
+                </td>
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">formState.submitErrors</td>
                 <td className="py-3 pr-4 font-mono text-xs">FieldErrorRecord | null</td>
-                <td className="py-3 text-gray-400">Raw server error record.</td>
+                <td className="py-3 text-gray-400">
+                  Structured field errors from validation/client mapping.
+                </td>
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">formState.actionResult</td>
                 <td className="py-3 pr-4 font-mono text-xs">TResult | null</td>
-                <td className="py-3 text-gray-400">Full result from last action.</td>
+                <td className="py-3 text-gray-400">
+                  Full result from the last completed action response (use with success guards).
+                </td>
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">setSubmitError</td>
@@ -376,7 +410,7 @@ const customMapper = (result) => {
       <section className="mb-16">
         <h2 className="text-2xl font-bold mb-4 text-cyan-400">Plugin System (Internal)</h2>
         <p className="text-gray-400 mb-6">
-          <span className="text-cyan-400 text-xs font-medium mr-1">v3</span>
+          <span className="text-cyan-400 text-xs font-medium mr-1">v4</span>
           Internal plugin architecture for extending useActionFormCore. Not yet part of the public
           API.
         </p>
@@ -442,22 +476,22 @@ const customMapper = (result) => {
             <tbody className="text-gray-300">
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-brand-300">hookform-action-core</td>
-                <td className="py-3 pr-4 font-mono text-xs">3.0.0</td>
+                <td className="py-3 pr-4 font-mono text-xs">4.0.3</td>
                 <td className="py-3 text-gray-400">Core + Next.js adapter (backward-compatible)</td>
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-emerald-300">hookform-action</td>
-                <td className="py-3 pr-4 font-mono text-xs">3.0.0</td>
+                <td className="py-3 pr-4 font-mono text-xs">4.0.3</td>
                 <td className="py-3 text-gray-400">Standalone Next.js adapter package</td>
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-emerald-300">hookform-action-standalone</td>
-                <td className="py-3 pr-4 font-mono text-xs">3.0.0</td>
+                <td className="py-3 pr-4 font-mono text-xs">4.0.3</td>
                 <td className="py-3 text-gray-400">Adapter for Vite, Remix, Astro, SPAs</td>
               </tr>
               <tr className="border-b border-gray-800/50">
                 <td className="py-3 pr-4 font-mono text-purple-300">hookform-action-devtools</td>
-                <td className="py-3 pr-4 font-mono text-xs">3.0.0</td>
+                <td className="py-3 pr-4 font-mono text-xs">4.0.3</td>
                 <td className="py-3 text-gray-400">Floating debug panel (FormDevTool)</td>
               </tr>
             </tbody>

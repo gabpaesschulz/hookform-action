@@ -360,11 +360,11 @@ export function FormDevTool<TFieldValues extends FieldValues = FieldValues>({
         <div style={{ color: COLORS.success, fontSize: 12 }}>✓ No errors</div>
       )}
 
-      {/* Submit Errors (from server) */}
-      {actionFormState?.submitErrors && (
+      {/* Server Errors */}
+      {actionFormState?.serverErrors && (
         <>
           <div style={{ ...sectionTitle, marginTop: 16 }}>Server Errors</div>
-          {Object.entries(actionFormState.submitErrors).map(([key, messages]) => (
+          {Object.entries(actionFormState.serverErrors).map(([key, messages]) => (
             <div key={key} style={kvRow}>
               <span style={{ ...keyStyle, color: COLORS.error }}>{key}</span>
               <span style={{ ...valueStyle, color: COLORS.error }}>
@@ -473,7 +473,7 @@ export function FormDevTool<TFieldValues extends FieldValues = FieldValues>({
           }}
           onClick={() => {
             console.log('[FormDevTool] Errors:', formState.errors)
-            console.log('[FormDevTool] Server errors:', actionFormState?.submitErrors)
+            console.log('[FormDevTool] Server errors:', actionFormState?.serverErrors)
           }}
           title="Log all errors to console"
         >

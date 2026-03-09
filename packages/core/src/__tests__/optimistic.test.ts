@@ -53,15 +53,14 @@ describe('useActionForm – optimistic updates', () => {
     completed: false,
   }
 
-  it('returns optimistic state when optimisticKey and optimisticData are provided', () => {
+  it('returns optimistic state when optimisticReducer is provided', () => {
     const action = createUpdateTodoAction()
 
     const { result } = renderHook(() =>
       useActionForm(action, {
         defaultValues: { title: 'Buy groceries', completed: false },
-        optimisticKey: 'todo-1',
-        optimisticInitial: INITIAL_TODO,
-        optimisticData: (current, formValues) => ({
+        optimisticDefault: INITIAL_TODO,
+        optimisticReducer: (current, formValues) => ({
           ...current,
           title: formValues.title,
           completed: formValues.completed,
@@ -75,7 +74,7 @@ describe('useActionForm – optimistic updates', () => {
     expect(typeof result.current.optimistic?.rollback).toBe('function')
   })
 
-  it('returns undefined optimistic when no optimisticKey is set', () => {
+  it('returns undefined optimistic when no optimisticReducer is set', () => {
     const action = createUpdateTodoAction()
 
     const { result } = renderHook(() =>
@@ -93,9 +92,8 @@ describe('useActionForm – optimistic updates', () => {
     const { result } = renderHook(() =>
       useActionForm(action, {
         defaultValues: { title: 'Updated title', completed: true },
-        optimisticKey: 'todo-1',
-        optimisticInitial: INITIAL_TODO,
-        optimisticData: (current, formValues) => ({
+        optimisticDefault: INITIAL_TODO,
+        optimisticReducer: (current, formValues) => ({
           ...current,
           title: formValues.title,
           completed: formValues.completed,
@@ -123,9 +121,8 @@ describe('useActionForm – optimistic updates', () => {
     const { result } = renderHook(() =>
       useActionForm(action, {
         defaultValues: { title: '' },
-        optimisticKey: 'todo-1',
-        optimisticInitial: INITIAL_TODO,
-        optimisticData: (current, formValues) => ({
+        optimisticDefault: INITIAL_TODO,
+        optimisticReducer: (current, formValues) => ({
           ...current,
           title: formValues.title,
         }),
@@ -151,9 +148,8 @@ describe('useActionForm – optimistic updates', () => {
     const { result } = renderHook(() =>
       useActionForm(action, {
         defaultValues: { title: 'Will fail' },
-        optimisticKey: 'todo-1',
-        optimisticInitial: INITIAL_TODO,
-        optimisticData: (current, formValues) => ({
+        optimisticDefault: INITIAL_TODO,
+        optimisticReducer: (current, formValues) => ({
           ...current,
           title: formValues.title,
         }),
@@ -179,9 +175,8 @@ describe('useActionForm – optimistic updates', () => {
     const { result } = renderHook(() =>
       useActionForm(action, {
         defaultValues: { title: 'Updated title', completed: false },
-        optimisticKey: 'todo-1',
-        optimisticInitial: INITIAL_TODO,
-        optimisticData: (current, formValues) => ({
+        optimisticDefault: INITIAL_TODO,
+        optimisticReducer: (current, formValues) => ({
           ...current,
           title: formValues.title,
         }),

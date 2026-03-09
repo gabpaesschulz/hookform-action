@@ -192,26 +192,40 @@ export interface UseActionFormCoreOptions<
    */
   validationMode?: ClientValidationMode
 
+  /**
+   * Alias for `validationMode`.
+   * @deprecated Use `validationMode` instead.
+   */
+  clientValidation?: ClientValidationMode
+
   // ---- Optimistic UI ------------------------------------------------------
 
   /**
-   * Unique key identifying the optimistic state.
-   * When provided (along with `optimisticData`), enables optimistic updates.
+   * Optional key used to enable optimistic UI mode and identify optimistic data.
    */
   optimisticKey?: string
 
   /**
-   * Reducer that computes the optimistic state from the current data and
-   * the form values being submitted.
-   * Required when `optimisticKey` is set.
+   * Reducer that computes optimistic data from current data + submitted values.
    */
   optimisticData?: OptimisticReducer<TOptimistic, TFieldValues>
 
   /**
-   * Initial data for the optimistic state.
-   * This is the "confirmed" state before any optimistic updates.
+   * Initial (confirmed) data used by optimistic mode.
    */
   optimisticInitial?: TOptimistic
+
+  /**
+   * Alias for `optimisticData`.
+   * @deprecated Use `optimisticData` instead.
+   */
+  optimisticReducer?: OptimisticReducer<TOptimistic, TFieldValues>
+
+  /**
+   * Alias for `optimisticInitial`.
+   * @deprecated Use `optimisticInitial` instead.
+   */
+  optimisticDefault?: TOptimistic
 
   // ---- Internal plugins (v3) ----------------------------------------------
 
@@ -233,8 +247,18 @@ export interface ActionFormState<TResult> {
   isSubmitSuccessful: boolean
   /** Raw error record returned by the action (via errorMapper). */
   submitErrors: FieldErrorRecord | null
-  /** The full result from the last action invocation, if any. */
+  /** Full result from the last action invocation, if any. */
   actionResult: TResult | null
+  /**
+   * Alias for `submitErrors`.
+   * @deprecated Use `submitErrors` instead.
+   */
+  serverErrors: FieldErrorRecord | null
+  /**
+   * Alias for `actionResult`.
+   * @deprecated Use `actionResult` instead.
+   */
+  lastResult: TResult | null
   /**
    * `true` while a transition is pending.
    */
@@ -270,6 +294,12 @@ export interface UseActionFormCoreReturn<
   setSubmitError: (field: keyof TFieldValues & string, message: string) => void
 
   /**
+   * Alias for `setSubmitError`.
+   * @deprecated Use `setSubmitError` instead.
+   */
+  setServerError: (field: keyof TFieldValues & string, message: string) => void
+
+  /**
    * Manually persist the current form state to sessionStorage.
    * Only works when `persistKey` is set.
    */
@@ -280,6 +310,12 @@ export interface UseActionFormCoreReturn<
    * Only works when `persistKey` is set.
    */
   clearPersistedData: () => void
+
+  /**
+   * Alias for `clearPersistedData`.
+   * @deprecated Use `clearPersistedData` instead.
+   */
+  clearPersisted: () => void
 
   /**
    * Optimistic state. Only populated when `optimisticKey` is provided.

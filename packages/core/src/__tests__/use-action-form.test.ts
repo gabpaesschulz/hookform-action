@@ -60,9 +60,9 @@ describe('useActionForm', () => {
     expect(result.current.register).toBeDefined()
     expect(result.current.handleSubmit).toBeDefined()
     expect(result.current.formState).toBeDefined()
-    expect(result.current.setSubmitError).toBeDefined()
+    expect(result.current.setServerError).toBeDefined()
     expect(result.current.persist).toBeDefined()
-    expect(result.current.clearPersistedData).toBeDefined()
+    expect(result.current.clearPersisted).toBeDefined()
     expect(result.current.formAction).toBeDefined()
   })
 
@@ -97,8 +97,8 @@ describe('useActionForm', () => {
 
     await waitFor(() => {
       expect(result.current.formState.isSubmitSuccessful).toBe(true)
-      expect(result.current.formState.submitErrors).toBeNull()
-      expect(result.current.formState.actionResult).toEqual({
+      expect(result.current.formState.serverErrors).toBeNull()
+      expect(result.current.formState.lastResult).toEqual({
         success: true,
         data: 'ok',
       })
@@ -126,7 +126,7 @@ describe('useActionForm', () => {
 
     await waitFor(() => {
       expect(result.current.formState.isSubmitSuccessful).toBe(false)
-      expect(result.current.formState.submitErrors).toEqual({
+      expect(result.current.formState.serverErrors).toEqual({
         email: ['Invalid email address'],
         name: ['Name is required'],
       })
@@ -139,14 +139,14 @@ describe('useActionForm', () => {
     })
   })
 
-  // ---- setSubmitError -----------------------------------------------------
+  // ---- setServerError -----------------------------------------------------
 
   it('allows manually setting a server error', async () => {
     const action = createSuccessAction()
     const { result } = renderHook(() => useActionForm(action, { defaultValues: { email: '' } }))
 
     act(() => {
-      result.current.setSubmitError('email', 'Already taken')
+      result.current.setServerError('email', 'Already taken')
     })
 
     await waitFor(() => {
@@ -277,7 +277,7 @@ describe('useActionForm', () => {
 
       await waitFor(() => {
         expect(result.current.formState.isSubmitSuccessful).toBe(true)
-        expect(result.current.formState.actionResult).toEqual({
+        expect(result.current.formState.lastResult).toEqual({
           success: true,
           data: 'json-ok',
         })
@@ -305,7 +305,7 @@ describe('useActionForm', () => {
 
       await waitFor(() => {
         expect(result.current.formState.isSubmitSuccessful).toBe(false)
-        expect(result.current.formState.submitErrors).toEqual({
+        expect(result.current.formState.serverErrors).toEqual({
           email: ['Invalid email from JSON action'],
         })
         const emailState = result.current.getFieldState('email')
